@@ -1,8 +1,9 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import styles from './styles.module.css'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <h1>Página del requerimiento 21</h1>
-  </StrictMode>,
-)
+  const Req21 = () => (
+    <div className={styles.container}>
+      <h1 className={styles.title}>Página del requerimiento 21</h1>
+    </div>
+  )
+
+export default Req21
