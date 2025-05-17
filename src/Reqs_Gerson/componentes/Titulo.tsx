@@ -1,5 +1,7 @@
+import "./Global.css";
+
 const Titulo = () => {
-  return <h1>GameStore</h1>;
+  return <h1 className="titulo-gamestore">GameStore</h1>;
 };
 
 export default Titulo;

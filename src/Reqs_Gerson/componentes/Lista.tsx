@@ -1,20 +1,21 @@
-const Lista = () => {
+interface Juego {
+  titulo: string;
+  imagen: string;
+}
+
+interface Props {
+  juegos: Juego[];
+}
+
+const Lista = ({ juegos }: Props) => {
   return (
-    <div className="mt-4">
-      <ul className="list-group">
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-          <div className="ms-2 me-auto">Cocinar el almuerzo</div>
-          <input className="form-check-input" type="checkbox" />
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-          <div className="ms-2 me-auto">Cocinar el almuerzo</div>
-          <input className="form-check-input" type="checkbox" />
-        </li>
-        <li className="list-group-item d-flex justify-content-between align-items-center">
-          <div className="ms-2 me-auto">Cocinar el almuerzo</div>
-          <input className="form-check-input" type="checkbox" />
-        </li>
-      </ul>
+    <div  className="lista-juegos">
+      {juegos.map((juego, index) => (
+        <div key={index} className="juego-item">
+          <h4 className="titulo-juego">{juego.titulo}</h4>
+          <img src={juego.imagen} alt={juego.titulo} className="portada" />
+        </div>
+      ))}
     </div>
   );
 };

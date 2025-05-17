@@ -1,0 +1,10 @@
+.pagina {
+  background-color: #151935; 
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.titulo-blanco {
+  color: white;
+  font-weight: bold;
+}
