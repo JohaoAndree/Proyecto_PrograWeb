@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Req21 from './Reqs_Johao/Req_21';
 import Req22 from './Reqs_Johao/Req_22';
