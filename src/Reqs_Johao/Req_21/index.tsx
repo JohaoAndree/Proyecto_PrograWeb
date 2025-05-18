@@ -1,14 +1,13 @@
-import BarraLateral from './Components/BarraLateral'
+import BarraLateral from '../Shared_Components/BarraLateral'
 import CuerpoPagina from './Components/CuerpoPagina'
-/* import styles from './styles.module.css' */
 
 const Req21 = () => {
-  return <div className="container-fluid px-0">
+  return <div className="container-fluid">
     <div className="row">
-      <div className="col-md-3 px-0">
+      <div className="col-lg-3 px-0">
         <BarraLateral />
       </div>
-      <div className="col-md-9 px-0">
+      <div className="col-lg-9 px-0">
         <CuerpoPagina />
       </div>
     </div>

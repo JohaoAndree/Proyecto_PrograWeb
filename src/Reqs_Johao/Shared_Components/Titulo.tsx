@@ -1,4 +1,4 @@
-import styles from '../styles.module.css'
+import styles from './SharedComponents.module.css'
 
 interface TituloProps{
     texto : string

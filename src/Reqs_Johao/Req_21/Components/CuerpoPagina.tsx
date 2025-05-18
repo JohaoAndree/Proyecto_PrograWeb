@@ -1,6 +1,6 @@
-import styles from '../styles.module.css'
+import styles from './styles.module.css'
 import CuadroConteoUsuarios from './CuadroConteoUsuarios'
-import Titulo from './Titulo'
+import Titulo from '../../Shared_Components/Titulo'
 
 const CuerpoPagina = () => {
     const titulo = "Estadísticas"
