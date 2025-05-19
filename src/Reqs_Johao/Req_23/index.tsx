@@ -1,9 +1,17 @@
-import styles from './styles.module.css'
+import BarraLateral from '../Shared_Components/BarraLateral'
+import CuerpoPagina from './Components/CuerpoPagina'
 
-  const Req23 = () => (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Página del requerimiento 23</h1>
+const Req24 = () => {
+  return <div className="container-fluid">
+    <div className="row">
+      <div className="col-lg-3 px-0">
+        <BarraLateral />
+      </div>
+      <div className="col-lg-9 px-0">
+        <CuerpoPagina />
+      </div>
     </div>
-  )
+  </div>
+}
 
-export default Req23
+export default Req24
