@@ -1,7 +1,7 @@
-import styles from './SharedComponents.module.css'
+import Avatar from "../Resources/Avatar.jpeg"
 import ListaOpciones from './ListaOpciones'
 import PerfilUsuario from './PerfilUsuario'
-import Avatar from "../Resources/Avatar.jpeg"
+import styles from './SharedComponents.module.css'
 
 const BarraLateral = () => {
     const rutaAvatar = Avatar
