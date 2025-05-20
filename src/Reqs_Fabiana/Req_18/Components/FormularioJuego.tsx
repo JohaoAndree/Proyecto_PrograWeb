@@ -1,0 +1,88 @@
+import { useState } from 'react'
+
+type Juego = {
+  nombre: string
+  descripcion: string
+  categoria: string
+  precio: number
+  descuento: string
+  foto: string
+}
+
+type Props = {
+  modo: 'agregar' | 'editar'
+  juego?: Juego
+  onCancelar: () => void
+  onGuardar: (juego: Juego) => void
+}
+
+const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
+  const [formData, setFormData] = useState<Juego>({
+    nombre: juego?.nombre || '',
+    descripcion: juego?.descripcion || '',
+    categoria: juego?.categoria || '',
+    precio: juego?.precio || 0,
+    descuento: juego?.descuento || '',
+    foto: juego?.foto || ''
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target
+    setFormData({ ...formData, [name]: value })
+  }
+
+  const handleSubmit = () => {
+    onGuardar(formData)
+  }
+
+  return (
+    <div className="alert alert-light border border-primary rounded-4 p-4">
+      <h5 className="mb-4">{modo === 'agregar' ? 'Add game' : 'Edit game'}</h5>
+
+      <div className="row mb-3">
+        <div className="col">
+          <label>Name</label>
+          <input className="form-control" name="nombre" value={formData.nombre} onChange={handleChange} />
+        </div>
+        <div className="col">
+          <label>Description</label>
+          <textarea className="form-control" name="descripcion" value={formData.descripcion} onChange={handleChange} />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <div className="col">
+          <label>Category</label>
+          <select className="form-control" name="categoria" value={formData.categoria} onChange={handleChange}>
+            <option value="">Select</option>
+            <option value="Horror">Horror</option>
+            <option value="Open world">Open world</option>
+            <option value="Hack & Slash">Hack & Slash</option>
+          </select>
+        </div>
+        <div className="col">
+          <label>Photo (URL)</label>
+          <input className="form-control" name="foto" value={formData.foto} onChange={handleChange} />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <div className="col">
+          <label>Price</label>
+          <input type="number" className="form-control" name="precio" value={formData.precio} onChange={handleChange} />
+        </div>
+        <div className="col">
+          <label>Discount</label>
+          <input className="form-control" name="descuento" value={formData.descuento} onChange={handleChange} />
+        </div>
+      </div>
+
+      <div className="d-flex justify-content-end gap-2">
+        <button className="btn btn-secondary" onClick={onCancelar}>Cancel</button>
+        <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+      </div>
+    </div>
+  )
+}
+
+export default FormularioJuego
