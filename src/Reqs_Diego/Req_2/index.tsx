@@ -7,10 +7,11 @@ const Req2 = () => {
     const [correo, setCorreo] = useState("")
     const [contra, setContra] = useState("")
     const [repContra, setRepContra] = useState("")
+    const [pais, setPais] = useState("")
     const [mensaje, setMensaje] = useState("")
 
     const onClick = () => {
-        if (!nombre || !correo || !contra || !repContra){
+        if (!nombre || !correo || !contra || !repContra || !pais){
             setMensaje("Llene todos los segmentos")
             return
         }
@@ -43,6 +44,13 @@ const Req2 = () => {
               className="form-control mb-3"
               value={correo}
               onChange={(e) => setCorreo(e.target.value)} />
+            <label htmlFor="paisRegis" className="form-label">Pais de residencia:</label>
+            <input
+             id="paisRegis"
+             type="text"
+             className="form-control mb-3"
+             value={pais}
+             onChange={(e) => setPais(e.target.value)} />
             <label htmlFor="contraRegis" className="form-label">Contraseña:</label>
             <input
              id="contraRegis"

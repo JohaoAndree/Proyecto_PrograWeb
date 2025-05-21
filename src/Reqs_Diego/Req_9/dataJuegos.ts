@@ -17,7 +17,7 @@ export const listaJuegos: Juego[] = [
         desc: "Juego de bloques, te va a agarrar herobrine veras",
         urlTrailer: "ttps://www.youtube.com/embed/MmB9b5njVbA?si=yBnre528seQFvHKY",
         capturas: [
-            "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3f/Beta.png/revision/latest?cb=20191215152001",
+            "https://images.surferseo.art/aad6eeed-7807-47e3-a09f-3b294fd2d3d5.png",
             "https://bigtechquestion.com/wp-content/uploads/2018/08/2017-02-08_11.03.51-990x524.png",
             "https://cdn.pixabay.com/photo/2017/05/20/23/22/minecraft-2330079_1280.jpg"
         ],
