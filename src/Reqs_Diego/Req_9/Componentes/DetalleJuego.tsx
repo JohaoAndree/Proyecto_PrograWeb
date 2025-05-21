@@ -1,8 +1,8 @@
 import React from "react";
 import { Juego } from "../dataJuegos";
 
-function DetalleJuego(props:{juego:Juego}){
-    const juego = props.juego
+function DetalleJuego(props:{juego: Juego, onComprar: (juego: Juego)=> void}){
+    const {juego, onComprar} = props
     return (
         <div className="bg-secondary text-light p-4 mt-3 rounded">
             <h2>{juego.titulo}</h2>
@@ -17,6 +17,7 @@ function DetalleJuego(props:{juego:Juego}){
                 ))}
             </div>
             <h5>Estrellas: {juego.estrellas}/5</h5>
+            <button className="btn btn-success mb-3" onClick={()=> onComprar(juego)}>Comprar</button>
             <h5>Reseñas:</h5>
             <ul>
                 {juego.resenas.map(resena => (
