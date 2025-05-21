@@ -1,28 +1,28 @@
 /* styles.module.css */
 
 .fondoAzulOscuro {
-  background-color:navy; /* azul oscuro */
-  height: 100vh;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.loginBox {
-  background-color: #0d6efd; /* azul bootstrap */
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 320px;
-  text-align: center;
-  color: white;
-}
-
-.loginBox label {
-  text-align: left;
-  display: block;
-}
-
-.linkOlvido {
-  font-size: 0.8rem;
-}
+    background-color:navy; /* azul oscuro */
+    height: 100vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .loginBox {
+    background-color: #0d6efd; /* azul bootstrap */
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 320px;
+    text-align: center;
+    color: white;
+  }
+  
+  .loginBox label {
+    text-align: left;
+    display: block;
+  }
+  
+  .linkOlvido {
+    font-size: 0.8rem;
+  }
