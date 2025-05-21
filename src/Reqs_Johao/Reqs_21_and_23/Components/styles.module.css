@@ -18,3 +18,10 @@
     text-align: center;
 }
 
+.Grafico{
+    position: relative;
+    width: 100%;
+    min-height: auto;
+    max-height: 400px;
+    margin: 0 auto;
+}
