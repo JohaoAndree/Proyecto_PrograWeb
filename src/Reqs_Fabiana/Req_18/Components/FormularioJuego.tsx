@@ -11,7 +11,7 @@ type Juego = {
 
 type Props = {
   modo: 'agregar' | 'editar'
-  juego?: Juego
+  juego?: Partial<Juego>
   onCancelar: () => void
   onGuardar: (juego: Juego) => void
 }
@@ -26,7 +26,9 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
     foto: juego?.foto || ''
   })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
   }
@@ -42,44 +44,89 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
       <div className="row mb-3">
         <div className="col">
           <label>Name</label>
-          <input className="form-control" name="nombre" value={formData.nombre} onChange={handleChange} />
+          <input
+            className="form-control"
+            name="nombre"
+            value={formData.nombre}
+            onChange={handleChange}
+          />
         </div>
         <div className="col">
           <label>Description</label>
-          <textarea className="form-control" name="descripcion" value={formData.descripcion} onChange={handleChange} />
+          <textarea
+            className="form-control"
+            name="descripcion"
+            value={formData.descripcion}
+            onChange={handleChange}
+          />
         </div>
       </div>
 
       <div className="row mb-3">
         <div className="col">
           <label>Category</label>
-          <select className="form-control" name="categoria" value={formData.categoria} onChange={handleChange}>
+          <select
+            className="form-control"
+            name="categoria"
+            value={formData.categoria}
+            onChange={handleChange}
+          >
             <option value="">Select</option>
             <option value="Horror">Horror</option>
             <option value="Open world">Open world</option>
             <option value="Hack & Slash">Hack & Slash</option>
           </select>
         </div>
-        <div className="col">
-          <label>Photo (URL)</label>
-          <input className="form-control" name="foto" value={formData.foto} onChange={handleChange} />
+
+        <div className="col-12 mt-3">
+          <label>Photo (Upload)</label>
+          <input
+            type="file"
+            accept="image/*"
+            className="form-control"
+            onChange={(e) => {
+              const file = e.target.files?.[0]
+              if (file) {
+                const reader = new FileReader()
+                reader.onloadend = () => {
+                  setFormData({ ...formData, foto: reader.result as string })
+                }
+                reader.readAsDataURL(file)
+              }
+            }}
+          />
         </div>
       </div>
 
       <div className="row mb-3">
         <div className="col">
           <label>Price</label>
-          <input type="number" className="form-control" name="precio" value={formData.precio} onChange={handleChange} />
+          <input
+            type="number"
+            className="form-control"
+            name="precio"
+            value={formData.precio}
+            onChange={handleChange}
+          />
         </div>
         <div className="col">
           <label>Discount</label>
-          <input className="form-control" name="descuento" value={formData.descuento} onChange={handleChange} />
+          <input
+            className="form-control"
+            name="descuento"
+            value={formData.descuento}
+            onChange={handleChange}
+          />
         </div>
       </div>
 
       <div className="d-flex justify-content-end gap-2">
-        <button className="btn btn-secondary" onClick={onCancelar}>Cancel</button>
-        <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+        <button className="btn btn-secondary" onClick={onCancelar}>
+          Cancel
+        </button>
+        <button className="btn btn-primary" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   )

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import FormularioJuego from '../Components/FormularioJuego'
 
-// ✅ 1. Declaramos el tipo de objeto "Juego"
+// ✅ Tipo de objeto Juego
 type Juego = {
   fecha: string
   categoria: string
@@ -11,7 +11,7 @@ type Juego = {
   descuento: string
 }
 
-// ✅ 2. Usamos el tipo en el arreglo base
+// ✅ Lista base de juegos
 const juegosBase: Juego[] = [
   { fecha: "12/12/24", categoria: "Hack & Slash", nombre: "Devil May Cry 5", precio: 90, descuento: "75%" },
   { fecha: "25/03/23", categoria: "Open world", nombre: "Red Dead Redemption 2", precio: 54.97, descuento: "75%" },
@@ -19,10 +19,8 @@ const juegosBase: Juego[] = [
 ]
 
 const TablaJuegos = () => {
-  // ✅ 3. Especificamos los tipos en useState
   const [mostrarAgregar, setMostrarAgregar] = useState(false)
-  const [juegoEditando, setJuegoEditando] = useState<any>(null)
-
+  const [juegoEditando, setJuegoEditando] = useState<Juego | null>(null)
   const [juegoEliminando, setJuegoEliminando] = useState<Juego | null>(null)
 
   return (
@@ -64,35 +62,43 @@ const TablaJuegos = () => {
         </tbody>
       </table>
 
-      {mostrarAgregar && (
-  <FormularioJuego
-    modo="agregar"
-    onCancelar={() => setMostrarAgregar(false)}
-    onGuardar={(nuevoJuego) => {
-      console.log('Juego agregado:', nuevoJuego)
-      setMostrarAgregar(false)
-    }}
-  />
-)}
+      {/* MODAL CENTRADO: Agregar o Editar */}
+      {(mostrarAgregar || juegoEditando) && (
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
+        >
+          <div style={{ width: '90%', maxWidth: '700px' }}>
+            <FormularioJuego
+              modo={mostrarAgregar ? 'agregar' : 'editar'}
+              juego={juegoEditando ?? undefined}
+              onCancelar={() => {
+                setMostrarAgregar(false)
+                setJuegoEditando(null)
+              }}
+              onGuardar={(juego) => {
+                console.log(mostrarAgregar ? 'Juego agregado:' : 'Juego editado:', juego)
+                setMostrarAgregar(false)
+                setJuegoEditando(null)
+              }}
+            />
+          </div>
+        </div>
+      )}
 
-      {juegoEditando && (
-  <FormularioJuego
-    modo="editar"
-    juego={juegoEditando}
-    onCancelar={() => setJuegoEditando(null)}
-    onGuardar={(juegoEditado) => {
-      console.log('Juego editado:', juegoEditado)
-      setJuegoEditando(null)
-    }}
-  />
-)}
-
-
+      {/* MODAL CENTRADO: Confirmación de eliminación */}
       {juegoEliminando && (
-        <div className="alert alert-danger">
-          <h5>¿Está seguro de eliminar "{juegoEliminando.nombre}"?</h5>
-          <button className="btn btn-secondary me-2" onClick={() => setJuegoEliminando(null)}>Cancelar</button>
-          <button className="btn btn-danger">Eliminar</button>
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
+        >
+          <div className="alert alert-danger text-center p-4 rounded-4 shadow" style={{ width: '90%', maxWidth: '500px' }}>
+            <h5>¿Está seguro de eliminar "{juegoEliminando.nombre}"?</h5>
+            <div className="d-flex justify-content-center mt-3 gap-2">
+              <button className="btn btn-secondary" onClick={() => setJuegoEliminando(null)}>Cancelar</button>
+              <button className="btn btn-danger">Eliminar</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
