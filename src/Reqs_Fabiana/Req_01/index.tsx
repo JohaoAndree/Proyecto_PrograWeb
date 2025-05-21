@@ -1,9 +1,12 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './styles.module.css';
+import logo from './logo.jpg';
 
 const Login = () => {
   return (
     <div className={styles.fondoAzulOscuro}>
+      <img src={logo} alt="Logo GameStore" className={styles.logoFijo} />
+      
       <div className={styles.loginBox}>
         <h2 className="mb-4">Ingresa <br /><strong>GameStore</strong></h2>
 

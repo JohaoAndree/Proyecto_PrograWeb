@@ -29,7 +29,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/juegos" element={<Req9 />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/carrito" element={<Carrito />} />
-          <Route path="/usuario" element={<Usuario />} />
+          <Route path="/usuario" element={<Req1 />} />
+
         </Route>
 
         {/* Estas rutas son independientes y no tendrán header */}

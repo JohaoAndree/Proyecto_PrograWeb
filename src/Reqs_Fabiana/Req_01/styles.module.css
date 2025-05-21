@@ -26,3 +26,13 @@
   .linkOlvido {
     font-size: 0.8rem;
   }
+
+  .logoFijo {
+    position: fixed;   /* se mantiene en pantalla aunque haya scroll */
+    top: 10px;         /* separación desde arriba */
+    left: 10px;        /* separación desde la izquierda */
+    width: 100px;      /* tamaño ajustable */
+    height: auto;
+    z-index: 1000;     /* para que quede encima de todo */
+  }
+  
