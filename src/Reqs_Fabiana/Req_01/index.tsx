@@ -34,9 +34,11 @@ const Login = () => {
         </div>
 
         {/* Botón debajo del loginBox */}
-        <button className="btn btn-primary mt-4">
-          Ir a la vista administrador
-        </button>
+        <Link to="/req22">
+          <button className="btn btn-primary mt-4">
+            Ir a la vista administrador
+          </button>
+        </Link>
       </div>
     </div>
   );

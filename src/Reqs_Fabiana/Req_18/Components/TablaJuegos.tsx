@@ -33,12 +33,12 @@ const TablaJuegos = () => {
       <table className="table table-bordered">
         <thead className="table-light">
           <tr>
-            <th>Date</th>
-            <th>Category</th>
-            <th>Name</th>
-            <th>Base price</th>
-            <th>Discount</th>
-            <th>Actions</th>
+            <th>Fecha</th>
+            <th>Categoría</th>
+            <th>Nombre</th>
+            <th>Precio base</th>
+            <th>Descuento</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>

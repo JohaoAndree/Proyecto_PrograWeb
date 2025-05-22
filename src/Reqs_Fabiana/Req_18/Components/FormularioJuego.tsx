@@ -43,7 +43,7 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
 
       <div className="row mb-3">
         <div className="col">
-          <label>Name</label>
+          <label>Nombre</label>
           <input
             className="form-control"
             name="nombre"
@@ -52,7 +52,7 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
           />
         </div>
         <div className="col">
-          <label>Description</label>
+          <label>Descripción</label>
           <textarea
             className="form-control"
             name="descripcion"
@@ -64,14 +64,14 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
 
       <div className="row mb-3">
         <div className="col">
-          <label>Category</label>
+          <label>Categoría</label>
           <select
             className="form-control"
             name="categoria"
             value={formData.categoria}
             onChange={handleChange}
           >
-            <option value="">Select</option>
+            <option value="">Seleccionar</option>
             <option value="Horror">Horror</option>
             <option value="Open world">Open world</option>
             <option value="Hack & Slash">Hack & Slash</option>
@@ -79,7 +79,7 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
         </div>
 
         <div className="col-12 mt-3">
-          <label>Photo (Upload)</label>
+          <label>Foto(subir)</label>
           <input
             type="file"
             accept="image/*"
@@ -100,7 +100,7 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
 
       <div className="row mb-3">
         <div className="col">
-          <label>Price</label>
+          <label>Precio</label>
           <input
             type="number"
             className="form-control"
@@ -110,7 +110,7 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
           />
         </div>
         <div className="col">
-          <label>Discount</label>
+          <label>Descuento</label>
           <input
             className="form-control"
             name="descuento"
