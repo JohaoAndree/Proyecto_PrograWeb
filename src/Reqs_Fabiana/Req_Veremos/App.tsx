@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Header from "./Componentes/Header";
-import Inicio from "./Paginas/Inicio";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Juegos from "../Req_9/Req9"; // O "./Paginas/Juegos" si lo renombraste
-import Noticias from "./Paginas/Noticias";
+import Header from "./Componentes/Header";
 import Carrito from "./Paginas/Carrito";
+import Inicio from "./Paginas/Inicio";
+import Noticias from "./Paginas/Noticias";
 import Usuario from "./Paginas/Usuario";
 
 function App() {
@@ -16,6 +16,7 @@ function App() {
           <Route path="/juegos" element={<Juegos />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/carrito" element={<Carrito />} />
+
           <Route path="/usuario" element={<Usuario />} />
         </Routes>
       </div>

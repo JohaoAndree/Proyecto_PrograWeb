@@ -1,5 +1,5 @@
-import React from "react"
-import type {Juego} from "../dataJuegos"
+//import React from "react"
+import type { Juego } from "../dataJuegos"
 
 function CardJuego(props: {juego: Juego, select: (id:number)=>void}){
     const juego = props.juego

@@ -1,0 +1,23 @@
+body {
+  background: radial-gradient(circle at top, #0f2027, #203a43, #2c5364);
+  color: #ffffff;
+  font-family: 'Orbitron', sans-serif; /* Puedes instalar Orbitron con Google Fonts */
+}
+
+.futuristic-title {
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #00ffc3;
+  text-shadow: 0 0 10px #00ffc3, 0 0 20px #00ffc3;
+}
+
+.futuristic-card {
+  border: 1px solid #00ffc3;
+  background: linear-gradient(to bottom right, #1a1a1a, #292929);
+  transition: transform 0.3s ease;
+}
+
+.futuristic-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px #00ffc3;
+}

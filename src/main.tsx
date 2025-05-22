@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Necesario para que el carrusel funcione
 
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -15,9 +16,12 @@ import Req17 from './Reqs_Fabiana/Req_17';
 import Req18 from './Reqs_Fabiana/Req_18';
 import Req9 from './Reqs_Fabiana/Req_9/Req9';
 
+
+
+import Req10 from './Reqs_Fabiana/Req_10_11/Carrito'; // ← Asegúrate de que el path es correcto
 import Noticias from './Reqs_Fabiana/Req_Veremos/Paginas/Noticias';
-import Carrito from './Reqs_Fabiana/Req_Veremos/Paginas/Carrito';
-import Usuario from './Reqs_Fabiana/Req_Veremos/Paginas/Usuario';
+
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -28,7 +32,9 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<PaginaPrincipal />} />
           <Route path="/juegos" element={<Req9 />} />
           <Route path="/noticias" element={<Noticias />} />
-          <Route path="/carrito" element={<Carrito />} />
+         <Route path="/carrito" element={<Req10 />} />
+
+
           <Route path="/usuario" element={<Req1 />} />
 
         </Route>

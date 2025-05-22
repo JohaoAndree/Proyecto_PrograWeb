@@ -14,17 +14,17 @@ export const listaJuegos: Juego[] = [
         id: 1, 
         titulo: "Minecraft",
         cover: "https://i.pinimg.com/736x/00/a8/e4/00a8e4a3edf9937c186dbecd009fd48d.jpg",
-        desc: "Juego de bloques, te va a agarrar herobrine veras",
+        desc: "Juego de bloques",
         urlTrailer: "ttps://www.youtube.com/embed/MmB9b5njVbA?si=yBnre528seQFvHKY",
         capturas: [
-            "https://static.wikia.nocookie.net/minecraft_gamepedia/images/3/3f/Beta.png/revision/latest?cb=20191215152001",
+            "https://images.surferseo.art/aad6eeed-7807-47e3-a09f-3b294fd2d3d5.png",
             "https://bigtechquestion.com/wp-content/uploads/2018/08/2017-02-08_11.03.51-990x524.png",
             "https://cdn.pixabay.com/photo/2017/05/20/23/22/minecraft-2330079_1280.jpg"
         ],
         estrellas: 4,
         resenas: [
             "Me hizo crecer pelos en el pecho!",
-            "Lo compre por error y ahora estoy endeudado con el banco gaaaa",
+            "Lo compre por error y ahora estoy endeudado con el banco",
             "Bloquecito :3"
         ]
     },
@@ -60,7 +60,7 @@ export const listaJuegos: Juego[] = [
         estrellas: 4,
         resenas: [
             "Es el mismo del año pasado!",
-            "El mejor de la franquisia",
+            "El mejor de la franquicia",
             "Yo queria PES :("
         ]
     }
