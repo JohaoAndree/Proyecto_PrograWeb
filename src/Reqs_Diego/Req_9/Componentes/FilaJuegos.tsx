@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 import { Juego } from "../dataJuegos";
 import CardJuego from "./CardJuego";
 

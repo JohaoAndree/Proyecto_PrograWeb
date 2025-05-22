@@ -1,4 +1,4 @@
-import React from "react";
+//import React from "react";
 import { Juego } from "../dataJuegos";
 
 function DetalleJuego(props:{juego: Juego, onComprar: (juego: Juego)=> void}){

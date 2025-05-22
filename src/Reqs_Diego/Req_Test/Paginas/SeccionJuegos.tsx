@@ -1,10 +1,9 @@
-import { /*use,*/ useState } from "react";
-import { listaJuegos } from "./dataJuegos";
-import type {Juego} from "./dataJuegos"
-import FilaJuegos from "./Componentes/FilaJuegos";
-import DetalleJuego from "./Componentes/DetalleJuego";
+import { useState } from "react";
+import { listaJuegos, Juego } from "../../Req_9/dataJuegos";
+import FilaJuegos from "../../Req_9/Componentes/FilaJuegos";
+import DetalleJuego from "../../Req_9/Componentes/DetalleJuego";
 
-function Req9() {
+function SeccionJuegos() {
     const [juegoSeleccionado, setJuegoSeleccionado] = useState<Juego | null>(null)
     const [carrito, setCarrito] = useState<Juego[]>([])
 
@@ -22,11 +21,11 @@ function Req9() {
             setCarrito([...carrito,juego])
         }
     }
-    
+
     return (
         <div className="container mt-4">
             <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2>Lista de Juegos</h2>
+                <h2>Nuestros juegos destacados!</h2>
                 {carrito.length > 0 && (
                     <div className="text-end">
                         <span style={{ fontSize: "1.8rem" }}>🛒</span>
@@ -52,4 +51,4 @@ function Req9() {
     )
 }
 
-export default Req9
+export default SeccionJuegos
