@@ -1,13 +1,17 @@
-/* styles.module.css */
-
 .fondoAzulOscuro {
-    background-color:navy; /* azul oscuro */
-    height: 100vh;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+ 
+  min-height: 100%;
+  width: 100%;
+  padding: 2rem 0;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+
+
   
   .loginBox {
     background-color: #0d6efd; /* azul bootstrap */
@@ -26,13 +30,3 @@
   .linkOlvido {
     font-size: 0.8rem;
   }
-
-  .logoFijo {
-    position: fixed;   /* se mantiene en pantalla aunque haya scroll */
-    top: 10px;         /* separación desde arriba */
-    left: 10px;        /* separación desde la izquierda */
-    width: 100px;      /* tamaño ajustable */
-    height: auto;
-    z-index: 1000;     /* para que quede encima de todo */
-  }
-  
