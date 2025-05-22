@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Necesario para que el carrusel funcione
 
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -12,7 +13,9 @@ import LayoutConHeader from './Reqs_Fabiana/Req_Veremos/Componentes/LayoutConHea
 import PaginaPrincipal from './Reqs_Fabiana/Req_Veremos/PaginaPrincipal';
 
 // Requerimientos de Fabiana
+import Req2 from "./Reqs_Diego/Req_2/index"; // Ajusta la ruta si es diferente
 import Req1 from './Reqs_Fabiana/Req_01';
+
 import Req10 from './Reqs_Fabiana/Req_10_11/Carrito'; // Carrito de compras
 import Req11 from './Reqs_Fabiana/Req_11';
 import Req17 from './Reqs_Fabiana/Req_17';
@@ -36,6 +39,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/carrito" element={<Req10 />} />
           <Route path="/usuario" element={<Req1 />} />
+          <Route path="/registro" element={<Req2 />} />
 
           {/* Secciones de juegos */}
           <Route path="/juegos" element={<Req7 />} /> {/* Vista general o más vendidos */}

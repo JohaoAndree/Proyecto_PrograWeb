@@ -1,0 +1,47 @@
+.fondoAzulOsc{
+    background-color: white;
+    height: 100vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cajaRegist {
+    background-color: black;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 400px;
+    color: white;
+}
+
+.cajaRegist label {
+    text-align: left;
+    display: block;
+}
+
+#button_regis:hover {
+    background-color: #3e72fe;
+}
+
+#mensajes {
+    font-weight: bold;
+}
+
+.cajaRegist h2,
+.cajaRegist p {
+  color: white !important;
+}
+
+/* styles.module.css */
+.botonRojo {
+  background-color: red !important;
+  color: white !important;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.botonRojo:hover {
+  background-color: darkred !important;
+}
+

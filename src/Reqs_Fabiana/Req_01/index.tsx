@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Link } from "react-router-dom"; // ✅ IMPORTANTE
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -24,7 +25,12 @@ const Login = () => {
 
           <button className="btn btn-danger w-100 mb-3">Ingresa</button>
 
-          <p>¿Eres nuevo en GameStore? <a href="#" className="text-white fw-bold text-decoration-underline">Crea una cuenta</a></p>
+          <p>
+            ¿Eres nuevo en GameStore?{" "}
+            <Link to="/registro" className="text-white fw-bold text-decoration-underline">
+              Crea una cuenta
+            </Link>
+          </p>
         </div>
 
         {/* Botón debajo del loginBox */}
