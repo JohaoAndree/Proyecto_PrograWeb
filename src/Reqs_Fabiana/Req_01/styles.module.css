@@ -1,69 +1,26 @@
 .fondoAzulOscuro {
-  min-height: calc(100vh - 80px); /* Resta el alto del header */
-  width: 100%;
-  padding: 2rem 0;
-  background: white;
+  background-color: white;
+  height: 100vh;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
 }
-
 
 .loginBox {
   background-color: black;
-  padding: 2.5rem;
-  border-radius: 1.5rem;
-  width: 100%;
-  max-width: 380px;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 320px;
   text-align: center;
   color: white;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
-  animation: fadeIn 1s ease;
 }
 
 .loginBox label {
   text-align: left;
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
 }
 
 .linkOlvido {
   font-size: 0.8rem;
-  color: #ccc;
-}
-
-.loginBox input {
-  border-radius: 0.5rem;
-  border: none;
-  padding: 0.75rem;
-  font-size: 1rem;
-  background-color: #1e1e2f;
-  color: white;
-}
-
-.loginBox input:focus {
-  outline: none;
-  box-shadow: 0 0 5px #ff4d4d;
-  background-color: #2a2a40;
-}
-
-.loginBox button {
-  background-color: #dc3545;
-  border: none;
-  padding: 0.75rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.3s ease;
-}
-
-.loginBox button:hover {
-  background-color: #ff4d4d;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
