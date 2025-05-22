@@ -1,8 +1,9 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaPlus } from "react-icons/fa";
 import Modal from "./EditarModal";
-import Eliminar from "./Eliminar"; // ✅ Importar componente Eliminar
+import Eliminar from "./Eliminar";
+import Agregar from "./Agregar"; // ✅ Importa componente
 
 export interface Noticia {
   id: number;
@@ -18,6 +19,7 @@ interface PropsListaNoticias {
 const ListaNoticias = ({ data }: PropsListaNoticias) => {
   const [noticias, setNoticias] = useState(data);
   const [noticiaEditando, setNoticiaEditando] = useState<Noticia | null>(null);
+  const [modalAgregar, setModalAgregar] = useState(false); // ✅ estado para abrir el modal agregar
 
   const handleEditar = (noticia: Noticia) => {
     setNoticiaEditando(noticia);
@@ -34,8 +36,21 @@ const ListaNoticias = ({ data }: PropsListaNoticias) => {
     setNoticias(noticias.filter((n) => n.id !== id));
   };
 
+  const agregarNoticia = (nueva: Noticia) => {
+    setNoticias((prev) => [...prev, nueva]);
+    setModalAgregar(false);
+  };
+
   return (
     <div className="container text-center mt-4">
+      <div className="mb-3 d-flex justify-content-end">
+        <button
+          className="btn btn-primary"
+          onClick={() => setModalAgregar(true)}
+        >
+          <FaPlus className="me-2" /> Agregar Noticia
+        </button>
+      </div>
       <ul className="list-group d-flex flex-column">
         <li className={`list-group-item ${styles.Encabezado}`}>
           <div className="row align-items-center">
@@ -80,8 +95,16 @@ const ListaNoticias = ({ data }: PropsListaNoticias) => {
           onClose={() => setNoticiaEditando(null)}
         />
       )}
+
+      {modalAgregar && (
+        <Agregar
+          onSave={agregarNoticia}
+          onClose={() => setModalAgregar(false)}
+        />
+      )}
     </div>
   );
 };
 
 export default ListaNoticias;
+
