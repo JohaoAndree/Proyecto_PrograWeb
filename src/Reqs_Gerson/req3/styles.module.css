@@ -1,0 +1,29 @@
+.fondoAzulOsc{
+    background-color: navy;
+    height: 100vh;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cajaRegist {
+    background-color: #0d6efd;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 400px;
+    color: white;
+}
+
+.cajaRegist label {
+    text-align: left;
+    display: block;
+}
+
+#button_regis:hover {
+    background-color: #3e72fe;
+}
+
+#mensajes {
+    font-weight: bold;
+}

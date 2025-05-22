@@ -1,60 +1,87 @@
-import styles from "./styles.module.css"
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { useState } from "react";
+import styles from "./styles.module.css";
+import { FaEdit } from "react-icons/fa";
+import Modal from "./EditarModal";
+import Eliminar from "./Eliminar"; // ✅ Importar componente Eliminar
 
-export interface Noticia{
-    id : number
-    foto : string
-    nombre : string
-    descripcion : string
+export interface Noticia {
+  id: number;
+  foto: string;
+  nombre: string;
+  descripcion: string;
 }
 
-interface PropsListaNoticias{
-    data : Noticia[]
+interface PropsListaNoticias {
+  data: Noticia[];
 }
 
-const ListaNoticias = (props: PropsListaNoticias) => {
-    return (
-        <div className="container text-center mt-4">
-            <ul className="list-group d-flex flex-column">
-                <li className={"list-group-item " + styles.Encabezado}>
-                    <div className="row align-items-center">
-                        <div className="col-1">ID</div>
-                        <div className="col-3">Foto</div>
-                        <div className="col-3">Nombre</div>
-                        <div className="col-3">Descripcion</div>
-                        <div className="col-2">Acciones</div>
-                    </div>
-                </li>
-                {props.data.map((elemento: Noticia) => {
-                    return (
-                        <li className={"list-group-item " + styles.ItemLista}>
-                            <div className="row align-items-center">
-                                <div className="col-1">{elemento.id}</div>
-                                <div className="col-3">
-                                    <img
-                                        src={elemento.foto}
-                                        alt={`avatar${elemento.nombre}`}
-                                        className="rounded-circle"
-                                        style={{ width: 56, height: 56, objectFit: "cover" }}
-                                    />
-                                </div>
-                                <div className="col-3">{elemento.nombre}</div>
-                                <div className="col-3">{elemento.descripcion}</div>
-                                <div className="col-2 d-flex justify-content-around">
-                                    <button className="btn btn-sm btn-outline-primary">
-                                        <FaEdit />
-                                    </button>
-                                    <button className="btn btn-sm btn-outline-danger">
-                                        <FaTrash />
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    );
-                })}
-            </ul>
-        </div>
+const ListaNoticias = ({ data }: PropsListaNoticias) => {
+  const [noticias, setNoticias] = useState(data);
+  const [noticiaEditando, setNoticiaEditando] = useState<Noticia | null>(null);
+
+  const handleEditar = (noticia: Noticia) => {
+    setNoticiaEditando(noticia);
+  };
+
+  const guardarCambios = (nueva: Noticia) => {
+    setNoticias((prev) =>
+      prev.map((n) => (n.id === nueva.id ? nueva : n))
     );
+    setNoticiaEditando(null);
+  };
+
+  const eliminarNoticia = (id: number) => {
+    setNoticias(noticias.filter((n) => n.id !== id));
+  };
+
+  return (
+    <div className="container text-center mt-4">
+      <ul className="list-group d-flex flex-column">
+        <li className={`list-group-item ${styles.Encabezado}`}>
+          <div className="row align-items-center">
+            <div className="col-1">ID</div>
+            <div className="col-2">Foto</div>
+            <div className="col-3">Nombre</div>
+            <div className="col-4">Descripcion</div>
+            <div className="col-2">Acciones</div>
+          </div>
+        </li>
+        {noticias.map((noticia) => (
+          <li className="list-group-item" key={noticia.id}>
+            <div className="row align-items-center">
+              <div className="col-1">{noticia.id}</div>
+              <div className="col-2">
+                <img
+                  src={noticia.foto}
+                  alt="foto"
+                  style={{ width: 60, height: 60, borderRadius: "50%" }}
+                />
+              </div>
+              <div className="col-3">{noticia.nombre}</div>
+              <div className="col-4">{noticia.descripcion}</div>
+              <div className="col-2">
+                <button
+                  className="btn btn-outline-primary btn-sm me-2"
+                  onClick={() => handleEditar(noticia)}
+                >
+                  <FaEdit />
+                </button>
+                <Eliminar id={noticia.id} onDelete={eliminarNoticia} />
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      {noticiaEditando && (
+        <Modal
+          noticia={noticiaEditando}
+          onSave={guardarCambios}
+          onClose={() => setNoticiaEditando(null)}
+        />
+      )}
+    </div>
+  );
 };
 
-export default ListaNoticias
+export default ListaNoticias;
