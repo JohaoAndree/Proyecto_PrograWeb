@@ -31,30 +31,19 @@
   color: white !important;
   border: none !important;
   margin-bottom: 0;
-  
-}
-
-interface Juego {
-  titulo: string;
-  imagen: string;
-}
-
-interface Props {
-  juegos: Juego[];
 }
 
 .titulo-juego {
   color: white;
   font-weight: 800;
   font-size: 1.2rem;
-
   margin-bottom: 0.5rem;
 }
 
 .lista-juegos {
-  margin-top: 2rem; 
+  margin-top: 2rem;
 }
 
 .juego-item:first-child {
-  padding-top: 1rem; 
+  padding-top: 1rem;
 }

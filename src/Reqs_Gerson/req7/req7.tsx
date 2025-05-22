@@ -2,20 +2,19 @@
 
 // src/Reqs_Gerson/req7/req7.tsx
 
-import Header from "../req_veremos/Componentes/Header";
-import CarruselSimple from "./componentes/CarruselSimple";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CarruselSimple from "./componentes/CarruselSimple";
 import "./componentes/Global.css";
 
-import v from "./imagenes/v.jpg";
-import resident from "./imagenes/resident.jpg";
 import cod from "./imagenes/cod.jpg";
-import f from "./imagenes/f.jpg";
 import diablo from "./imagenes/diablo.jpg";
-import gta from "./imagenes/gta.jpg";
 import e from "./imagenes/e.jpg";
-import m from "./imagenes/m.jpg";
+import f from "./imagenes/f.jpg";
 import god from "./imagenes/god.jpg";
+import gta from "./imagenes/gta.jpg";
+import m from "./imagenes/m.jpg";
+import resident from "./imagenes/resident.jpg";
+import v from "./imagenes/v.jpg";
 
 
 
@@ -83,7 +82,7 @@ const juegosMasVendidos = [
 const Req7 = () => {
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
-      <Header />
+      
       <h2
         style={{
           color: "#1e1e2f",

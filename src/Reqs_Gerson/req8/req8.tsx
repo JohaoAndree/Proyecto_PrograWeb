@@ -1,10 +1,11 @@
 // src/Reqs_Gerson/req7.tsx
 
 // src/Reqs_Gerson/req7/req7.tsx
-
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "../../Reqs_Fabiana/Req_Veremos/Componentes/Header";
+import CarruselSimple from "./componentes_req8/CarruselSimple";
+
 import "./componentes_req8/Global.css";
+;
 
 import ci from "./imagenes/ci.jpg";
 import doom from "./imagenes/doom.jpg";
@@ -100,7 +101,7 @@ Con un sistema de combate más refinado, exploración expandida y una narrativa 
 const Req8 = () => {
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
-      <Header />
+     
       <h2
         style={{
           color: "#1e1e2f",
@@ -111,12 +112,9 @@ const Req8 = () => {
       >
         🎮 Juegos Más Populares 🎯
       </h2>
-      
-      
+      <CarruselSimple juegos={juegosMasVendidos} />
     </div>
   );
 };
-
-
 
 export default Req8;

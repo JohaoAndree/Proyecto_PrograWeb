@@ -24,3 +24,9 @@
 .linkOlvido {
   font-size: 0.8rem;
 }
+
+.loginBox h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: white; /* Cambiado de celeste a blanco */
+}
