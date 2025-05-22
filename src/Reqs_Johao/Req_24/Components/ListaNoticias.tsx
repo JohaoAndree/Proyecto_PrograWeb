@@ -1,5 +1,5 @@
 import styles from "./styles.module.css"
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 
 export interface Noticia{
     id : number
@@ -15,6 +15,11 @@ interface PropsListaNoticias{
 const ListaNoticias = (props: PropsListaNoticias) => {
     return (
         <div className="container text-center mt-4">
+            <div className="mb-3 d-flex justify-content-end">
+                <button className="btn btn-primary">
+                    <FaPlus className="me-2" /> Agregar Noticia
+                </button>
+            </div>
             <ul className="list-group d-flex flex-column">
                 <li className={"list-group-item " + styles.Encabezado}>
                     <div className="row align-items-center">

@@ -7,7 +7,7 @@ const BarraLateral = () => {
     const rutaAvatar = Avatar
     const alt = "avatar"
     const nombre = "Johao Andreé"
-    const tamaño = 160
+    const tamaño = 180
 
     return (
         <div className={"d-flex flex-column p-3 " + styles.BarraLateral}>

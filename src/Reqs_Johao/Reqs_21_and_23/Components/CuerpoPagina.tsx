@@ -13,7 +13,7 @@ const CuerpoPagina = () => {
     const tituloY = "Ganancias ($)"
 
     return (
-        <div className={styles.CuerpoPagina}>
+        <div className={"flex-grow-1 " + styles.CuerpoPagina}>
             <Titulo texto={titulo}/>
             <CuadroConteoUsuarios numero={contador}/>
             <Grafico

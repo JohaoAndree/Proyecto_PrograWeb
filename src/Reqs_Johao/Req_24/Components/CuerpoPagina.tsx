@@ -29,7 +29,7 @@ const CuerpoPagina = () => {
     ]
 
     return (
-        <div className={styles.CuerpoPagina}>
+        <div className={"flex-grow-1 " + styles.CuerpoPagina}>
             <Titulo texto={titulo}/>
             <div className={styles.ContenedorListaNoticias}>
                 <ListaNoticias data={lista}/>

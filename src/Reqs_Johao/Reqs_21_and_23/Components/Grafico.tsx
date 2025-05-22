@@ -72,10 +72,14 @@ const Grafico = (props: PropsGrafico) => {
         plugins: {
             legend: {
                 position: 'top' as const,
+                labels: {
+                    color: "white"
+                },
             },
             title: {
                 display: true,
                 text: props.titulo,
+                color: "white"
             },
         },
         scales: {
@@ -84,13 +88,27 @@ const Grafico = (props: PropsGrafico) => {
                 title: {
                     display: true,
                     text: props.tituloY,
+                    color: "white"
                 },
+                ticks: {
+                    color: "white"
+                },
+                grid: {
+                    color: "rgba(255, 255, 255, 0.1)"
+                }
             },
             x: {
                 title: {
                     display: true,
                     text: props.tituloX,
+                    color: "white"
                 },
+                ticks: {
+                    color: "white"
+                },
+                grid: {
+                    color: "rgba(255, 255, 255, 0.1)"
+                }
             },
         },
     };

@@ -6,12 +6,14 @@
 
 .CuadroConteoUsuarios{
     border: 1px solid #ced4da;
-    padding: 15px;
+    padding: 5px;
     margin-left: 30px;
     width: fit-content;
     background-color: #ced4da;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-color: white;
 }
 
 .Numero{
@@ -20,8 +22,12 @@
 
 .Grafico{
     position: relative;
-    width: 100%;
+    width: 80%;
     min-height: auto;
-    max-height: 400px;
+    max-height: auto;
     margin: 0 auto;
+    border-color: whitesmoke;
+    border-width: 1px;
+    border-style: solid;
 }
+
