@@ -1,0 +1,32 @@
+.fondoAzulOscuro {
+  background-color: white;
+  height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginBox {
+  background-color: black;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 320px;
+  text-align: center;
+  color: white;
+}
+
+.loginBox label {
+  text-align: left;
+  display: block;
+}
+
+.linkOlvido {
+  font-size: 0.8rem;
+}
+
+.loginBox h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: white; /* Cambiado de celeste a blanco */
+}

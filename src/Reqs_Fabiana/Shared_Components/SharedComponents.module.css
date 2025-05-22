@@ -1,0 +1,53 @@
+.Titulo {
+    color: black;
+    font-size: 2em;
+    font-weight: bold;
+    padding-top: 30px;
+    padding-left: 30px;
+    margin-bottom: 20px;
+}
+
+.BarraLateral{
+    font-family: 'Roboto', sans-serif;
+    background-color: #1b1c1d;
+    color: white;
+    min-height: 100vh;
+    /* padding-top: 20px; */
+    /* display: flex;
+    flex-direction: column; */
+    /* justify-content: space-between; */
+}
+
+.PerfilUsuario{
+    padding: 10px;
+    /* padding-left: 30px; */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.ListaOpciones{
+    padding-top: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    /* display: flex;
+    flex-direction: column; */
+    flex-grow: 1;
+}
+
+.ListItem{
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    text-align: left;
+}
+
+.ListItem:hover{
+    background-color: rgba(17, 172, 12, 0.1);
+    cursor: pointer;
+}
+
+.ItemFinal{
+    padding-left: 30px;
+    margin-top: auto;
+}

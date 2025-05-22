@@ -1,0 +1,85 @@
+.carrusel-contenedor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.carrusel-contenido {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  justify-content: center;
+}
+
+.carrusel-lista {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px;
+  height: 500px;
+  position: relative;
+  width: 70%;
+}
+
+.carrusel-item {
+  position: absolute;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  text-align: center;
+}
+
+.carrusel-item img {
+  width: 260px;
+  height: 390px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.carrusel-item h4 {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+.carrusel-item p {
+  font-size: 14px;
+  color: #444;
+}
+
+.flecha {
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flecha:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.flecha svg {
+  width: 36px;
+  height: 36px;
+  stroke: white;
+}
+
+.descripcion-juego {
+  margin-top: 10px;
+  max-width: 800px;
+
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #333;
+  margin-left: auto;
+  margin-right: auto;
+}
+
