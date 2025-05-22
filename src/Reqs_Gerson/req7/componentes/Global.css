@@ -1,0 +1,63 @@
+.pagina {
+  background-color: #1b1f3b;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.titulo-gamestore {
+  color: white;
+  font-weight: bold;
+  font-size: 2.5rem;
+  padding: 1rem 2rem;
+  text-align: center;
+  border-radius: 0.5rem;
+}
+
+.custom-tabs .nav-link {
+  color: white !important;
+  font-weight: bold;
+  background-color: transparent !important;
+  border: none !important;
+  margin-bottom: 0;
+}
+
+.custom-tabs .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  margin-bottom: 0;
+}
+
+.custom-tabs .nav-link.active {
+  background-color: red !important;
+  color: white !important;
+  border: none !important;
+  margin-bottom: 0;
+  
+}
+
+interface Juego {
+  titulo: string;
+  imagen: string;
+}
+
+interface Props {
+  juegos: Juego[];
+}
+
+.titulo-juego {
+  color: white;
+  font-weight: 800;
+  font-size: 1.2rem;
+
+  margin-bottom: 0.5rem;
+}
+
+.lista-juegos {
+  margin-top: 2rem; 
+}
+
+.juego-item:first-child {
+  padding-top: 1rem; 
+}
+|
+
+

@@ -1,5 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Necesario para que el carrusel funcione
+import ListaJuegosReq10 from "./Reqs_Fabiana/Req_10_11/Carrito"; // Ajusta si el nombre varía
+
+<Routes>
+  {/* otras rutas */}
+  <Route path="/juegos/lista" element={<ListaJuegosReq10 />} /> {/* ✅ */}
+</Routes>
 
 
 import { StrictMode } from 'react';
@@ -32,11 +38,13 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<PaginaPrincipal />} />
           <Route path="/juegos" element={<Req9 />} />
           <Route path="/noticias" element={<Noticias />} />
-         <Route path="/carrito" element={<Req10 />} />
+         <Route path="/carrito" element={<Req10 />} />  
 
+        
+<Route path="/juegos/lista" element={<Req9 />} />
 
           <Route path="/usuario" element={<Req1 />} />
-
+      
         </Route>
 
         {/* Estas rutas son independientes y no tendrán header */}

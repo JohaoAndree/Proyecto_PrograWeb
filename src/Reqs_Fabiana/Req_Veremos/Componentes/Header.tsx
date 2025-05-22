@@ -1,30 +1,36 @@
-import { Link, NavLink } from "react-router-dom";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-function Header() {
+const Header = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <Link className="navbar-brand" to="/">GameZone</Link>
-      <div className="collapse navbar-collapse">
-        <ul className="navbar-nav ms-auto">
-          <li className="nav-item">
-            <NavLink to="/" className="nav-link">Inicio</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/juegos" className="nav-link">Juegos</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/noticias" className="nav-link">Noticias</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/carrito" className="nav-link">Carrito de compras</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to="/usuario" className="nav-link">Usuario</NavLink>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <Navbar bg="dark" variant="dark" expand="lg">
+      <Container>
+        <Navbar.Brand as={Link} to="/">GameZone</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+
+            <NavDropdown title="Juegos" id="juegos-dropdown">
+              <NavDropdown.Item as={Link} to="/juegos/mas-vendidos">
+                Juegos más vendidos
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/juegos/mas-populares">
+                Juegos más populares
+              </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/juegos/lista">
+                Lista de Juegos
+              </NavDropdown.Item> {/* ✅ AÑADIDO */}
+            </NavDropdown>
+
+            <Nav.Link as={Link} to="/req25">Noticias</Nav.Link>
+            <Nav.Link as={Link} to="/carrito">Carrito de compras</Nav.Link>
+            <Nav.Link as={Link} to="/usuario">Usuario</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
-}
+};
 
 export default Header;
