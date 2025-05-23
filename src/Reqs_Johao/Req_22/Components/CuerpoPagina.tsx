@@ -4,13 +4,19 @@ import ListaUsuarios, { type Usuario } from './ListaUsuarios'
 import AvatarZed from "../../Resources/avatarZed.jpg"
 import AvatarIrelia from "../../Resources/avatarIrelia.jpg"
 import AvatarAatrox from "../../Resources/avatarAatrox.jpg"
+import AvatarSage from "../../Resources/avatarSage.jpg"
+import AvatarRaze from "../../Resources/avatarRaze.jpg"
+import AvatarReyna from "../../Resources/avatarReyna.jpg"
 
 const CuerpoPagina = () => {
     const titulo = "Usuarios"
     const lista : Usuario[] = [
         {id : 1, foto : AvatarZed, nickname : "El maestro de las sombras", nombre : "Zed"},
         {id : 2, foto : AvatarIrelia, nickname : "La danza de las cuchillas", nombre : "Irelia"},
-        {id : 3, foto : AvatarAatrox, nickname : "La espada de los oscuros", nombre : "Aatrox"}
+        {id : 3, foto : AvatarAatrox, nickname : "La espada de los oscuros", nombre : "Aatrox"},
+        {id : 4, foto : AvatarSage, nickname : "La curadora", nombre : "Sage"},
+        {id : 5, foto : AvatarRaze, nickname : "La bailarina de Bahia", nombre : "Raze"},
+        {id : 6, foto : AvatarReyna, nickname : "La emperatriz de la venganza", nombre : "Reyna"},
     ]
 
     return (

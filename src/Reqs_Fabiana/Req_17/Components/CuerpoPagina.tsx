@@ -1,4 +1,4 @@
-import Titulo from '../../Shared_Components/Titulo'
+import Titulo from '../../../Reqs_Johao/Shared_Components/Titulo'
 import styles from '../styles.module.css'
 import TablaJuegos from './TablaJuegos'
 

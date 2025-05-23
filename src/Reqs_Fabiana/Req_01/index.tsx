@@ -1,12 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Link } from "react-router-dom"; // ✅ IMPORTANTE
+import { Link } from "react-router-dom";
 import styles from './styles.module.css';
 
 const Login = () => {
   return (
     <div className={styles.fondoAzulOscuro}>
       <div className="text-center">
-        {/* Cuadro de login centrado */}
         <div className={styles.loginBox}>
           <h2 className="mb-4">
             Ingresa <br /><strong>GameStore</strong>
@@ -33,7 +32,6 @@ const Login = () => {
           </p>
         </div>
 
-        {/* Botón debajo del loginBox */}
         <Link to="/req22">
           <button className="btn btn-primary mt-4">
             Ir a la vista administrador

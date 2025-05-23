@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Juegos from "../Req_9/Req9"; // O "./Paginas/Juegos" si lo renombraste
+import Juegos from "../Req_9/Req9";
 import Header from "./Componentes/Header";
 import Carrito from "./Paginas/Carrito";
 import Inicio from "./Paginas/Inicio";
@@ -17,7 +17,6 @@ function App() {
           <Route path="/juegos" element={<Juegos />} />
           <Route path="/noticias" element={<Noticias />} />
           <Route path="/carrito" element={<Carrito />} />
-
           <Route path="/usuario" element={<Usuario />} />
         </Routes>
       </div>

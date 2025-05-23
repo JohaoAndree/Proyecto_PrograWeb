@@ -1,11 +1,4 @@
-// Archivo: src/Reqs_Gerson/req25/componentes25/Editar.tsx
-
-// EditarModal.tsx
-// src/Reqs_Gerson/req25/componentes25/EditarModal.tsx
-
 import { useState, useEffect } from "react";
-
-
 import type { Noticia } from "./ListaNoticias";
 import styles from "./styles.module.css";
 

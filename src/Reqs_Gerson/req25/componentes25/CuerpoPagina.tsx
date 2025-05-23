@@ -1,15 +1,9 @@
-import styles from "./styles.module.css"; // ✅ Correcto
-import Titulo from "../../Shared_components/Titulo";
+import styles from "./styles.module.css";
+import Titulo from "../../../Reqs_Johao/Shared_Components/Titulo";
 import ListaNoticias, { type Noticia } from "./ListaNoticias";
-
-
-// 🔁 Corrige estas rutas según la ubicación real:
 import Noticia1 from "../imagenes/noticia1.jpg";
 import Noticia2 from "../imagenes/noticia2.jpg";
 import Noticia3 from "../imagenes/noticia3.jpg";
-
-// ... (resto del código como ya lo tienes)
-
 
 const CuerpoPagina = () => {
   const titulo = "Noticias";

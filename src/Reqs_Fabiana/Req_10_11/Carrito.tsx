@@ -3,7 +3,7 @@ import type { Juego } from "../Req_9/dataJuegos";
 import { listaJuegos } from "../Req_9/dataJuegos";
 
 function Carrito() {
-  const [carrito] = useState<Juego[]>(listaJuegos); // ← Siempre usa los 3 juegos base
+  const [carrito] = useState<Juego[]>(listaJuegos);
   const [juegoAEliminar, setJuegoAEliminar] = useState<Juego | null>(null);
 
   return (
@@ -35,7 +35,6 @@ function Carrito() {
         ))}
       </div>
 
-      {/* Botón Finalizar Compra */}
       {carrito.length > 0 && (
         <div className="text-center mt-4">
           <button className="btn btn-success btn-lg w-100" style={{ maxWidth: "500px" }}>
@@ -44,7 +43,6 @@ function Carrito() {
         </div>
       )}
 
-      {/* Mini interfaz de confirmación, solo visual */}
       {juegoAEliminar && (
         <div
           className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
@@ -63,7 +61,7 @@ function Carrito() {
               </button>
               <button
                 className="btn btn-danger"
-                onClick={() => setJuegoAEliminar(null)} // No elimina realmente
+                onClick={() => setJuegoAEliminar(null)}
               >
                 Sí, eliminar
               </button>

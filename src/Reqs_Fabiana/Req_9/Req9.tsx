@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ← Agregado
+import { useNavigate } from "react-router-dom";
 import DetalleJuego from "./Componentes/DetalleJuego";
 import FilaJuegos from "./Componentes/FilaJuegos";
 import type { Juego } from "./dataJuegos";
@@ -8,7 +8,7 @@ import { listaJuegos } from "./dataJuegos";
 function Req9() {
     const [juegoSeleccionado, setJuegoSeleccionado] = useState<Juego | null>(null)
     const [carrito, setCarrito] = useState<Juego[]>([])
-    const navigate = useNavigate(); // ← Inicialización
+    const navigate = useNavigate();
 
     function manejarSeleccion(juego: Juego) {
         if (juegoSeleccionado && juegoSeleccionado.id === juego.id) {
@@ -26,7 +26,7 @@ function Req9() {
     }
 
     function irAlCarrito() {
-        navigate("/carrito") // ← Redirige a la ruta del carrito
+        navigate("/carrito")
     }
 
     return (

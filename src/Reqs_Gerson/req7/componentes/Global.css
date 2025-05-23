@@ -1,11 +1,9 @@
-/* Fondo blanco general */
 .pagina-blanca {
   background-color: white;
   min-height: 100vh;
   padding: 2rem;
 }
 
-/* Título principal */
 h2 {
   color: #212529;
   text-align: center;
@@ -14,7 +12,6 @@ h2 {
   margin-bottom: 2rem;
 }
 
-/* Lista de juegos */
 .lista-juegos {
   display: flex;
   flex-wrap: wrap;
@@ -33,7 +30,6 @@ h2 {
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Barra de navegación */
 .navbar {
   background-color: #1e1e2f !important;
 }
@@ -44,7 +40,6 @@ h2 {
   font-family: 'Orbitron', sans-serif;
 }
 
-/* Dropdown personalizado */
 .dropdown-menu {
   background-color: #1e1e2f;
 }
@@ -57,7 +52,6 @@ h2 {
   background-color: #343a40;
 }
 
-/* Estilo responsivo básico */
 @media (max-width: 768px) {
   .lista-juegos {
     flex-direction: column;

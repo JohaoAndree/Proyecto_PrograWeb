@@ -1,7 +1,4 @@
-// ✅ src/Reqs_Gerson/req25/componentes25/Agregar.tsx
 import React, { useState } from "react";
-
-
 import type { Noticia } from "./ListaNoticias";
 import styles from "./styles.module.css";
 

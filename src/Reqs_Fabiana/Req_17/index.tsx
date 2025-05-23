@@ -1,4 +1,4 @@
-import BarraLateral from "../../Reqs_Fabiana/Shared_Components/BarraLateral";
+import BarraLateral from "../../Reqs_Johao/Shared_Components/BarraLateral";
 import CuerpoPagina from './Components/CuerpoPagina';
 
 const Req17 = () => {

@@ -1,4 +1,3 @@
-//import React from "react";
 import type { Juego } from "../dataJuegos";
 import CardJuego from "./CardJuego";
 

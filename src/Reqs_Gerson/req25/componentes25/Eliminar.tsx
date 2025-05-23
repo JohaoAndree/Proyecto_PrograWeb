@@ -1,5 +1,3 @@
-// src/Reqs_Gerson/req25/componentes25/Eliminar.tsx
-
 import React from "react";
 import { FaTrash } from "react-icons/fa";
 

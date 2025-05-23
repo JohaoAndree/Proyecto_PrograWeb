@@ -19,7 +19,7 @@ interface PropsListaNoticias {
 const ListaNoticias = ({ data }: PropsListaNoticias) => {
   const [noticias, setNoticias] = useState(data);
   const [noticiaEditando, setNoticiaEditando] = useState<Noticia | null>(null);
-  const [modalAgregar, setModalAgregar] = useState(false); // ✅ estado para abrir el modal agregar
+  const [modalAgregar, setModalAgregar] = useState(false);
 
   const handleEditar = (noticia: Noticia) => {
     setNoticiaEditando(noticia);

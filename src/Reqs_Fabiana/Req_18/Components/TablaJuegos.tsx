@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import FormularioJuego from '../Components/FormularioJuego'
 
-// ✅ Tipo de objeto Juego
 type Juego = {
   fecha: string
   categoria: string
@@ -11,7 +10,6 @@ type Juego = {
   descuento: string
 }
 
-// ✅ Lista base de juegos
 const juegosBase: Juego[] = [
   { fecha: "12/12/24", categoria: "Hack & Slash", nombre: "Devil May Cry 5", precio: 90, descuento: "75%" },
   { fecha: "25/03/23", categoria: "Open world", nombre: "Red Dead Redemption 2", precio: 54.97, descuento: "75%" },
@@ -62,7 +60,6 @@ const TablaJuegos = () => {
         </tbody>
       </table>
 
-      {/* MODAL CENTRADO: Agregar o Editar */}
       {(mostrarAgregar || juegoEditando) && (
         <div
           className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
@@ -86,7 +83,6 @@ const TablaJuegos = () => {
         </div>
       )}
 
-      {/* MODAL CENTRADO: Confirmación de eliminación */}
       {juegoEliminando && (
         <div
           className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"

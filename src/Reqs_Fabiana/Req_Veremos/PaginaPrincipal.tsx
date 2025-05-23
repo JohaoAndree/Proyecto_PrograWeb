@@ -7,7 +7,6 @@ import minecraft from '../Req_Veremos/Imagenes_Prueba_Carrusel/minecraft.png';
 function PaginaPrincipal() {
   return (
     <div className="container mt-4">
-      {/* Carrusel */}
       <Carousel fade>
         <Carousel.Item>
           <img className="d-block w-100" src={minecraft} alt="Minecraft" />
@@ -32,7 +31,6 @@ function PaginaPrincipal() {
         </Carousel.Item>
       </Carousel>
 
-      {/* Categorías */}
       <section className="mt-5">
         <h2 className="text-center mb-4">Categorías Populares</h2>
         <div className="row text-center">
@@ -51,7 +49,6 @@ function PaginaPrincipal() {
         </div>
       </section>
 
-      {/* Juegos populares */}
       <section className="mt-5">
         <h2 className="text-center mb-4">Juegos Populares</h2>
         <div className="row text-center">
@@ -70,7 +67,6 @@ function PaginaPrincipal() {
         </div>
       </section>
 
-      {/* Sobre nosotros */}
       <section className="mt-5 bg-light p-4 rounded">
         <h2 className="text-center">Sobre Nosotros</h2>
         <p className="text-center">
@@ -78,7 +74,6 @@ function PaginaPrincipal() {
         </p>
       </section>
 
-      {/* Contacto */}
       <section className="mt-5">
         <h2 className="text-center">Contacto</h2>
         <form className="mx-auto" style={{ maxWidth: '600px' }}>
@@ -98,7 +93,6 @@ function PaginaPrincipal() {
         </form>
       </section>
 
-      {/* Información adicional */}
       <section className="mt-5 bg-light p-4 rounded">
         <h2 className="text-center">Información</h2>
         <ul className="list-unstyled text-center">
@@ -108,7 +102,6 @@ function PaginaPrincipal() {
         </ul>
       </section>
 
-      {/* Footer */}
       <footer className="mt-5 py-4 bg-dark text-light text-center">
         <p>&copy; 2025 Tienda de Videojuegos. Todos los derechos reservados.</p>
         <p>

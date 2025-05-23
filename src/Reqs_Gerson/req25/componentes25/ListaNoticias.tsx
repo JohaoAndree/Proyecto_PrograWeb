@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 import { FaEdit, FaPlus } from "react-icons/fa";
 import Modal from "./EditarModal";
 import Eliminar from "./Eliminar";
-import Agregar from "./Agregar"; // ✅ Importa componente
+import Agregar from "./Agregar";
 
 export interface Noticia {
   id: number;
@@ -19,7 +19,7 @@ interface PropsListaNoticias {
 const ListaNoticias = ({ data }: PropsListaNoticias) => {
   const [noticias, setNoticias] = useState(data);
   const [noticiaEditando, setNoticiaEditando] = useState<Noticia | null>(null);
-  const [modalAgregar, setModalAgregar] = useState(false); // ✅ estado para abrir el modal agregar
+  const [modalAgregar, setModalAgregar] = useState(false);
 
   const handleEditar = (noticia: Noticia) => {
     setNoticiaEditando(noticia);

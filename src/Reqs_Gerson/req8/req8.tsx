@@ -1,12 +1,6 @@
-// src/Reqs_Gerson/req7.tsx
-
-// src/Reqs_Gerson/req7/req7.tsx
 import "bootstrap/dist/css/bootstrap.min.css";
 import CarruselSimple from "./componentes_req8/CarruselSimple";
-
 import "./componentes_req8/Global.css";
-;
-
 import ci from "./imagenes/ci.jpg";
 import doom from "./imagenes/doom.jpg";
 import god from "./imagenes/god.jpg";
@@ -16,10 +10,6 @@ import read from "./imagenes/read.jpg";
 import sh from "./imagenes/sh.jpg";
 import wi from "./imagenes/wi.jpg";
 import x from "./imagenes/x.jpg";
-
-
-
-
 
 const juegosMasVendidos = [
   {
@@ -96,12 +86,9 @@ Con un sistema de combate más refinado, exploración expandida y una narrativa 
   },
 ];
 
-
-
 const Req8 = () => {
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
-     
       <h2
         style={{
           color: "#1e1e2f",

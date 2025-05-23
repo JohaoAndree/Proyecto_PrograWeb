@@ -1,11 +1,6 @@
-// src/Reqs_Gerson/req7.tsx
-
-// src/Reqs_Gerson/req7/req7.tsx
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import CarruselSimple from "./componentes/CarruselSimple";
 import "./componentes/Global.css";
-
 import cod from "./imagenes/cod.jpg";
 import diablo from "./imagenes/diablo.jpg";
 import e from "./imagenes/e.jpg";
@@ -15,10 +10,6 @@ import gta from "./imagenes/gta.jpg";
 import m from "./imagenes/m.jpg";
 import resident from "./imagenes/resident.jpg";
 import v from "./imagenes/v.jpg";
-
-
-
-
 
 const juegosMasVendidos = [
   {
@@ -76,8 +67,6 @@ const juegosMasVendidos = [
       "God of War Ragnarök, desarrollado por Santa Monica Studio y lanzado en 2022, continúa la saga de Kratos y su hijo Atreus en la mitología nórdica. El juego combina combates intensos con una narrativa emocional, explorando temas de paternidad y destino. Con gráficos impresionantes y una jugabilidad refinada, es una culminación épica de la historia iniciada en el reinicio de 2018.",
   },
 ];
-
-
 
 const Req7 = () => {
   return (
