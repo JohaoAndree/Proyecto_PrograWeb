@@ -9,10 +9,10 @@ function PaginaPrincipal() {
     <div className="container mt-4">
       <Carousel fade>
         <Carousel.Item>
-          <img className="d-block w-100" src={minecraft} alt="Minecraft" />
+          <img className="d-block w-100" src={genshin} alt="Genshin Impact" />
           <Carousel.Caption>
-            <h3>Minecraft</h3>
-            <p>Explora, construye y sobrevive en un mundo pixelado sin fin.</p>
+            <h3>Genshin Impact</h3>
+            <p>Explora Teyvat, un mundo de fantasía lleno de aventuras.</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -23,10 +23,10 @@ function PaginaPrincipal() {
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
-          <img className="d-block w-100" src={genshin} alt="Genshin Impact" />
+          <img className="d-block w-100" src={minecraft} alt="Minecraft" />
           <Carousel.Caption>
-            <h3>Genshin Impact</h3>
-            <p>Explora Teyvat, un mundo de fantasía lleno de aventuras.</p>
+            <h3>Minecraft</h3>
+            <p>Explora, construye y sobrevive en un mundo pixelado sin fin.</p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
