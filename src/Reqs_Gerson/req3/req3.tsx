@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import styles from "./styles.module.css";
 import { useState } from "react";
-import emailjs from "@emailjs/browser";
+
 
 const Req3 = () => {
     const [nombre, setNombre] = useState("");
@@ -12,50 +12,48 @@ const Req3 = () => {
     const [mensaje, setMensaje] = useState("");
     const [correoEnviado, setCorreoEnviado] = useState(false);
 
-    const onClick = () => {
-        if (!nombre || !correo || !contra || !repContra || !pais) {
-            setMensaje("Llene todos los segmentos");
+   const onClick = async () => {
+    if (!nombre || !correo || !contra || !repContra || !pais) {
+        setMensaje("Llene todos los segmentos");
+        return;
+    }
 
-            return;
+    if (!correo.includes("@") || !correo.includes(".")) {
+        setMensaje("Registre un correo válido");
+        return;
+    }
+
+    if (contra !== repContra) {
+        setMensaje("Las contraseñas deben ser iguales");
+        return;
+    }
+
+    try {
+        const respuesta = await fetch("http://localhost:5020/registro", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                nombre,
+                correo,
+                pais,
+                contra
+            }),
+        });
+
+        const data = await respuesta.json();
+
+        if (respuesta.ok) {
+            setMensaje("¡Registrado! :D");
+            setCorreoEnviado(true);
+        } else {
+            setMensaje(data.mensaje || "Error al registrar");
         }
+    } catch (error) {
+        console.error("Error al conectar con el backend", error);
+        setMensaje("Fallo de conexión");
+    }
+};
 
-        if (!correo.includes("@") || !correo.includes(".")) {
-            setMensaje("Registre un correo válido");
-
-            return;
-        }
-
-        if (contra !== repContra) {
-            setMensaje("Las contraseñas deben ser iguales");
-
-            return;
-        }
-
-        setMensaje("¡Registrado! :D");
-
-        setCorreoEnviado(true);
-
-        emailjs
-            .send(
-                "service_eyy133e",
-
-                "template_767tfq6",
-
-                {
-                    user_name: nombre,
-
-                    user_email: correo,
-
-                    pais: pais,
-                },
-
-                "CV-Lbrym9ihwdUp83"
-            )
-
-            .then(() => console.log("Correo enviado"))
-
-            .catch((error) => console.error("Error al enviar el correo", error));
-    };
 
     return (
         <div className={styles.fondoAzulOsc}>
