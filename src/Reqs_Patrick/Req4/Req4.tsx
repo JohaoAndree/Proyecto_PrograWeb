@@ -1,6 +1,5 @@
-import emailjs from '@emailjs/browser';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useState } from "react";
 import styles from "./styles.module.css";
 
 const Req4 = () => {
@@ -8,7 +7,7 @@ const Req4 = () => {
   const [mensaje, setMensaje] = useState("");
   const [correoEnviado, setCorreoEnviado] = useState(false);
 
-  const handleEnviar = () => {
+  const handleEnviar = async () => {
     if (!correo) {
       setMensaje("Ingrese su correo.");
       return;
@@ -19,20 +18,25 @@ const Req4 = () => {
       return;
     }
 
-    emailjs.send(
-      'service_eyy133e',        // ✅ Tu service ID real
-      'template_767tfq6',       // ✅ Tu template ID real
-      { user_email: correo },
-      'CV-Lbrym9ihwdUp83'       // ✅ Tu public key real
-    )
-    .then(() => {
-      setCorreoEnviado(true);
-      setMensaje("Se envió un enlace para restablecer la contraseña.");
-    })
-    .catch((error) => {
-      console.error("Error al enviar", error);
-      setMensaje("Hubo un error al enviar el correo.");
-    });
+    try {
+      const respuesta = await fetch("http://localhost:5020/recuperar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo }),
+      });
+
+      const data = await respuesta.json();
+
+      if (respuesta.ok) {
+        setCorreoEnviado(true);
+        setMensaje("Se envió un enlace para restablecer la contraseña.");
+      } else {
+        setMensaje(data.mensaje || "Error al enviar el correo.");
+      }
+    } catch (error) {
+      console.error("Error al conectar con el backend", error);
+      setMensaje("Fallo de conexión con el servidor.");
+    }
   };
 
   return (
@@ -58,10 +62,7 @@ const Req4 = () => {
           onChange={(e) => setCorreo(e.target.value)}
         />
 
-        <button
-          className="btn btn-danger w-100 mb-2"
-          onClick={handleEnviar}
-        >
+        <button className="btn btn-danger w-100 mb-2" onClick={handleEnviar}>
           Enviar enlace
         </button>
 

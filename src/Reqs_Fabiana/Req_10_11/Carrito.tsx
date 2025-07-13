@@ -1,7 +1,6 @@
 import { useState } from "react";
 import type { Juego } from "../Req_9/dataJuegos";
 import { listaJuegos } from "../Req_9/dataJuegos";
-import emailjs from "@emailjs/browser";
 
 function Carrito() {
   const [carrito, setCarrito] = useState<Juego[]>(listaJuegos);
@@ -13,37 +12,51 @@ function Carrito() {
   const [metodoPago, setMetodoPago] = useState("Visa");
   const [mensaje, setMensaje] = useState("");
   const [emailUsuario, setEmailUsuario] = useState("");
-  const [pagoExitoso, setPagoExitoso] = useState(false); 
+  const [pagoExitoso, setPagoExitoso] = useState(false);
 
-  const handlePago = () => {
+  const handlePago = async () => {
     if (!tarjeta || !fecha || !cvv || !emailUsuario) {
       setMensaje("❌ Completa todos los campos.");
       return;
     }
 
-    const resumen = carrito
-      .map((j) => `- ${j.titulo} (clave: ${Math.random().toString(36).substring(2, 10)})`)
-      .join("\n");
+    if (!emailUsuario.includes("@") || !emailUsuario.includes(".")) {
+      setMensaje("❌ Ingresa un correo válido.");
+      return;
+    }
 
-    emailjs
-      .send(
-        "service_eyy133e",
-        "template_767tfq6",
-        {
-          user_email: emailUsuario,
-          message: resumen,
-        },
-        "CV-Lbrym9ihwdUp83"
-      )
-      .then(() => {
+    const resumen = carrito.map((juego) => ({
+      titulo: juego.titulo,
+      clave: Math.random().toString(36).substring(2, 10),
+    }));
+
+    try {
+      const respuesta = await fetch("http://localhost:5020/pago", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailUsuario,
+          metodoPago,
+          tarjeta,
+          fecha,
+          cvv,
+          resumen,
+        }),
+      });
+
+      const data = await respuesta.json();
+
+      if (respuesta.ok) {
         setMensaje("✅ ¡Compra realizada! Se envió la boleta al correo.");
         setCarrito([]);
-        setPagoExitoso(true); 
-      })
-      .catch((error) => {
-        console.error(error);
-        setMensaje("❌ Error al enviar la boleta.");
-      });
+        setPagoExitoso(true);
+      } else {
+        setMensaje(data.mensaje || "❌ Error al procesar el pago.");
+      }
+    } catch (error) {
+      console.error("Error de conexión:", error);
+      setMensaje("❌ No se pudo conectar con el servidor.");
+    }
   };
 
   return (
@@ -53,7 +66,7 @@ function Carrito() {
       <div className="row">
         {carrito.map((juego) => (
           <div key={juego.id} className="col-md-4 mb-4">
-            <div className="card futuristic-card h-100 shadow border-0">
+            <div className="card h-100 shadow border-0">
               <img
                 src={juego.cover}
                 className="card-img-top"
@@ -83,7 +96,7 @@ function Carrito() {
             onClick={() => {
               setMostrarPago(true);
               setMensaje("");
-              setPagoExitoso(false); // Reinicia por si se repite
+              setPagoExitoso(false);
             }}
           >
             ✅ FINALIZAR COMPRA
@@ -97,12 +110,11 @@ function Carrito() {
           style={{ backgroundColor: "rgba(0,0,0,0.7)", zIndex: 1050 }}
         >
           <div
-            className="p-4 futuristic-card"
+            className="p-4 bg-dark text-white"
             style={{
               width: "90%",
               maxWidth: "400px",
               borderRadius: "12px",
-              backgroundColor: "#1a1a1a",
             }}
           >
             {!pagoExitoso ? (
