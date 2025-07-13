@@ -1,0 +1,43 @@
+.fondoAzulOsc {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.cajaRegist {
+  background-color: black;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 360px;
+  text-align: center;
+  color: white;
+}
+
+.cajaRegist h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.cajaRegist p {
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  color: #cccccc;
+}
+
+.form-label {
+  text-align: left;
+  display: block;
+  color: white;
+}
+
+#mensajes {
+  font-size: 0.9rem;
+}
+
+.btn {
+  font-weight: bold;
+}
