@@ -97,9 +97,11 @@ const CarruselSimple: React.FC<Props> = ({ juegos }) => {
       </div>
 
       {/* Descripción separada visualmente */}
-      <div className="descripcion-juego">
-        <p>{juegos[index].descripcion}</p>
-      </div>
+      {juegos.length > 0 && (
+        <div className="descripcion-juego">
+          <p>{juegos[index].descripcion}</p>
+        </div>
+      )}
     </div>
   );
 };

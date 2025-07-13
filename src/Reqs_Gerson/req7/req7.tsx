@@ -14,11 +14,10 @@ const Req7 = () => {
   const [juegos, setJuegos] = useState<Juego[]>([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/juegos")
-      .then((res) => setJuegos(res.data))
-      .catch((err) => console.error("Error al obtener juegos:", err));
-  }, []);
+  axios.get("http://localhost:5000/devs/gerson/juegos")
+  .then((res) => setJuegos(res.data))
+  .catch((err) => console.error("Error al obtener juegos:", err));
+}, []);
 
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
