@@ -15,10 +15,10 @@ const Login = () => {
           <input id="email" type="text" className="form-control mb-3" />
 
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <label htmlFor="password" className="form-label mb-0">Contraseña:</label>
-            <a href="#" className={`text-white text-decoration-none ${styles.linkOlvido}`}>
-              ¿Olvidaste tu contraseña?
-            </a>
+          <label htmlFor="password" className="form-label mb-0">Contraseña:</label>
+            <Link to="/recuperar"className={`text-white text-decoration-none ${styles.linkOlvido}`}>
+             ¿Olvidaste tu contraseña?
+            </Link>
           </div>
           <input id="password" type="password" className="form-control mb-3" />
 
@@ -43,3 +43,4 @@ const Login = () => {
 };
 
 export default Login;
+
