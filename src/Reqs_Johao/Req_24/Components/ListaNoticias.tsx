@@ -97,7 +97,7 @@ const ListaNoticias = ({ noticias, recargarNoticias }: PropsListaNoticias) => {
       {modalAgregar && (
         <Agregar
           onClose={() => setModalAgregar(false)}
-          onAdd={recargarNoticias}
+          onSave={recargarNoticias}
         />
       )}
     </div>
