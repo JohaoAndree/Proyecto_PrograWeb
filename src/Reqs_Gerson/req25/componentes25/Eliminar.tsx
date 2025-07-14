@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
+import ConfirmarEliminar from "./ConfirmarEliminar";
 
 interface Props {
   id: number;
@@ -7,16 +8,26 @@ interface Props {
 }
 
 const Eliminar: React.FC<Props> = ({ id, onDelete }) => {
-  const handleClick = () => {
-    if (confirm("¿Estás seguro de eliminar esta noticia?")) {
-      onDelete(id);
-    }
+  const [mostrarModal, setMostrarModal] = useState(false);
+
+  const handleEliminar = () => {
+    onDelete(id);
+    setMostrarModal(false);
   };
 
   return (
-    <button className="btn btn-outline-danger btn-sm" onClick={handleClick}>
-      <FaTrash />
-    </button>
+    <>
+      <button className="btn btn-outline-danger btn-sm" onClick={() => setMostrarModal(true)}>
+        <FaTrash />
+      </button>
+
+      {mostrarModal && (
+        <ConfirmarEliminar
+          onConfirm={handleEliminar}
+          onCancel={() => setMostrarModal(false)}
+        />
+      )}
+    </>
   );
 };
 

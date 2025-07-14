@@ -1,9 +1,12 @@
-import { useState } from "react";
 import styles from "./styles.module.css";
 import { FaEdit, FaPlus } from "react-icons/fa";
-import Modal from "../../../Reqs_Gerson/req25/componentes25/EditarModal";
+import Modal from "../../../Reqs_Gerson/req25/componentes25/Editar";
 import Eliminar from "../../../Reqs_Gerson/req25/componentes25/Eliminar";
 import Agregar from "../../../Reqs_Gerson/req25/componentes25/Agregar";
+import {
+  eliminarNoticia as eliminarNoticiaApi,
+} from "../../../api/usuarios.api";
+import { useState } from "react";
 
 export interface Noticia {
   id: number;
@@ -13,11 +16,11 @@ export interface Noticia {
 }
 
 interface PropsListaNoticias {
-  data: Noticia[];
+  noticias: Noticia[];
+  recargarNoticias: () => void;
 }
 
-const ListaNoticias = ({ data }: PropsListaNoticias) => {
-  const [noticias, setNoticias] = useState(data);
+const ListaNoticias = ({ noticias, recargarNoticias }: PropsListaNoticias) => {
   const [noticiaEditando, setNoticiaEditando] = useState<Noticia | null>(null);
   const [modalAgregar, setModalAgregar] = useState(false);
 
@@ -25,20 +28,13 @@ const ListaNoticias = ({ data }: PropsListaNoticias) => {
     setNoticiaEditando(noticia);
   };
 
-  const guardarCambios = (nueva: Noticia) => {
-    setNoticias((prev) =>
-      prev.map((n) => (n.id === nueva.id ? nueva : n))
-    );
-    setNoticiaEditando(null);
-  };
-
-  const eliminarNoticia = (id: number) => {
-    setNoticias(noticias.filter((n) => n.id !== id));
-  };
-
-  const agregarNoticia = (nueva: Noticia) => {
-    setNoticias((prev) => [...prev, nueva]);
-    setModalAgregar(false);
+  const handleEliminar = async (id: number) => {
+    try {
+      await eliminarNoticiaApi(id);
+      await recargarNoticias();
+    } catch (error) {
+      console.error("Error al eliminar noticia:", error);
+    }
   };
 
   return (
@@ -51,25 +47,27 @@ const ListaNoticias = ({ data }: PropsListaNoticias) => {
           <FaPlus className="me-2" /> Agregar Noticia
         </button>
       </div>
+
       <ul className="list-group d-flex flex-column">
         <li className={`list-group-item ${styles.Encabezado}`}>
           <div className="row align-items-center">
             <div className="col-1">ID</div>
             <div className="col-2">Foto</div>
             <div className="col-3">Nombre</div>
-            <div className="col-4">Descripcion</div>
+            <div className="col-4">Descripción</div>
             <div className="col-2">Acciones</div>
           </div>
         </li>
+
         {noticias.map((noticia) => (
           <li className="list-group-item" key={noticia.id}>
             <div className="row align-items-center">
               <div className="col-1">{noticia.id}</div>
               <div className="col-2">
                 <img
-                  src={noticia.foto}
+                  src={`${import.meta.env.VITE_BACKEND_URL}${noticia.foto}`}
                   alt="foto"
-                  style={{ width: 60, height: 60, borderRadius: "50%" }}
+                  style={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover" }}
                 />
               </div>
               <div className="col-3">{noticia.nombre}</div>
@@ -81,7 +79,7 @@ const ListaNoticias = ({ data }: PropsListaNoticias) => {
                 >
                   <FaEdit />
                 </button>
-                <Eliminar id={noticia.id} onDelete={eliminarNoticia} />
+                <Eliminar id={noticia.id} onDelete={handleEliminar} />
               </div>
             </div>
           </li>
@@ -91,15 +89,15 @@ const ListaNoticias = ({ data }: PropsListaNoticias) => {
       {noticiaEditando && (
         <Modal
           noticia={noticiaEditando}
-          onSave={guardarCambios}
           onClose={() => setNoticiaEditando(null)}
+          onSave={recargarNoticias}
         />
       )}
 
       {modalAgregar && (
         <Agregar
-          onSave={agregarNoticia}
           onClose={() => setModalAgregar(false)}
+          onAdd={recargarNoticias}
         />
       )}
     </div>
