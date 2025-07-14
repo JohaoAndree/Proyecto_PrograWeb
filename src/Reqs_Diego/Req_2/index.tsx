@@ -1,4 +1,5 @@
-import emailjs from '@emailjs/browser';
+//import emailjs from '@emailjs/browser';
+import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import styles from "./styles.module.css";
@@ -12,7 +13,7 @@ const Req2 = () => {
   const [mensaje, setMensaje] = useState("");
   const [correoEnviado, setCorreoEnviado] = useState(false);
 
-  const onClick = () => {
+  const onClick = async () => {
     if (!nombre || !correo || !contra || !repContra || !pais) {
       setMensaje("Llene todos los segmentos");
       return;
@@ -26,21 +27,26 @@ const Req2 = () => {
       return;
     }
 
-    setMensaje("¡Registrado! :D");
-    setCorreoEnviado(true);
+    try {
+      const res = await axios.post("http://localhost:5020/registro", {
+        nombre,
+        correo,
+        pais,
+        contra
+      })
 
-    emailjs.send(
-      'service_eyy133e',       // Reemplaza con tu ID real
-      'template_767tfq6',      // Reemplaza con tu ID real
-      {
-        user_name: nombre,
-        user_email: correo,
-        pais: pais,
-      },
-      'CV-Lbrym9ihwdUp83'      // Reemplaza con tu Public Key real
-    )
-    .then(() => console.log("Correo enviado"))
-    .catch((error) => console.error("Error al enviar el correo", error));
+      if (res.status === 200){
+        setMensaje(res.data.msg || "Registrado! :D")
+        setCorreoEnviado(true)
+      }
+    } catch (error: any){
+      if (error.response && error.response.data && error.response.data.msg){
+        setMensaje(error.response.data.msg)
+      } else {
+        setMensaje("Ocurrió un error al registrar.")
+      }
+      setCorreoEnviado(false)
+    }
   };
 
   return (

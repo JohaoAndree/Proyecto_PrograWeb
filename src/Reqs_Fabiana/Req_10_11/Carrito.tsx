@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import axios from "axios";
 import { useEffect, useState } from "react";
+=======
+import { useState, useEffect } from "react";
+>>>>>>> origin/DiegoNuevoXd
 import type { Juego } from "../Req_9/dataJuegos";
 import { listaJuegos } from "../Req_9/dataJuegos";
 
 function Carrito() {
+<<<<<<< HEAD
   const [carrito, setCarrito] = useState<Juego[]>([]);
   const [juegoAEliminar, setJuegoAEliminar] = useState<Juego | null>(null);
 
@@ -28,6 +33,26 @@ function Carrito() {
       console.error("Error eliminando juego del carrito:", error);
     }
   };
+=======
+  const [carrito, setCarrito] = useState<Juego[]>(listaJuegos);
+  const [juegoAEliminar, setJuegoAEliminar] = useState<Juego | null>(null);
+
+  //cargar carrito desde localstorage
+  useEffect(() => {
+    const guardado = localStorage.getItem("carrito")
+    if (guardado) {
+      setCarrito(JSON.parse(guardado))
+    }
+  }, [])
+
+  //elim del carrito y actualizar localstore
+  function eliminarJuego(juego: Juego) {
+    const actualizado = carrito.filter(j => j.id !== juego.id)
+    setCarrito(actualizado)
+    localStorage.setItem("carrito",JSON.stringify(actualizado))
+    setJuegoAEliminar(null)
+  }
+>>>>>>> origin/DiegoNuevoXd
 
   return (
     <div className="container mt-5">
@@ -84,7 +109,11 @@ function Carrito() {
               </button>
               <button
                 className="btn btn-danger"
+<<<<<<< HEAD
                 onClick={eliminarJuego}
+=======
+                onClick={() => eliminarJuego(juegoAEliminar)}
+>>>>>>> origin/DiegoNuevoXd
               >
                 Sí, eliminar
               </button>
