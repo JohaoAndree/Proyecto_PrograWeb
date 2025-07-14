@@ -1,0 +1,70 @@
+.fondoAzulOsc {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.cajaPerfil {
+  background-color: black;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 360px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.cajaPerfil h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.cajaPerfil img {
+  border-radius: 50%;
+  border: 3px solid #dc3545; /* rojo fuerte */
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  text-align: left;
+  display: block;
+  color: white;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.form-control {
+  margin-bottom: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  font-weight: bold;
+  background-color: #dc3545; /* rojo */
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #b02a37;
+}
+
+#mensajes {
+  font-size: 0.9rem;
+  color: #ff4c4c;
+  font-weight: bold;
+  margin-top: 0.8rem;
+}
