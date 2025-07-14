@@ -1,7 +1,7 @@
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from './styles.module.css';
 
 const Login = () => {
@@ -9,23 +9,34 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [mensaje, setMensaje] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:5020/api/users/login', {
-        correo,
-        password
-      });
+const handleLogin = async () => {
+  try {
+    const response = await axios.post('http://localhost:5020/api/users/login', {
+      correo,
+      password
+    });
 
-      const usuario = response.data;
-      setMensaje(`Bienvenido`);
-      setError('');
-    } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      setMensaje('');
-      setError('Correo o contraseña incorrectos');
-    }
-  };
+    const usuario = response.data.usuario;
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    setMensaje(`Bienvenido, ${usuario.nombre}`);
+    setError('');
+
+    if (usuario.correo.trim().toLowerCase() === 'admin@gamestore.es') {
+  navigate('/req22'); // vista administrador
+} else {
+  navigate('/'); // vista normal
+}
+
+
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    setMensaje('');
+    setError('Correo o contraseña incorrectos');
+  }
+};
+
 
   return (
     <div className={styles.fondoAzulOscuro}>
@@ -81,12 +92,6 @@ const Login = () => {
             </Link>
           </p>
         </div>
-
-        <Link to="/req22">
-          <button className="btn btn-primary mt-4">
-            Ir a la vista administrador
-          </button>
-        </Link>
       </div>
     </div>
   );
