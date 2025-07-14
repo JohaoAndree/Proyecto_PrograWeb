@@ -1,40 +1,40 @@
 import React, { useState } from "react";
+import type { Noticia } from "./ListaNoticias";
 import styles from "./styles.module.css";
 
 interface Props {
+  noticia: Noticia;
   onClose: () => void;
-  onAdd: () => void;
+  onSave: () => void;
 }
 
-const Agregar: React.FC<Props> = ({ onClose, onAdd }) => {
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
+const Editar: React.FC<Props> = ({ noticia, onClose, onSave }) => {
+  const [nombre, setNombre] = useState(noticia.nombre);
+  const [descripcion, setDescripcion] = useState(noticia.descripcion);
   const [foto, setFoto] = useState<File | null>(null);
 
   const handleGuardar = async () => {
-    if (!nombre || !descripcion || !foto) return;
-
     const formData = new FormData();
     formData.append("nombre", nombre);
     formData.append("descripcion", descripcion);
-    formData.append("foto", foto);
+    if (foto) formData.append("foto", foto);
 
     try {
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/johao/noticias`, {
-        method: "POST",
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/johao/noticias/${noticia.id}`, {
+        method: "PUT",
         body: formData,
       });
-      onAdd();
+      onSave();
       onClose();
     } catch (error) {
-      console.error("Error al agregar noticia:", error);
+      console.error("Error al editar noticia:", error);
     }
   };
 
   return (
     <div className={styles.modalOverlay}>
       <div className={`card p-4 ${styles.modalContent}`} style={{ maxWidth: '500px', margin: '0 auto' }}>
-        <h4 className="text-center mb-4">Agregar Noticia</h4>
+        <h4 className="text-center mb-4">Editar Noticia</h4>
 
         <label>Nombre:</label>
         <input
@@ -52,7 +52,7 @@ const Agregar: React.FC<Props> = ({ onClose, onAdd }) => {
           onChange={(e) => setDescripcion(e.target.value)}
         />
 
-        <label>Imagen:</label>
+        <label>Nueva Imagen (opcional):</label>
         <input
           type="file"
           className="form-control mb-3"
@@ -62,7 +62,7 @@ const Agregar: React.FC<Props> = ({ onClose, onAdd }) => {
 
         <div className="d-flex justify-content-around mt-3">
           <button className="btn btn-success" onClick={handleGuardar}>
-            Guardar
+            Guardar Cambios
           </button>
           <button className="btn btn-secondary" onClick={onClose}>
             Cancelar
@@ -73,4 +73,4 @@ const Agregar: React.FC<Props> = ({ onClose, onAdd }) => {
   );
 };
 
-export default Agregar;
+export default Editar;

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./styles.module.css";
 import { FaEdit, FaPlus } from "react-icons/fa";
-import Modal from "./EditarModal";
+import Modal from "./Editar";
 import Eliminar from "./Eliminar";
 import Agregar from "./Agregar";
 
