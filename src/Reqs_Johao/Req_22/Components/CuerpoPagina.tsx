@@ -7,7 +7,7 @@ import { obtenerUsuarios } from '../../../api/usuarios.api';
 interface ApiUsuario {
   id: number;
   foto: string;
-  nickname?: string;
+  nickname: string;
   nombre: string;
 }
 
@@ -22,7 +22,7 @@ const CuerpoPagina = () => {
         const usuariosMapeados: Usuario[] = data.map((usuario) => ({
           id: usuario.id,
           foto: `${import.meta.env.VITE_BACKEND_URL}/imagenes/usuario/${usuario.foto}`,
-          nickname: usuario.nickname ?? 'Sin nickname',
+          nickname: `${usuario.nombre}${usuario.id}`,
           nombre: usuario.nombre,
         }));
         setLista(usuariosMapeados);
