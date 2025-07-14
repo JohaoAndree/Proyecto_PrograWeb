@@ -25,7 +25,7 @@ const ListaUsuarios = (props: PropsListaUsuarios) => {
                 </li>
                 {props.data.map((elemento: Usuario) => {
                     return (
-                        <li className={"list-group-item " + styles.ItemLista}>
+                        <li key={elemento.id} className={"list-group-item " + styles.ItemLista}>
                             <div className="row align-items-center">
                                 <div className="col-2">{elemento.id}</div>
                                 <div className="col-3">
