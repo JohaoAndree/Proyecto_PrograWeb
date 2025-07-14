@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import DetalleJuego from "./Componentes/DetalleJuego";
 import FilaJuegos from "./Componentes/FilaJuegos";
@@ -10,6 +10,19 @@ function Req9() {
     const [carrito, setCarrito] = useState<Juego[]>([])
     const navigate = useNavigate();
 
+    //usar localstorage por ahora, esto lo carga
+    useEffect(() => {
+        const carritoGuardado = localStorage.getItem("carrito")
+        if (carritoGuardado) {
+            setCarrito(JSON.parse(carritoGuardado))
+        }
+    }, [])
+
+    //guardar carrito actualizado
+    useEffect(() => {
+        localStorage.setItem("carrito",JSON.stringify(carrito))
+    }, [carrito])
+    
     function manejarSeleccion(juego: Juego) {
         if (juegoSeleccionado && juegoSeleccionado.id === juego.id) {
             setJuegoSeleccionado(null)
