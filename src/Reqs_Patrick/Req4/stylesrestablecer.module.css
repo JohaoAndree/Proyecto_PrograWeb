@@ -1,0 +1,47 @@
+.fondoAzulOsc {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.cajaRegist {
+  background-color: black;
+  padding: 2rem;
+  border-radius: 1rem;
+  width: 360px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.cajaRegist h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.cajaRegist p {
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  color: #cccccc;
+}
+
+.formLabel {
+  text-align: left;
+  display: block;
+  color: white;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+#mensajes {
+  font-size: 0.9rem;
+  color: #ff4c4c;
+}
+
+.btn {
+  font-weight: bold;
+}
