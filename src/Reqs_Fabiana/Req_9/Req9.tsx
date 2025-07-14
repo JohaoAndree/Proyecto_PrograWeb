@@ -1,15 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import DetalleJuego from "./Componentes/DetalleJuego";
 import FilaJuegos from "./Componentes/FilaJuegos";
 import type { Juego } from "./dataJuegos";
-import { listaJuegos } from "./dataJuegos";
+//import { listaJuegos } from "./dataJuegos";
 
 function Req9() {
     const [juegoSeleccionado, setJuegoSeleccionado] = useState<Juego | null>(null)
     const [carrito, setCarrito] = useState<Juego[]>([])
+    const [juegosDisponibles, setJuegosDisponibles] = useState<Juego[]>([])
     const navigate = useNavigate();
 
+    //usando el back, ayuda xd
+    useEffect(() => {
+        axios.get("http://localhost:5020/juegos").then(res=>{
+            setJuegosDisponibles(res.data)
+        }).catch(err=>{
+            console.error("Error al cargar los juegos: ",err)
+        })
+    }, [])
+
+    //cargar carrito
+    useEffect(() => {
+        const carritoGuardado = localStorage.getItem("carrito")
+        if (carritoGuardado) {
+            setCarrito(JSON.parse(carritoGuardado))
+        }
+    }, [])
+
+    //guardar carrito actualizado
+    useEffect(() => {
+        localStorage.setItem("carrito",JSON.stringify(carrito))
+    }, [carrito])
+    
     function manejarSeleccion(juego: Juego) {
         if (juegoSeleccionado && juegoSeleccionado.id === juego.id) {
             setJuegoSeleccionado(null)
@@ -51,7 +75,7 @@ function Req9() {
                 )}
             </div>
             
-            <FilaJuegos juegos={listaJuegos} select={manejarSeleccion} />
+            <FilaJuegos juegos={juegosDisponibles} select={manejarSeleccion} />
             {juegoSeleccionado && (
                 <div className="mt-5">
                     <DetalleJuego juego={juegoSeleccionado} onComprar={agregarCarrito} />

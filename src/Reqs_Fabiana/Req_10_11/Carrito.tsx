@@ -1,10 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { Juego } from "../Req_9/dataJuegos";
-import { listaJuegos } from "../Req_9/dataJuegos";
+//import { listaJuegos } from "../Req_9/dataJuegos";
 
 function Carrito() {
-  const [carrito] = useState<Juego[]>(listaJuegos);
+  const [carrito, setCarrito] = useState<Juego[]>([]);
   const [juegoAEliminar, setJuegoAEliminar] = useState<Juego | null>(null);
+
+  //cargar carrito desde localstorage
+  useEffect(() => {
+    const guardado = localStorage.getItem("carrito")
+    if (guardado) {
+      setCarrito(JSON.parse(guardado))
+    }
+  }, [])
+
+  //elim del carrito y actualizar localstore
+  function eliminarJuego(juego: Juego) {
+    const actualizado = carrito.filter(j => j.id !== juego.id)
+    setCarrito(actualizado)
+    localStorage.setItem("carrito",JSON.stringify(actualizado))
+    setJuegoAEliminar(null)
+  }
 
   return (
     <div className="container mt-5">
@@ -61,7 +77,7 @@ function Carrito() {
               </button>
               <button
                 className="btn btn-danger"
-                onClick={() => setJuegoAEliminar(null)}
+                onClick={() => eliminarJuego(juegoAEliminar)}
               >
                 Sí, eliminar
               </button>
