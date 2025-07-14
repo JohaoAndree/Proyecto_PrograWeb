@@ -22,7 +22,7 @@ import Req8 from './Reqs_Gerson/req8/req8';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/Proyecto_PrograWeb'>
       <Routes>
         <Route element={<LayoutConHeader />}>
           <Route path="/" element={<PaginaPrincipal />} />
