@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import type { Juego } from "../Req_9/dataJuegos";
-import { listaJuegos } from "../Req_9/dataJuegos";
+//import { listaJuegos } from "../Req_9/dataJuegos";
 
 function Carrito() {
-  const [carrito, setCarrito] = useState<Juego[]>(listaJuegos);
+  const [carrito, setCarrito] = useState<Juego[]>([]);
   const [juegoAEliminar, setJuegoAEliminar] = useState<Juego | null>(null);
 
   //cargar carrito desde localstorage
