@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 interface Props {
   noticia: Noticia;
   onClose: () => void;
-  onSave: () => void;
+  onSave: (nueva : Noticia) => void;
 }
 
 const Editar: React.FC<Props> = ({ noticia, onClose, onSave }) => {
@@ -24,7 +24,7 @@ const Editar: React.FC<Props> = ({ noticia, onClose, onSave }) => {
         method: "PUT",
         body: formData,
       });
-      onSave();
+      onSave(noticia);
       onClose();
     } catch (error) {
       console.error("Error al editar noticia:", error);

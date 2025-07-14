@@ -1,4 +1,4 @@
-import BarraLateral from "../../Reqs_Gerson/Shared_components/BarraLateral";
+import BarraLateral from "../../Reqs_Johao/Shared_Components/BarraLateral";
 import CuerpoPagina from "./componentes25/CuerpoPagina";
 
 const Req25 = () => {

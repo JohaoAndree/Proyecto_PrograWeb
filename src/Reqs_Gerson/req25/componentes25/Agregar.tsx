@@ -1,12 +1,13 @@
 import React, { useState } from "react";
+import type { Noticia } from "./ListaNoticias";
 import styles from "./styles.module.css";
 
 interface Props {
   onClose: () => void;
-  onAdd: () => void;
+  onSave: (nueva: Noticia) => void;
 }
 
-const Agregar: React.FC<Props> = ({ onClose, onAdd }) => {
+const Agregar: React.FC<Props> = ({ onClose, onSave }) => {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [foto, setFoto] = useState<File | null>(null);
@@ -20,11 +21,16 @@ const Agregar: React.FC<Props> = ({ onClose, onAdd }) => {
     formData.append("foto", foto);
 
     try {
-      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/johao/noticias`, {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/johao/noticias`, {
         method: "POST",
         body: formData,
       });
-      onAdd();
+
+      if (!response.ok) {
+          throw new Error('Fallo al agregar la noticia');
+      }
+      const nuevaNoticia = await response.json();
+      onSave(nuevaNoticia);
       onClose();
     } catch (error) {
       console.error("Error al agregar noticia:", error);

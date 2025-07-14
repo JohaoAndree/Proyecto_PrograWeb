@@ -107,4 +107,3 @@ const ListaNoticias = ({ data }: PropsListaNoticias) => {
 };
 
 export default ListaNoticias;
-
