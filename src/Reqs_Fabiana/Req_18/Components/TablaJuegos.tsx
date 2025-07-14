@@ -10,16 +10,39 @@ const TablaJuegos = () => {
   const [juegoEditando, setJuegoEditando] = useState<Juego | null>(null);
   const [juegoEliminando, setJuegoEliminando] = useState<Juego | null>(null);
 
+  const [categorias, setCategorias] = useState<{ id: number; nombre: string }[]>([]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
+
   useEffect(() => {
     cargarJuegos();
-  }, []);
+    cargarCategorias();
+  }, [categoriaSeleccionada]);
 
   const cargarJuegos = async () => {
+  try {
+    const res = await axios.get('http://localhost:5020/api/juegos');
+    let lista = res.data;
+
+    // ⚠️ Agrega este filtro para que solo se vean los juegos activos
+    lista = lista.filter((j: Juego) => j.estado === true);
+
+    if (categoriaSeleccionada) {
+      lista = lista.filter((j: Juego) => j.categoriaId === categoriaSeleccionada);
+    }
+
+    setJuegos(lista);
+  } catch (error) {
+    console.error('Error al cargar juegos:', error);
+  }
+};
+
+
+  const cargarCategorias = async () => {
     try {
-      const res = await axios.get('http://localhost:5020/api/juegos');
-      setJuegos(res.data);
+      const res = await axios.get('http://localhost:5020/api/juegos/categorias');
+      setCategorias(res.data);
     } catch (error) {
-      console.error('Error al cargar juegos:', error);
+      console.error('Error al cargar categorías:', error);
     }
   };
 
@@ -39,25 +62,45 @@ const TablaJuegos = () => {
     }
   };
 
-  const eliminarJuego = async (id: number): Promise<void> => {
-    try {
-      await axios.delete(`http://localhost:5020/api/juegos/${id}`);
-      setJuegoEliminando(null);
-      await cargarJuegos();
-    } catch (error) {
-      console.error('Error al eliminar juego:', error);
-    }
-  };
+ const eliminarJuego = async (id: number): Promise<void> => {
+  try {
+    await axios.put(`http://localhost:5020/api/juegos/${id}`, { estado: false });
+    setJuegoEliminando(null);
+    await cargarJuegos();
+  } catch (error) {
+    console.error('Error al eliminar juego:', error);
+  }
+};
+
 
   return (
     <div className="table-responsive px-4">
-      <div className="d-flex justify-content-end gap-2 mb-3">
-        <button className="btn btn-secondary">Filtrar</button>
+      {/* Filtros */}
+      <div className="d-flex justify-content-between align-items-center mb-3 px-2">
+        <div className="d-flex gap-2">
+          <select
+            className="form-select"
+            style={{ width: '200px' }}
+            value={categoriaSeleccionada ?? ''}
+            onChange={(e) =>
+              setCategoriaSeleccionada(e.target.value ? Number(e.target.value) : null)
+            }
+          >
+            <option value="">Todas las categorías</option>
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.nombre}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <button className="btn btn-primary" onClick={() => setMostrarAgregar(true)}>
           + Agregar
         </button>
       </div>
 
+      {/* Tabla */}
       <table className="table table-bordered">
         <thead className="table-light">
           <tr>
@@ -96,10 +139,12 @@ const TablaJuegos = () => {
         </tbody>
       </table>
 
-      {/* Formulario para agregar o editar */}
+      {/* Formulario agregar/editar */}
       {(mostrarAgregar || juegoEditando) && (
-        <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}>
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
+        >
           <div style={{ width: '90%', maxWidth: '700px' }}>
             <FormularioJuego
               modo={mostrarAgregar ? 'agregar' : 'editar'}
@@ -114,10 +159,12 @@ const TablaJuegos = () => {
         </div>
       )}
 
-      {/* Modal de confirmación para eliminar */}
+      {/* Modal confirmar eliminar */}
       {juegoEliminando && (
-        <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}>
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
+          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
+        >
           <div className="bg-white p-4 rounded-4 shadow" style={{ width: '90%', maxWidth: '400px' }}>
             <h5>¿Estás segura de eliminar <strong>{juegoEliminando.nombre}</strong>?</h5>
             <div className="d-flex justify-content-end mt-3 gap-2">

@@ -3,10 +3,12 @@ export type Juego = {
   nombre: string;
   descripcion: string;
   categoriaId: number;
-  precio: number;
-  descuento?: string;
-  foto?: string;
   categoria?: {
+    id: number;
     nombre: string;
   };
+  precio: number;
+  descuento?: string;
+  foto: string;
+  estado?: boolean; // ✅ importante
 };

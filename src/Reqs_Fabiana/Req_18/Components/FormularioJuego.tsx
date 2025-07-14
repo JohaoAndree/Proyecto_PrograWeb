@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import type { Juego } from '../../../../types';
 
 type Props = {
@@ -10,6 +11,7 @@ type Props = {
 
 const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
   const [formData, setFormData] = useState<Juego>({
+    id: juego?.id,
     nombre: juego?.nombre || '',
     descripcion: juego?.descripcion || '',
     categoriaId: juego?.categoriaId ?? 1,
@@ -17,6 +19,21 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
     descuento: juego?.descuento || '',
     foto: juego?.foto || '',
   });
+
+  const [categorias, setCategorias] = useState<{ id: number; nombre: string }[]>([]);
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const res = await axios.get("http://localhost:5020/api/juegos/categorias");
+        setCategorias(res.data);
+      } catch (error) {
+        console.error("Error al cargar categorías:", error);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -66,11 +83,11 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
             value={formData.categoriaId}
             onChange={handleChange}
           >
-            <option value={1}>Aventura</option>
-            <option value={2}>Acción</option>
-            <option value={3}>Deportes</option>
-            <option value={4}>Indie</option>
-            <option value={5}>Multijugador</option>
+            {categorias.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.nombre}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -129,3 +146,4 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
 };
 
 export default FormularioJuego;
+
