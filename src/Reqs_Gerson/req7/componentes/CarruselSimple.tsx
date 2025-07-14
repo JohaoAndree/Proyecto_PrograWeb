@@ -77,7 +77,7 @@ const CarruselSimple: React.FC<Props> = ({ juegos }) => {
                   <>
                     <h4>{juego.titulo}</h4>
                   </>
-                )}
+                )} 
               </div>
             );
           })}
