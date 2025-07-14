@@ -1,10 +1,33 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import type { Juego } from "../Req_9/dataJuegos";
 import { listaJuegos } from "../Req_9/dataJuegos";
 
 function Carrito() {
-  const [carrito] = useState<Juego[]>(listaJuegos);
+  const [carrito, setCarrito] = useState<Juego[]>([]);
   const [juegoAEliminar, setJuegoAEliminar] = useState<Juego | null>(null);
+
+  // Simulamos usuario autenticado
+  const usuarioId = 1;
+
+  // Al montar, cargamos los juegos del carrito si quieres desde el backend
+  useEffect(() => {
+    // Aquí podrías hacer GET desde backend para cargar carrito
+    setCarrito(listaJuegos); // por ahora usa la lista local
+  }, []);
+
+  const eliminarJuego = async () => {
+    if (!juegoAEliminar) return;
+
+    try {
+      await axios.delete(`http://localhost:5020/api/carrito/${usuarioId}/${juegoAEliminar.id}`);
+
+      setCarrito(prev => prev.filter(j => j.id !== juegoAEliminar.id));
+      setJuegoAEliminar(null);
+    } catch (error) {
+      console.error("Error eliminando juego del carrito:", error);
+    }
+  };
 
   return (
     <div className="container mt-5">
@@ -61,7 +84,7 @@ function Carrito() {
               </button>
               <button
                 className="btn btn-danger"
-                onClick={() => setJuegoAEliminar(null)}
+                onClick={eliminarJuego}
               >
                 Sí, eliminar
               </button>
