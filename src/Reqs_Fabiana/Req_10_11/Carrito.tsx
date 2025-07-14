@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { Juego } from "../Req_9/dataJuegos";
 //import { listaJuegos } from "../Req_9/dataJuegos";
 
