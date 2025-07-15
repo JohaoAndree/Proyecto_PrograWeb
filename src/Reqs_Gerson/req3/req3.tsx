@@ -12,47 +12,55 @@ const Req3 = () => {
     const [mensaje, setMensaje] = useState("");
     const [correoEnviado, setCorreoEnviado] = useState(false);
 
-   const onClick = async () => {
-    if (!nombre || !correo || !contra || !repContra || !pais) {
-        setMensaje("Llene todos los segmentos");
-        return;
-    }
-
-    if (!correo.includes("@") || !correo.includes(".")) {
-        setMensaje("Registre un correo válido");
-        return;
-    }
-
-    if (contra !== repContra) {
-        setMensaje("Las contraseñas deben ser iguales");
-        return;
-    }
-
-    try {
-        const respuesta = await fetch("http://localhost:5020/registro", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                nombre,
-                correo,
-                pais,
-                contra
-            }),
-        });
-
-        const data = await respuesta.json();
-
-        if (respuesta.ok) {
-            setMensaje("¡Registrado! :D");
-            setCorreoEnviado(true);
-        } else {
-            setMensaje(data.mensaje || "Error al registrar");
+    const onClick = async () => {
+        if (!nombre || !correo || !contra || !repContra || !pais) {
+            setMensaje("Llene todos los segmentos");
+            return;
         }
-    } catch (error) {
-        console.error("Error al conectar con el backend", error);
-        setMensaje("Fallo de conexión");
-    }
-};
+
+        if (!correo.includes("@") || !correo.includes(".")) {
+            setMensaje("Registre un correo válido");
+            return;
+        }
+
+        if (contra !== repContra) {
+            setMensaje("Las contraseñas deben ser iguales");
+            return;
+        }
+
+        try {
+            // frontend (por ejemplo, req3.tsx)
+            const respuesta = await fetch("http://localhost:5020/api/gerson/games/registro", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    nombre,
+                    correo,
+                    pais,
+                    password: contra
+                }),
+            });
+
+
+
+
+            const data = await respuesta.json();
+
+            if (respuesta.status === 201 || respuesta.status === 200) {
+                setMensaje("¡Registrado! :D");
+                setCorreoEnviado(true);
+            } else if (respuesta.status === 409) {
+                setMensaje("Ese correo ya está registrado. Usa otro.");
+            } else {
+                setMensaje(data.mensaje || "Error al registrar");
+            }
+        } catch (error) {
+            console.error("Error al conectar con el backend", error);
+            setMensaje("Fallo de conexión");
+        }
+    };
 
 
     return (

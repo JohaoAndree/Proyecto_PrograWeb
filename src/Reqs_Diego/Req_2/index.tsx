@@ -19,7 +19,7 @@ const Req2 = () => {
       return;
     }
     if (!correo.includes("@") || !correo.includes(".")) {
-      setMensaje("Registre un correo valido");
+      setMensaje("Registre un correo válido");
       return;
     }
     if (contra !== repContra) {
@@ -28,31 +28,39 @@ const Req2 = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:5020/registro", {
-        nombre,
-        correo,
-        pais,
-        contra
-      })
+      const res = await axios.post<{ msg: string }>(
+        "http://localhost:5020/api/gerson/games/registro",
+        {
+          nombre,
+          correo,
+          pais,
+          password: contra,
+        }
+      );
 
-      if (res.status === 200){
-        setMensaje(res.data.msg || "Registrado! :D")
-        setCorreoEnviado(true)
+      if (res.status === 200) {
+        setMensaje(res.data.msg || "Registrado! :D");
+        setCorreoEnviado(true);
       }
-    } catch (error: any){
-      if (error.response && error.response.data && error.response.data.msg){
-        setMensaje(error.response.data.msg)
+    } catch (error: unknown) {
+      if (
+        typeof error === "object" &&
+        error !== null &&
+        "response" in error &&
+        typeof (error as { response?: { data?: { msg?: string } } }).response?.data?.msg === "string"
+      ) {
+        setMensaje((error as { response: { data: { msg: string } } }).response.data.msg);
       } else {
-        setMensaje("Ocurrió un error al registrar.")
+        setMensaje("Ocurrió un error al registrar.");
       }
-      setCorreoEnviado(false)
+      setCorreoEnviado(false);
     }
-  };
+  }
 
   return (
     <div className={styles.fondoAzulOsc}>
       <div className={styles.cajaRegist}>
-        <h2 className="mb-2 text-center">Registro <strong>GameStore</strong></h2>
+        <h2 className="mb-2 text-center">Registro <strong>DieguitoStore</strong></h2>
         <p className="text-center mb-4">Ingresa los siguientes datos</p>
 
         <label htmlFor="nombreRegis" className="form-label">Nombres:</label>

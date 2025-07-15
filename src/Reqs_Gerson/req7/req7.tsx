@@ -14,10 +14,19 @@ const Req7 = () => {
   const [juegos, setJuegos] = useState<Juego[]>([]);
 
   useEffect(() => {
-  axios.get("http://localhost:5000/devs/gerson/juegos")
-  .then((res) => setJuegos(res.data))
-  .catch((err) => console.error("Error al obtener juegos:", err));
-}, []);
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/masvendidos`)
+      .then((res) => {
+        // Agrega el dominio del backend a la imagen si es ruta relativa
+        const juegosConImagenes = res.data.map((juego: Juego) => ({
+          ...juego,
+          imagen: juego.imagen.startsWith("http")
+            ? juego.imagen
+            : `${import.meta.env.VITE_BACKEND_URL}${juego.imagen}`,
+        }));
+        setJuegos(juegosConImagenes);
+      })
+      .catch((err) => console.error("Error al obtener juegos:", err));
+  }, []);
 
   return (
     <div style={{ backgroundColor: "white", minHeight: "100vh" }}>
