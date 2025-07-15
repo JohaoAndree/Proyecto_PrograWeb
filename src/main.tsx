@@ -19,6 +19,8 @@ import Req9 from './Reqs_Fabiana/Req_9/Req9';
 import Noticias from './Reqs_Fabiana/Req_Veremos/Paginas/Noticias';
 import Req7 from './Reqs_Gerson/req7/req7';
 import Req8 from './Reqs_Gerson/req8/req8';
+import Req4 from './Reqs_Patrick/Req4/Req4';
+import RestablecerClave from './Reqs_Patrick/Req4/Req4.1';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -30,6 +32,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/carrito" element={<Req10 />} />
           <Route path="/usuario" element={<Req1 />} />
           <Route path="/registro" element={<Req2 />} />
+          <Route path="/recuperar" element={<Req4 />} />
+          <Route path="/reset-password/:token" element={<RestablecerClave />} />
           <Route path="/juegos" element={<Req7 />} />
           <Route path="/juegos/mas-vendidos" element={<Req7 />} />
           <Route path="/juegos/mas-populares" element={<Req8 />} />
