@@ -39,7 +39,7 @@ const TablaJuegos = () => {
 
   const cargarCategorias = async () => {
     try {
-      const res = await axios.get('http://localhost:5020/api/juegos/categorias');
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/categorias`);
       setCategorias(res.data);
     } catch (error) {
       console.error('Error al cargar categorías:', error);
@@ -49,9 +49,9 @@ const TablaJuegos = () => {
   const guardarJuego = async (juego: Juego): Promise<void> => {
     try {
       if (juego.id) {
-        await axios.put(`http://localhost:5020/api/juegos/${juego.id}`, juego);
+        await axios.put(`${import.meta.env.ITE_BACKEND_URL}/api/juegos/${juego.id}`, juego);
       } else {
-        await axios.post('http://localhost:5020/api/juegos', juego);
+        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`, juego);
       }
 
       setMostrarAgregar(false);
@@ -64,7 +64,7 @@ const TablaJuegos = () => {
 
  const eliminarJuego = async (id: number): Promise<void> => {
   try {
-    await axios.put(`http://localhost:5020/api/juegos/${id}`, { estado: false });
+    await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/${id}`, { estado: false });
     setJuegoEliminando(null);
     await cargarJuegos();
   } catch (error) {
