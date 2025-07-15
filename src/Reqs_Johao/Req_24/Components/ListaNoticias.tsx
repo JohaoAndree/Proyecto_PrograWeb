@@ -67,7 +67,7 @@ const ListaNoticias = ({ noticias, recargarNoticias }: PropsListaNoticias) => {
                 <img
                   src={`${import.meta.env.VITE_BACKEND_URL}${noticia.foto}`}
                   alt="foto"
-                  style={{ width: 60, height: 60, borderRadius: "50%", objectFit: "cover" }}
+                  className={styles.ImagenNoticia}
                 />
               </div>
               <div className="col-3">{noticia.nombre}</div>

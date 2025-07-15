@@ -37,7 +37,9 @@ const CuerpoPagina = () => {
   return (
     <div className={'flex-grow-1 ' + styles.CuerpoPagina}>
       <Titulo texto={titulo} />
-      <ListaUsuarios data={lista} />
+      <div className={styles.ContenedorListaUsuarios}>
+        <ListaUsuarios data={lista} />
+      </div>
     </div>
   );
 };
