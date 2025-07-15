@@ -14,7 +14,7 @@ function Req9() {
 
     //usando el back, ayuda xd
     useEffect(() => {
-        axios.get("http://localhost:5020/juegos").then(res=>{
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/juegos`).then(res=>{
             setJuegosDisponibles(res.data)
         }).catch(err=>{
             console.error("Error al cargar los juegos: ",err)

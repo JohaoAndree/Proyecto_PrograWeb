@@ -13,7 +13,7 @@ const Login = () => {
 
 const handleLogin = async () => {
   try {
-    const response = await axios.post('http://localhost:5020/api/users/login', {
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
       correo,
       password
     });

@@ -29,7 +29,7 @@ const Req2 = () => {
 
     try {
       const res = await axios.post<{ msg: string }>(
-        "http://localhost:5020/api/gerson/games/registro",
+        `${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/registro`,
         {
           nombre,
           correo,

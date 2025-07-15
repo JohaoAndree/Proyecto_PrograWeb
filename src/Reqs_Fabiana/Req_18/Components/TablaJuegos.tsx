@@ -20,7 +20,7 @@ const TablaJuegos = () => {
 
   const cargarJuegos = async () => {
   try {
-    const res = await axios.get('http://localhost:5020/api/juegos');
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`);
     let lista = res.data;
 
     // ⚠️ Agrega este filtro para que solo se vean los juegos activos

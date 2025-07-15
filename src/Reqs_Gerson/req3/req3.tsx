@@ -30,7 +30,7 @@ const Req3 = () => {
 
         try {
             // frontend (por ejemplo, req3.tsx)
-            const respuesta = await fetch("http://localhost:5020/api/gerson/games/registro", {
+            const respuesta = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/registro`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

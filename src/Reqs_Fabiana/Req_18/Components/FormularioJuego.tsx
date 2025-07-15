@@ -27,7 +27,7 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const res = await axios.get("http://localhost:5020/api/juegos/categorias");
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/categorias`);
         setCategorias(res.data);
       } catch (error) {
         console.error("Error al cargar categorías:", error);
