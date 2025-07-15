@@ -57,9 +57,9 @@ const handleLogin = async () => {
 
           <div className="d-flex justify-content-between align-items-center mb-2">
             <label htmlFor="password" className="form-label mb-0">Contraseña:</label>
-            <a href="#" className={`text-white text-decoration-none ${styles.linkOlvido}`}>
-              ¿Olvidaste tu contraseña?
-            </a>
+            <Link to="/recuperar"className={`text-white text-decoration-none ${styles.linkOlvido}`}>
+             ¿Olvidaste tu contraseña?
+            </Link>
           </div>
           <input
             id="password"
