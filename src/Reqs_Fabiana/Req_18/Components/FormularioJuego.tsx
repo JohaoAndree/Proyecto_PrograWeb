@@ -11,14 +11,16 @@ type Props = {
 
 const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
   const [formData, setFormData] = useState<Juego>({
-    id: juego?.id,
-    nombre: juego?.nombre || '',
-    descripcion: juego?.descripcion || '',
-    categoriaId: juego?.categoriaId ?? 1,
-    precio: juego?.precio !== undefined ? Number(juego.precio) : 0,
-    descuento: juego?.descuento || '',
-    foto: juego?.foto || '',
-  });
+  id: juego?.id,
+  nombre: juego?.nombre || '',
+  descripcion: juego?.descripcion || '',
+  categoriaId: juego?.categoriaId ?? 1,
+  precio: juego?.precio !== undefined ? Number(juego.precio) : 0,
+  descuento: juego?.descuento || '',
+  foto: juego?.foto || '',
+  imagen: juego?.imagen || '', // ✅ agregar esto
+});
+
 
   const [categorias, setCategorias] = useState<{ id: number; nombre: string }[]>([]);
 
@@ -102,7 +104,13 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
               if (file) {
                 const reader = new FileReader();
                 reader.onloadend = () => {
-                  setFormData({ ...formData, foto: reader.result as string });
+                  const base64 = reader.result as string;
+setFormData({
+  ...formData,
+  foto: base64,
+  imagen: base64, // ✅ enviar lo mismo en ambos campos
+});
+
                 };
                 reader.readAsDataURL(file);
               }
