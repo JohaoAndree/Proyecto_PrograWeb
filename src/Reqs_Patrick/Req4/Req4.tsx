@@ -22,13 +22,13 @@ const Req4 = () => {
     setCargando(true);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
+     const API_URL = import.meta.env.VITE_BACKEND_URL;
 
-      const respuesta = await fetch(`${API_URL}/patrick/games/recuperar`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ correo }),
-      });
+     const respuesta = await fetch(`${API_URL}/api/patrick/games/recuperar`, {
+          method: "POST",
+         headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ correo }),
+          });
 
       const data = await respuesta.json();
 
