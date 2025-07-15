@@ -32,8 +32,8 @@ const ListaUsuarios = (props: PropsListaUsuarios) => {
                                     <img
                                         src={elemento.foto}
                                         alt={`avatar${elemento.nombre}`}
-                                        className="rounded-circle"
-                                        style={{ width: 56, height: 56, objectFit: "cover" }}
+                                        className="rounded"
+                                        style={{ width: 70, height: 70, objectFit: "cover" }}
                                     />
                                 </div>
                                 <div className="col-4">{elemento.nickname}</div>

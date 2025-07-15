@@ -10,5 +10,7 @@ export type Juego = {
   precio: number;
   descuento?: string;
   foto: string;
-  estado?: boolean; // ✅ importante
+  imagen: string; // ✅ agregar este campo obligatorio
+  estado?: boolean;
 };
+

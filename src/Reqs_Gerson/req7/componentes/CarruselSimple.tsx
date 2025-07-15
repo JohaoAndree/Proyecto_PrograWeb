@@ -14,7 +14,7 @@ interface Props {
 const CarruselSimple: React.FC<Props> = ({ juegos }) => {
   const [index, setIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const timeoutRef = useRef<number | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const total = juegos.length;
 
