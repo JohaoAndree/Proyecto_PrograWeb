@@ -6,6 +6,7 @@ const Req4 = () => {
   const [correo, setCorreo] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [correoEnviado, setCorreoEnviado] = useState(false);
+  const [cargando, setCargando] = useState(false);
 
   const handleEnviar = async () => {
     if (!correo) {
@@ -18,8 +19,12 @@ const Req4 = () => {
       return;
     }
 
+    setCargando(true);
+
     try {
-      const respuesta = await fetch("http://localhost:5020/recuperar", {
+      const API_URL = import.meta.env.VITE_API_URL;
+
+      const respuesta = await fetch(`${API_URL}/patrick/games/recuperar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ correo }),
@@ -36,6 +41,8 @@ const Req4 = () => {
     } catch (error) {
       console.error("Error al conectar con el backend", error);
       setMensaje("Fallo de conexión con el servidor.");
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -60,10 +67,15 @@ const Req4 = () => {
           className="form-control mb-3"
           value={correo}
           onChange={(e) => setCorreo(e.target.value)}
+          disabled={cargando}
         />
 
-        <button className="btn btn-danger w-100 mb-2" onClick={handleEnviar}>
-          Enviar enlace
+        <button
+          className="btn btn-danger w-100 mb-2"
+          onClick={handleEnviar}
+          disabled={cargando}
+        >
+          {cargando ? "Enviando..." : "Enviar enlace"}
         </button>
 
         <div id="mensajes" className="text-center mt-2 text-light fw-bold">

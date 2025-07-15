@@ -30,13 +30,13 @@ const RestablecerClave = () => {
 
     setCargando(true);
     try {
-        console.log("TOKEN desde URL (useParams):", token);
-        console.log("Enviando al backend:", { token, nuevaClave });
-      const respuesta = await fetch("http://localhost:5020/api/patrick/games/nuevaClave", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, nuevaClave }),
-      });
+      const API_URL = import.meta.env.VITE_API_URL;
+
+     const respuesta = await fetch(`${API_URL}/patrick/games/reset-password/${token}`, {
+       method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nuevaClave }), // ya no mandes el token en el body
+      })
 
       const data = await respuesta.json();
 
