@@ -44,8 +44,8 @@ const TablaJuegos = () => {
           </tr>
         </thead>
         <tbody>
-          {juegos.map((juego, index) => (
-            <tr key={index}>
+          {juegos.map((juego) => (
+            <tr key={juego.nombre}>
               <td>{juego.fecha}</td>
               <td>{juego.categoria}</td>
               <td>{juego.nombre}</td>

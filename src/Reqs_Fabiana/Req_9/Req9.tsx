@@ -14,11 +14,13 @@ function Req9() {
 
     //usando el back, ayuda xd
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/juegos`).then(res=>{
-            setJuegosDisponibles(res.data)
-        }).catch(err=>{
-            console.error("Error al cargar los juegos: ",err)
+        let ignore = false;
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/juegos`).then(res => {
+            if (!ignore) setJuegosDisponibles(res.data)
+        }).catch(err => {
+            console.error("Error al cargar los juegos: ", err)
         })
+        return () => { ignore = true; };
     }, [])
 
     //cargar carrito
@@ -31,9 +33,9 @@ function Req9() {
 
     //guardar carrito actualizado
     useEffect(() => {
-        localStorage.setItem("carrito",JSON.stringify(carrito))
+        localStorage.setItem("carrito", JSON.stringify(carrito))
     }, [carrito])
-    
+
     function manejarSeleccion(juego: Juego) {
         if (juegoSeleccionado && juegoSeleccionado.id === juego.id) {
             setJuegoSeleccionado(null)
@@ -42,10 +44,10 @@ function Req9() {
         }
     }
 
-    function agregarCarrito(juego: Juego){
+    function agregarCarrito(juego: Juego) {
         const agregado = carrito.some(j => j.id === juego.id)
-        if (!agregado){
-            setCarrito([...carrito,juego])
+        if (!agregado) {
+            setCarrito([...carrito, juego])
         }
     }
 
@@ -74,7 +76,7 @@ function Req9() {
                     </div>
                 )}
             </div>
-            
+
             <FilaJuegos juegos={juegosDisponibles} select={manejarSeleccion} />
             {juegoSeleccionado && (
                 <div className="mt-5">

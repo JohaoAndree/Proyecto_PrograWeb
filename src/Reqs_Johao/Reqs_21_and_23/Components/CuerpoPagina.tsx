@@ -17,16 +17,18 @@ const CuerpoPagina = () => {
   const [meses, setMeses] = useState<string[]>([]);
 
   useEffect(() => {
+    let ignore = false;
     const cargarEstadisticas = async () => {
       try {
         const total = await contarUsuarios();
         const datos: GananciaApi[] = await obtenerGanancias();
+        if (ignore) return;
 
         const mesesFormateados: string[] = datos.map((item: GananciaApi) => {
-            const fecha = new Date(item.mes + '-01');
-            const nombreMes = fecha.toLocaleString('es-PE', { month: 'long' });
-            const anio = fecha.getFullYear();
-            return `${nombreMes.charAt(0).toUpperCase()}${nombreMes.slice(1)} ${anio}`;
+          const fecha = new Date(item.mes + '-01');
+          const nombreMes = fecha.toLocaleString('es-PE', { month: 'long' });
+          const anio = fecha.getFullYear();
+          return `${nombreMes.charAt(0).toUpperCase()}${nombreMes.slice(1)} ${anio}`;
         });
 
         const valoresGanancia: number[] = datos.map((item: GananciaApi) => item.total);
@@ -40,6 +42,7 @@ const CuerpoPagina = () => {
     };
 
     cargarEstadisticas();
+    return () => { ignore = true; };
   }, []);
 
   return (

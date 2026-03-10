@@ -9,9 +9,9 @@ interface Props {
 
 const Lista = ({ juegos }: Props) => {
   return (
-    <div  className="lista-juegos">
-      {juegos.map((juego, index) => (
-        <div key={index} className="juego-item">
+    <div className="lista-juegos">
+      {juegos.map((juego) => (
+        <div key={juego.titulo} className="juego-item">
           <h4 className="titulo-juego">{juego.titulo}</h4>
           <img src={juego.imagen} alt={juego.titulo} className="portada" />
         </div>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import backend from "../../api/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CarruselSimple from "./componentes_req8/CarruselSimple";
 import "./componentes_req8/Global.css";
@@ -14,15 +14,16 @@ const Req8 = () => {
   const [juegos, setJuegos] = useState<Juego[] | null>(null);
 
   useEffect(() => {
-    axios
-  .get("http://localhost:5000/devs/gerson/juegos-populares")
-  .then((res) => setJuegos(res.data))
-  .catch((err) =>
-    console.error("Error al cargar los juegos populares", err)
-  );
-
-
-
+    let ignore = false;
+    backend
+      .get("/api/gerson/games/juegos-populares")
+      .then((res) => {
+        if (!ignore) setJuegos(res.data);
+      })
+      .catch((err) =>
+        console.error("Error al cargar los juegos populares", err)
+      );
+    return () => { ignore = true; };
   }, []);
 
   return (

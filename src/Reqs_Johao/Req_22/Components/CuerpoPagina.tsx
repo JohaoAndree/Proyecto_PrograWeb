@@ -16,9 +16,11 @@ const CuerpoPagina = () => {
   const [lista, setLista] = useState<Usuario[]>([]);
 
   useEffect(() => {
+    let ignore = false;
     const cargarUsuarios = async () => {
       try {
         const data: ApiUsuario[] = await obtenerUsuarios();
+        if (ignore) return;
         const usuariosMapeados: Usuario[] = data.map((usuario) => ({
           id: usuario.id,
           foto: `${import.meta.env.VITE_BACKEND_URL}/imagenes/usuario/${usuario.foto}`,
@@ -32,6 +34,7 @@ const CuerpoPagina = () => {
     };
 
     cargarUsuarios();
+    return () => { ignore = true; };
   }, []);
 
   return (

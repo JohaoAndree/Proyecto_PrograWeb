@@ -62,12 +62,11 @@ const CarruselSimple: React.FC<Props> = ({ juegos }) => {
 
             return (
               <div
-                key={i}
+                key={juego.titulo}
                 className={`carrusel-item ${posicion === 0 ? "activo" : ""}`}
                 style={{
-                  transform: `translateX(${posicion * 260}px) scale(${
-                    posicion === 0 ? 1 : 0.8
-                  }) rotateY(${posicion * 15}deg)`,
+                  transform: `translateX(${posicion * 260}px) scale(${posicion === 0 ? 1 : 0.8
+                    }) rotateY(${posicion * 15}deg)`,
                   zIndex: posicion === 0 ? 1 : 0,
                   opacity: Math.abs(posicion) > 2 ? 0 : 1,
                 }}
