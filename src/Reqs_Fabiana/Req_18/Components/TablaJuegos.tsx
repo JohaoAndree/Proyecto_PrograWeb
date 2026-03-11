@@ -19,22 +19,22 @@ const TablaJuegos = () => {
   }, [categoriaSeleccionada]);
 
   const cargarJuegos = async () => {
-  try {
-    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`);
-    let lista = res.data;
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`);
+      let lista = res.data;
 
-    // ⚠️ Agrega este filtro para que solo se vean los juegos activos
-    lista = lista.filter((j: Juego) => j.estado === true);
+      // ⚠️ Agrega este filtro para que solo se vean los juegos activos
+      lista = lista.filter((j: Juego) => j.estado === true);
 
-    if (categoriaSeleccionada) {
-      lista = lista.filter((j: Juego) => j.categoriaId === categoriaSeleccionada);
+      if (categoriaSeleccionada) {
+        lista = lista.filter((j: Juego) => j.categoriaId === categoriaSeleccionada);
+      }
+
+      setJuegos(lista);
+    } catch (error) {
+      console.error('Error al cargar juegos:', error);
     }
-
-    setJuegos(lista);
-  } catch (error) {
-    console.error('Error al cargar juegos:', error);
-  }
-};
+  };
 
 
   const cargarCategorias = async () => {
@@ -49,7 +49,7 @@ const TablaJuegos = () => {
   const guardarJuego = async (juego: Juego): Promise<void> => {
     try {
       if (juego.id) {
-        await axios.put(`${import.meta.env.ITE_BACKEND_URL}/api/juegos/${juego.id}`, juego);
+        await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/${juego.id}`, juego);
       } else {
         await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`, juego);
       }
@@ -62,15 +62,15 @@ const TablaJuegos = () => {
     }
   };
 
- const eliminarJuego = async (id: number): Promise<void> => {
-  try {
-    await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/${id}`, { estado: false });
-    setJuegoEliminando(null);
-    await cargarJuegos();
-  } catch (error) {
-    console.error('Error al eliminar juego:', error);
-  }
-};
+  const eliminarJuego = async (id: number): Promise<void> => {
+    try {
+      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/${id}`, { estado: false });
+      setJuegoEliminando(null);
+      await cargarJuegos();
+    } catch (error) {
+      console.error('Error al eliminar juego:', error);
+    }
+  };
 
 
   return (

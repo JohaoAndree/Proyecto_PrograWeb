@@ -1,0 +1,269 @@
+/* Animación sutil en botones */
+.btn,
+button {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover,
+button:hover,
+.btn:focus,
+button:focus {
+  transform: scale(1.04);
+  box-shadow: 0 0 12px 2px var(--color-primary-glow);
+}
+
+/* Inputs: glow en focus */
+input:focus,
+textarea:focus {
+  box-shadow: 0 0 8px 2px var(--color-primary-glow);
+  border-color: var(--color-primary);
+}
+
+/* Animación de entrada para cards y secciones */
+.fadeInUp {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUpAnim 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes fadeInUpAnim {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+
+  .sectionCard,
+  .card {
+    padding: 1rem;
+    border-radius: 12px;
+    max-width: 98vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sectionCard p,
+  .card p {
+    max-width: 98vw;
+    font-size: 0.98rem;
+  }
+
+  section {
+    margin-bottom: 2.5rem;
+    padding: 0.5rem;
+  }
+
+  form {
+    padding: 0.5rem;
+    max-width: 98vw !important;
+  }
+
+  input,
+  textarea {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+}
+
+@font-face {
+  font-family: 'FiraCodeNerdFont';
+  src: url('/fonts/FiraCode-Light.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Paleta de colores: Deep Midnight & Cyan */
+  --color-bg: #0B0E14;
+  /* Fondo más profundo y profesional */
+  --color-bg-card: #151921;
+  /* Superficie de tarjetas con ligero tono azulado */
+  --color-bg-footer: #00AEEF;
+  /* El color vibrante de tu footer */
+  --color-primary: #00AEEF;
+  /* Cyan principal */
+  --color-primary-glow: rgba(0, 174, 239, 0.3);
+  --color-accent: #00D1FF;
+  /* Un cian más brillante para interacciones */
+  --color-text-main: #F0F2F5;
+  /* Blanco suave para no cansar la vista */
+  --color-text-secondary: #94A3B8;
+  /* Gris azulado para jerarquía secundaria */
+  --color-border: rgba(255, 255, 255, 0.08);
+  /* Bordes casi invisibles */
+}
+
+body {
+  /* Graduación más sutil: el color fluye desde la esquina inferior derecha */
+  background: radial-gradient(circle at 90% 90%, #00587A 0%, #0B0E14 40%);
+  background-attachment: fixed;
+  color: var(--color-text-main);
+  font-family: 'FiraCodeNerdFont', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  /* Fuente más limpia para UI */
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Efecto Glassmorphism para el Navbar */
+.navbar {
+  background: rgba(11, 14, 20, 0.75) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Tarjetas con más "aire" y profesionalismo */
+.card,
+.sectionCard {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+/* Mejora: texto de descripción en tarjetas y secciones */
+.sectionCard p,
+.card p {
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* Espaciado entre secciones grandes */
+section {
+  margin-bottom: 80px;
+}
+
+/* Unificación de los títulos de las tarjetas */
+.card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #FFFFFF;
+}
+
+/* Estilo para las estrellas o ratings */
+.rating {
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.6), 0 0 15px var(--color-primary-glow);
+  border-color: rgba(0, 174, 239, 0.4);
+}
+
+/* Enlaces más modernos */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+  text-shadow: 0 0 8px var(--color-primary-glow);
+}
+
+/* Títulos con jerarquía clara */
+h1,
+h2,
+h3 {
+  color: #FFFFFF;
+  letter-spacing: -0.02em;
+}
+
+/* Inputs con estilo moderno "Dark" */
+input,
+textarea,
+select {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 10px 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px var(--color-primary-glow);
+}
+
+/* Footer que se integra con la marca */
+.footer {
+  background: var(--color-bg-footer);
+  color: #FFFFFF;
+  padding: 3rem 1rem;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2D3748;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+@media (max-width: 900px) {
+
+  .card,
+  .sectionCard {
+    border-radius: 16px;
+    padding: 1rem;
+  }
+}
+
+/* Para que los textos no se estiren demasiado */
+.sectionCard p {
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  /* Mejora la legibilidad */
+  color: var(--color-text-secondary);
+  /* Usa un gris claro, no verde */
+}
+
+/* Espaciado entre las secciones grandes */
+section {
+  margin-bottom: 80px;
+}
+
+/* Unificación de los títulos de las tarjetas */
+.card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #FFFFFF;
+  /* Blanco puro para títulos de juegos */
+}
+
+/* Estilo para las estrellas o ratings */
+.rating {
+  color: var(--color-primary);
+  /* Cian en lugar de verde */
+  font-weight: bold;
+}

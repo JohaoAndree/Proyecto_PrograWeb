@@ -60,7 +60,7 @@ const Req2 = () => {
   return (
     <div className={styles.fondoAzulOsc}>
       <div className={styles.cajaRegist}>
-        <h2 className="mb-2 text-center">Registro <strong>DieguitoStore</strong></h2>
+        <h2 className="mb-2 text-center">Registro <strong>GameStore</strong></h2>
         <p className="text-center mb-4">Ingresa los siguientes datos</p>
 
         <label htmlFor="nombreRegis" className="form-label">Nombres:</label>

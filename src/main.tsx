@@ -6,6 +6,7 @@ import Req22 from './Reqs_Johao/Req_22';
 import Req24 from './Reqs_Johao/Req_24';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './global.module.css';
 import LayoutConHeader from './Reqs_Fabiana/Req_Veremos/Componentes/LayoutConHeader';
 import PaginaPrincipal from './Reqs_Fabiana/Req_Veremos/PaginaPrincipal';
 import Req2 from "./Reqs_Diego/Req_2/index";

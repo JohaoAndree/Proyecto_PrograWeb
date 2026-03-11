@@ -1,3 +1,33 @@
+.form-control {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #151921;
+  color: #EAEAEA;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  border-color: #00AEEF;
+  box-shadow: 0 0 0 2px rgba(0, 174, 239, 0.15);
+  outline: none;
+}
+
+.btn-danger,
+.btn-success,
+.btn-secondary {
+  background: linear-gradient(90deg, #00AEEF 0%, #00587A 100%);
+  border: none;
+  color: #FFF;
+  font-weight: bold;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn-danger:hover,
+.btn-success:hover,
+.btn-secondary:hover {
+  background: #00AEEF;
+  box-shadow: 0 0 8px 2px rgba(0, 174, 239, 0.15);
+}
+
 .fondoAzulOscuro {
   background-color: white;
   height: 100vh;

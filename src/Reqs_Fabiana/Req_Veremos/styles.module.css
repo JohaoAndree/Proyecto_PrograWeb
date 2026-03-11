@@ -1,0 +1,72 @@
+.sectionCard {
+  background: #36393F;
+  border-radius: 24px;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
+  padding: 2rem 1rem;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.sectionTitle {
+  color: #00AEEF;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.sectionText {
+  color: #B9BBBE;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.formLabel {
+  color: #EAEAEA;
+}
+
+.formInput {
+  background: #23272A;
+  color: #EAEAEA;
+  border: 1px solid #444;
+}
+
+.carrusel {
+  border-radius: 24px;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #23272A;
+  position: relative;
+}
+
+.carruselImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: transparent;
+  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.carruselCaption {
+  background: rgba(36, 37, 38, 0.18);
+  border-radius: 0 0 16px 16px;
+  padding: 10px 18px;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(2px);
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.carruselTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00AEEF;
+  text-shadow: 0 1px 4px #23272A;
+  margin-bottom: 0.5rem;
+}
+
+.carruselSubtitle {
+  display: none;
+}

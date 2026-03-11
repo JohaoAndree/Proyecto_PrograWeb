@@ -15,7 +15,7 @@ function Req9() {
     //usando el back, ayuda xd
     useEffect(() => {
         let ignore = false;
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/juegos`).then(res => {
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`).then(res => {
             if (!ignore) setJuegosDisponibles(res.data)
         }).catch(err => {
             console.error("Error al cargar los juegos: ", err)

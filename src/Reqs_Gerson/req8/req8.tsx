@@ -18,7 +18,15 @@ const Req8 = () => {
     backend
       .get("/api/gerson/games/juegos-populares")
       .then((res) => {
-        if (!ignore) setJuegos(res.data);
+        if (!ignore) {
+          const juegosConImagenes = res.data.map((juego: Juego) => ({
+            ...juego,
+            imagen: juego.imagen.startsWith("http")
+              ? juego.imagen
+              : `${import.meta.env.VITE_BACKEND_URL}${juego.imagen}`,
+          }));
+          setJuegos(juegosConImagenes);
+        }
       })
       .catch((err) =>
         console.error("Error al cargar los juegos populares", err)
