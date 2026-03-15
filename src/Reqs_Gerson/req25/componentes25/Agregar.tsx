@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { Noticia } from "./ListaNoticias";
+import type { Noticia } from "./types";
 import styles from "./styles.module.css";
 
 interface Props {

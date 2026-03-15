@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './JuegosPopulares.module.css';
-import axios from '../../api/axios';
+import axios from '../../../api/axios';
 
 interface Juego {
   titulo: string;

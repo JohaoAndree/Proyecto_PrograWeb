@@ -1,4 +1,3 @@
-//import emailjs from '@emailjs/browser';
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
