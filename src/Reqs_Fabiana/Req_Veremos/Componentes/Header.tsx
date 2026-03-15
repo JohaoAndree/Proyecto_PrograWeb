@@ -1,45 +1,95 @@
+import { useEffect, useState } from "react";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaGamepad, FaHome, FaNewspaper, FaShoppingCart, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
+import styles from "./Header.module.css";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
 
-  // 👇 Leer directamente del localStorage en cada render
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
+
+  // Detectar scroll para efecto de sombra
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const cerrarSesion = () => {
     localStorage.removeItem("usuario");
-    navigate("/"); // redirigir a inicio
+    navigate("/");
   };
 
-  return (
-    <Navbar bg="dark" variant="dark" expand="lg">
-      <Container>
-        <Navbar.Brand as={Link} to="/">GameStore</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/">Inicio</Nav.Link>
+  // Helper para determinar si una ruta está activa
+  const isActive = (path: string) => location.pathname === path;
+  const isJuegosActive = location.pathname.startsWith("/juegos");
 
-            <NavDropdown title="Juegos" id="juegos-dropdown">
+  const navLinkClass = (path: string) =>
+    `${styles.navLink} ${isActive(path) ? styles.navLinkActive : ""}`;
+
+  return (
+    <Navbar
+      expand="lg"
+      className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ""}`}
+      variant="dark"
+    >
+      <Container>
+        <Navbar.Brand as={Link} to="/" className={styles.brand}>
+          <FaGamepad className={styles.brandIcon} />
+          GameStore
+        </Navbar.Brand>
+
+        <Navbar.Toggle aria-controls="main-navbar-nav" />
+        <Navbar.Collapse id="main-navbar-nav">
+          <Nav className="ms-auto">
+            <Nav.Link as={Link} to="/" className={navLinkClass("/")}>
+              <FaHome className={styles.linkIcon} />
+              Inicio
+            </Nav.Link>
+
+            <NavDropdown
+              title={
+                <span>
+                  <FaGamepad className={styles.linkIcon} /> Juegos
+                </span>
+              }
+              id="juegos-dropdown"
+              className={`${styles.dropdown} ${isJuegosActive ? styles.dropdownActive : ""}`}
+            >
               <NavDropdown.Item as={Link} to="/juegos/mas-vendidos">
-                Juegos más vendidos
+                Más vendidos
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/juegos/mas-populares">
-                Juegos más populares
+                Más populares
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/juegos/lista">
-                Lista de Juegos
+                Lista de juegos
               </NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link as={Link} to="/carrito">Carrito de compras</Nav.Link>
+            <Nav.Link as={Link} to="/noticias" className={navLinkClass("/noticias")}>
+              <FaNewspaper className={styles.linkIcon} />
+              Noticias
+            </Nav.Link>
 
-            {/* ✅ Mostrar Acceder o Cerrar sesión según si hay usuario */}
+            <Nav.Link as={Link} to="/carrito" className={navLinkClass("/carrito")}>
+              <FaShoppingCart className={styles.linkIcon} />
+              Carrito
+            </Nav.Link>
+
             {usuario ? (
-              <Nav.Link onClick={cerrarSesion}>Cerrar sesión</Nav.Link>
+              <Nav.Link onClick={cerrarSesion} className={styles.logoutBtn}>
+                <FaSignOutAlt className={styles.linkIcon} />
+                Cerrar sesión
+              </Nav.Link>
             ) : (
-              <Nav.Link as={Link} to="/usuario">Acceder</Nav.Link>
+              <Nav.Link as={Link} to="/usuario" className={navLinkClass("/usuario")}>
+                <FaSignInAlt className={styles.linkIcon} />
+                Acceder
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

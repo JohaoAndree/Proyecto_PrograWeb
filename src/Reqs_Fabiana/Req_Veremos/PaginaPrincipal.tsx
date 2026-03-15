@@ -5,7 +5,7 @@ import godOfWar from '../Req_Veremos/Imagenes_Carrusel/God_of_War_Ragnarok.jpg';
 import minecraft from '../Req_Veremos/Imagenes_Carrusel/minecraft.png';
 import residentEvil from '../Req_Veremos/Imagenes_Carrusel/Resident_Evil_Village.jpg';
 import mariobros from '../Req_Veremos/Imagenes_Carrusel/mariobros.png';
-import witcher from '../Req_Veremos/Imagenes_Carrusel/The_Witcher_3_Wild_Hunt.jpg';
+import witcher from '../Req_Veremos/Imagenes_Carrusel/The_Witcher_3_Wild_Hunt.png';
 import genshin from '../Req_Veremos/Imagenes_Carrusel/genshin.jpg';
 import JuegosPopulares from './Componentes/JuegosPopulares';
 import Footer from './Componentes/Footer';
