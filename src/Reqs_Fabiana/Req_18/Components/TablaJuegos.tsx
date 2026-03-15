@@ -9,7 +9,6 @@ const TablaJuegos = () => {
   const [mostrarAgregar, setMostrarAgregar] = useState(false);
   const [juegoEditando, setJuegoEditando] = useState<Juego | null>(null);
   const [juegoEliminando, setJuegoEliminando] = useState<Juego | null>(null);
-
   const [categorias, setCategorias] = useState<{ id: number; nombre: string }[]>([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
 

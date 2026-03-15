@@ -11,8 +11,7 @@ import LayoutConHeader from './Reqs_Fabiana/Req_Veremos/Componentes/LayoutConHea
 import PaginaPrincipal from './Reqs_Fabiana/Req_Veremos/PaginaPrincipal';
 import Req2 from "./Reqs_Diego/Req_2/index";
 import Req1 from './Reqs_Fabiana/Req_01';
-import Req10 from './Reqs_Fabiana/Req_10_11/Carrito';
-import Req11 from './Reqs_Fabiana/Req_11';
+import Req_10_11 from './Reqs_Fabiana/Req_10_11/Carrito';
 import Req17 from './Reqs_Fabiana/Req_17';
 import Req18 from './Reqs_Fabiana/Req_18';
 import Req9 from './Reqs_Fabiana/Req_9/Req9';
@@ -29,7 +28,7 @@ createRoot(document.getElementById('root')!).render(
         <Route element={<LayoutConHeader />}>
           <Route path="/" element={<PaginaPrincipal />} />
           <Route path="/noticias" element={<Noticias />} />
-          <Route path="/carrito" element={<Req10 />} />
+          <Route path="/carrito" element={<Req_10_11 />} />
           <Route path="/usuario" element={<Req1 />} />
           <Route path="/registro" element={<Req2 />} />
           <Route path="/recuperar" element={<Req4 />} />
@@ -40,7 +39,6 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/juegos/lista" element={<Req9 />} />
         </Route>
         <Route path="/req1" element={<Req1 />} />
-        <Route path="/req11" element={<Req11 />} />
         <Route path="/req17" element={<Req17 />} />
         <Route path="/req18" element={<Req18 />} />
         <Route path="/reqs_21_and_23" element={<Reqs_21_and_23 />} />
