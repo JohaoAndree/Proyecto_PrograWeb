@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
-import Titulo from '../../Shared_Components/Titulo';
 import ListaNoticias from './ListaNoticias';
 import { obtenerNoticias } from '../../../api/usuarios.api';
 import type { Noticia } from './ListaNoticias';
 
 const CuerpoPagina = () => {
-  const titulo = "Noticias";
   const [noticias, setNoticias] = useState<Noticia[]>([]);
 
   const cargarNoticias = async () => {
@@ -23,9 +21,8 @@ const CuerpoPagina = () => {
   }, []);
 
   return (
-    <div className={"flex-grow-1 " + styles.CuerpoPagina}>
-      <Titulo texto={titulo} />
-      <div className={styles.ContenedorListaNoticias}>
+    <div className={styles.CuerpoPagina}>
+      <div className={styles.FullSpaceContainer}>
         <ListaNoticias noticias={noticias} recargarNoticias={cargarNoticias} />
       </div>
     </div>
