@@ -1,109 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-primary: #00D1FF;
+  --color-bg-dark: #0B0E14;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
 .sectionCard {
-  background: #36393F;
+  background: linear-gradient(135deg, rgba(43, 45, 49, 0.9) 0%, rgba(26, 29, 35, 0.95) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
-  padding: 2rem 1rem;
+  padding: 3rem 2.5rem;
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
+  transition: all 0.4s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.sectionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 209, 255, 0.3);
 }
 
 .sectionTitle {
-  color: #00AEEF;
-  font-size: 2rem;
-  font-weight: bold;
+  color: #00D1FF;
+  font-size: 2.5rem;
+  font-weight: 700;
   text-align: center;
   margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #00D1FF, #00AEEF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .sectionText {
-  color: #B9BBBE;
+  color: #E2E8F0;
   font-size: 1.1rem;
   text-align: center;
+  line-height: 1.6;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
+/* Form Styles */
 .formLabel {
-  color: #EAEAEA;
+  color: #00D1FF;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
 }
 
 .formInput {
-  background: #23272A;
-  color: #EAEAEA;
-  border: 1px solid #444;
+  background: rgba(0, 0, 0, 0.3) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 0.8rem 1.25rem !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+.formInput::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.formInput:focus {
+  border-color: #00AEEF !important;
+  box-shadow: 0 0 10px rgba(0, 174, 239, 0.1) !important;
+}
+
+.btnSubmit {
+  background: linear-gradient(90deg, #00AEEF, #00D1FF) !important;
+  border: none !important;
+  padding: 0.85rem 2rem !important;
+  border-radius: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  transition: all 0.3s ease !important;
+  width: 100%;
+}
+
+.btnSubmit:hover {
+  transform: scale(1.01);
+  box-shadow: 0 5px 15px rgba(0, 174, 239, 0.2) !important;
 }
 
 .carrusel {
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
   width: 100%;
-  aspect-ratio: 16/9;
-  background: #23272A;
+  aspect-ratio: 16/9; /* Coincide con 1920x1080 para imágenes completas */
+  background: #0B0E14;
   position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  margin-bottom: 2.5rem; /* Margen estándar para armonía */
+}
+
+/* Fix Crítico: Forzar que Bootstrap llene el contenedor aspect-ratio */
+.carrusel :global(.carousel),
+.carrusel :global(.carousel-inner),
+.carrusel :global(.carousel-item) {
+  height: 100% !important;
 }
 
 .carruselImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background: transparent;
-  transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  object-position: center;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.carrusel:hover .carruselImg {
+  transform: scale(1.05);
 }
 
 .carruselCaption {
-  background: rgba(36, 37, 38, 0.18);
-  border-radius: 0 0 16px 16px;
-  padding: 10px 18px;
-  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(2px);
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  background: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1rem 2rem !important;
+  bottom: 1.5rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: fit-content !important;
+  max-width: 90% !important;
+  text-align: center !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  z-index: 10 !important;
 }
 
-.carruselTitle {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #00AEEF;
-  text-shadow: 0 1px 4px #23272A;
-  margin-bottom: 0.5rem;
+.captionTitle {
+  color: #00D1FF;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
-.carruselSubtitle {
-  display: none;
+.captionText {
+  color: #FFFFFF;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin: 0 auto;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  font-weight: 400;
 }
 
-/* ===== Animación de pulsación cyan al cargar ===== */
-
-.pageGlow {
-  animation: cyanPulseGlow 4s ease-out forwards;
+/* Info List */
+.infoList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-@keyframes cyanPulseGlow {
-  0% {
-    box-shadow: inset 0 0 0 0 transparent, 0 0 0 0 transparent;
-  }
+.infoItem {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
 
-  15% {
-    box-shadow:
-      inset 0 0 30px -5px rgba(0, 174, 239, 0.2),
-      0 0 25px -5px rgba(0, 174, 239, 0.35),
-      0 0 60px -10px rgba(0, 209, 255, 0.15);
-  }
+.infoItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-5px);
+}
 
-  40% {
-    box-shadow:
-      inset 0 0 15px -5px rgba(0, 174, 239, 0.1),
-      0 0 12px -3px rgba(0, 174, 239, 0.2),
-      0 0 35px -8px rgba(0, 209, 255, 0.08);
-  }
-
-  65% {
-    box-shadow:
-      inset 0 0 25px -5px rgba(0, 174, 239, 0.15),
-      0 0 20px -5px rgba(0, 174, 239, 0.25),
-      0 0 50px -10px rgba(0, 209, 255, 0.12);
-  }
-
-  100% {
-    box-shadow: inset 0 0 0 0 transparent, 0 0 0 0 transparent;
+/* Responsive Fixes */
+@media (max-width: 991px) {
+  .captionTitle {
+    font-size: 1.5rem;
   }
 }
+
+@media (max-width: 768px) {
+  .carrusel {
+    aspect-ratio: 16/9; /* Mantener ratio para evitar espacios vacíos */
+  }
+  
+  .carruselCaption {
+    padding: 0.75rem 1.25rem !important;
+    bottom: 0.5rem !important;
+    max-width: 95% !important;
+    border-radius: 12px !important;
+  }
+
+  .captionTitle {
+    font-size: 1rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .captionText {
+    font-size: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .sectionTitle {
+    font-size: 1.75rem;
+  }
+
+  .sectionCard {
+    padding: 2rem 1.5rem;
+  }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './JuegosPopulares.module.css';
 import axios from '../../../api/axios';
+import { SkeletonCard } from '../../../Shared/Components/SkeletonView';
 
 interface Juego {
   titulo: string;
@@ -12,7 +13,6 @@ interface Juego {
 }
 
 function extraerValoracion(valoracion: string): number {
-  // Busca el número al final del string, ejemplo: "★★★★☆ 8.5/10"
   const match = valoracion.match(/([0-9]+\.?[0-9]*)\/10$/);
   return match ? parseFloat(match[1]) : 0;
 }
@@ -23,51 +23,62 @@ export default function JuegosPopulares() {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    let ignore = false;
     axios.get('/api/gerson/games/juegos-populares')
       .then(res => {
+        if (ignore) return;
         const juegosOrdenados = [...res.data]
           .sort((a: Juego, b: Juego) => extraerValoracion(b.valoracion) - extraerValoracion(a.valoracion));
-        // Selección de los 3 mejores, considerando empates
-        const topJuegos: Juego[] = [];
-        let i = 0;
-        while (topJuegos.length < 3 && i < juegosOrdenados.length) {
-          const actualValor = extraerValoracion(juegosOrdenados[i].valoracion);
-          if (topJuegos.length === 0 || actualValor === extraerValoracion(topJuegos[0].valoracion)) {
-            topJuegos.push(juegosOrdenados[i]);
-          } else if (topJuegos.length < 2 || actualValor === extraerValoracion(topJuegos[1].valoracion)) {
-            topJuegos.push(juegosOrdenados[i]);
-          } else {
-            topJuegos.push(juegosOrdenados[i]);
-          }
-          i++;
-        }
-        setJuegos(topJuegos.slice(0, 3));
+        
+        setJuegos(juegosOrdenados.slice(0, 3));
         setLoading(false);
       })
       .catch(() => {
+        if (ignore) return;
         setError('No se pudieron cargar los juegos populares');
         setLoading(false);
       });
+    return () => { ignore = true; };
   }, []);
 
-  if (loading) return <div className={styles.loading}>Cargando juegos populares...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
+  const extractNumericRating = (val: string) => {
+    const match = val.match(/([0-9]+\.?[0-9]*\/10)/);
+    return match ? match[1] : (val.split(' ').pop() || 'N/A');
+  };
 
   return (
     <section className={styles.popularesSection}>
-      <h2 className={styles.titulo}>Juegos Populares</h2>
+      <h2 className={styles.titulo}>Top Juegos de la Semana</h2>
       <div className={styles.juegosGrid}>
-        {juegos.map((juego, idx) => (
-          <div key={idx} className={styles.juegoCard + ' fadeInUp'}>
-            <img src={`${import.meta.env.VITE_BACKEND_URL}${juego.imagen}`} alt={juego.titulo} className={styles.juegoImg} />
-            <div className={styles.juegoInfo}>
-              <h3 className={styles.juegoTitulo}>{juego.titulo}</h3>
-              <p className={styles.juegoGenero}>{juego.genero}</p>
-              <p className={styles.juegoDescripcion}>{juego.descripcion}</p>
-              <p className={styles.juegoValoracion}>{juego.valoracion}</p>
+        {loading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : error ? (
+          <div className={styles.error}>{error}</div>
+        ) : (
+          juegos.map((juego, idx) => (
+            <div key={idx} className={`${styles.juegoCard} fadeInUp`}>
+              <div className={styles.imgWrapper}>
+                <img 
+                  src={`${import.meta.env.VITE_BACKEND_URL}${juego.imagen}`} 
+                  alt={juego.titulo} 
+                  className={styles.juegoImg} 
+                />
+              </div>
+              <div className={styles.juegoInfo}>
+                <div className={styles.headerInfo}>
+                  <h3 className={styles.juegoTitulo}>{juego.titulo}</h3>
+                  <span className={styles.valoracionTag}>{extractNumericRating(juego.valoracion)}</span>
+                </div>
+                <p className={styles.juegoGenero}>{juego.genero}</p>
+                <p className={styles.juegoDescripcion}>{juego.descripcion}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </section>
   );

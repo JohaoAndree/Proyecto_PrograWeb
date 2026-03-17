@@ -1,26 +1,43 @@
-/* Layout Principal */
 .pageContainer {
   min-height: 100vh;
-  padding: 2rem 0 4rem;
+  padding: 1.5rem 0 2.5rem;
+  /* Compactado */
 }
 
 .pageTitle {
-  color: #00AEEF;
+  color: #00D1FF;
   text-align: center;
-  font-family: 'FiraCodeNerdFont', 'Orbitron', sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 2.5rem;
-  text-shadow: 0 0 15px rgba(0, 174, 239, 0.4);
+  font-family: 'Fira Code', 'FiraCodeNerdFont', monospace;
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 20px rgba(0, 209, 255, 0.5), 0 0 40px rgba(0, 209, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: linear-gradient(90deg, #00AEEF, #00D1FF, #00AEEF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
 }
 
 .sectionTitle {
   color: #EAEAEA;
   font-size: 1.8rem;
-  margin-top: 4rem;
-  margin-bottom: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
   padding-left: 1rem;
-  border-left: 4px solid #00AEEF;
+  border-left: 4px solid #00D1FF;
+  font-family: 'Fira Code', monospace;
 }
 
 /* ===== Carrusel (Top 3) ===== */
@@ -28,7 +45,7 @@
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 174, 239, 0.15);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   aspect-ratio: 16/9;
   background: #111120;
 }
@@ -40,7 +57,6 @@
   transition: transform 6s ease-out;
 }
 
-/* Efecto sutil de zoom en la imagen activa del carrusel */
 :global(.carousel-item.active) .carruselImg {
   transform: scale(1.05);
 }
@@ -67,6 +83,24 @@
   font-size: 1.1rem;
   max-width: 800px;
   margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.readMore {
+  color: #00D1FF;
+  cursor: pointer;
+  margin-left: 5px;
+  font-weight: bold;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.readMore:hover {
+  color: #FFFFFF;
 }
 
 .badgeGroup {
@@ -88,7 +122,22 @@
   gap: 0.4rem;
 }
 
-/* ===== Grid de Tarjetas (Resto de juegos) ===== */
+.ratingBadge {
+  background: rgba(255, 215, 0, 0.25);
+  border: 1px solid rgba(255, 215, 0, 0.6);
+  color: #FFD700;
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: bold;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* ===== Grid de Tarjetas ===== */
 .juegosGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -105,6 +154,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  cursor: pointer;
 }
 
 .juegoCard:hover {
@@ -139,7 +189,7 @@
   backdrop-filter: blur(4px);
   color: #00D1FF;
   font-weight: bold;
-  font-family: 'FiraCodeNerdFont', monospace;
+  font-family: 'Fira Code', monospace;
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
   border: 1px solid rgba(0, 174, 239, 0.3);
@@ -165,8 +215,26 @@
   color: #94A3B8;
   font-size: 0.95rem;
   line-height: 1.5;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.85rem;
+}
+
+.ratingText {
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.5rem;
 }
 
 .cardFooter {
@@ -185,6 +253,128 @@
   gap: 0.4rem;
 }
 
+/* ===== Modal Premium ===== */
+.premiumModal :global(.modal-content) {
+  background: rgba(15, 18, 26, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 209, 255, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  color: #E2E8F0;
+}
+
+.modalHeader {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalTitle {
+  font-family: 'Fira Code', monospace;
+  font-weight: 700;
+  color: #00D1FF;
+}
+
+.btnClose {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 1.5rem;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.btnClose:hover {
+  color: #ef4444;
+}
+
+.modalBody {
+  padding: 2rem;
+}
+
+.modalImgContainer {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modalImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modalRatingBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(11, 14, 20, 0.85);
+  backdrop-filter: blur(10px);
+  color: #FFD700;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.5);
+  font-weight: 800;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modalBadgeGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.modalSectionTitle {
+  color: #00D1FF;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.5rem;
+}
+
+.modalText {
+  color: #cbd5e1;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}
+
+.modalFooter {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem 2rem;
+}
+
+.modalBtn {
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.modalBtn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(0, 209, 255, 0.3);
+}
+
 .loading {
   text-align: center;
   color: #00AEEF;
@@ -193,15 +383,31 @@
 }
 
 @media (max-width: 768px) {
+  .carruselContainer {
+    aspect-ratio: 4/5;
+  }
+
   .carruselTitle {
     font-size: 1.5rem;
   }
-  
+
   .carruselDesc {
     font-size: 0.9rem;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    max-height: 4rem;
   }
-  
+
   .carruselCaption {
     padding: 1.5rem 1rem 1rem;
+    background: linear-gradient(to top, rgba(11, 14, 20, 0.98) 0%, rgba(11, 14, 20, 0.8) 50%, transparent 100%);
+  }
+
+  .pageTitle {
+    font-size: 1.8rem;
+  }
+
+  .modalBody {
+    padding: 1.25rem;
   }
 }
