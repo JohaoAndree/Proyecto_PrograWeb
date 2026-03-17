@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
-import CuadroConteoUsuarios from './CuadroConteoUsuarios';
-import Titulo from '../../Shared_Components/Titulo';
+import StatCard from './StatCard';
 import Grafico from './Grafico';
-import { contarUsuarios, obtenerGanancias } from '../../../api/usuarios.api';
+import { contarUsuarios, obtenerGanancias, obtenerNoticias, contarVentas } from '../../../api/usuarios.api';
+import axios from 'axios';
+import { FaUsers, FaGamepad, FaNewspaper, FaShoppingCart } from 'react-icons/fa';
+import { SkeletonCard } from '../../../Shared/Components/SkeletonView';
 
 interface GananciaApi {
   mes: string;
@@ -11,53 +13,105 @@ interface GananciaApi {
 }
 
 const CuerpoPagina = () => {
-  const titulo = "Estadísticas";
-  const [contador, setContador] = useState<number>(0);
+  const [stats, setStats] = useState({
+    usuarios: 0,
+    juegos: 0,
+    noticias: 0,
+    ventas: 0
+  });
   const [ganancias, setGanancias] = useState<number[]>([]);
   const [meses, setMeses] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let ignore = false;
-    const cargarEstadisticas = async () => {
+    const cargarTodo = async () => {
       try {
-        const total = await contarUsuarios();
-        const datos: GananciaApi[] = await obtenerGanancias();
+        setIsLoading(true);
+        // Multi-fetching paralos KPIs
+        const [resUsers, resNoticias, resJuegos, resGanancias, resVentasCount] = await Promise.all([
+          contarUsuarios(),
+          obtenerNoticias(),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`),
+          obtenerGanancias(),
+          contarVentas()
+        ]);
+
         if (ignore) return;
 
-        const mesesFormateados: string[] = datos.map((item: GananciaApi) => {
-          const fecha = new Date(item.mes + '-01');
-          const nombreMes = fecha.toLocaleString('es-PE', { month: 'long' });
-          const anio = fecha.getFullYear();
-          return `${nombreMes.charAt(0).toUpperCase()}${nombreMes.slice(1)} ${anio}`;
+        // Procesar KPIs
+        setStats({
+          usuarios: resUsers,
+          noticias: resNoticias.length,
+          juegos: resJuegos.data.filter((j: { estado: boolean }) => j.estado === true).length,
+          ventas: resVentasCount
         });
 
-        const valoresGanancia: number[] = datos.map((item: GananciaApi) => item.total);
+        // Procesar Gráfico
+        const datos: GananciaApi[] = resGanancias;
+        const mesesFormateados: string[] = datos.map((item: GananciaApi) => {
+          const fecha = new Date(item.mes + '-01');
+          const nombreMes = fecha.toLocaleString('es-PE', { month: 'short' });
+          return `${nombreMes.charAt(0).toUpperCase()}${nombreMes.slice(1)}`;
+        });
 
-        setContador(total);
-        setGanancias(valoresGanancia);
+        setGanancias(datos.map(d => d.total));
         setMeses(mesesFormateados);
       } catch (error) {
-        console.error('Error al cargar estadísticas:', error);
+        console.error('Error al cargar dashboard:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    cargarEstadisticas();
+    cargarTodo();
     return () => { ignore = true; };
   }, []);
 
   return (
-    <div className={"flex-grow-1 " + styles.CuerpoPagina}>
-      <Titulo texto={titulo} />
-      <CuadroConteoUsuarios numero={contador} />
-      <Grafico
-        titulo="Ganancias de los últimos 12 meses"
-        ganancias={ganancias}
-        meses={meses}
-        tituloX="Meses"
-        tituloY="Ganancias ($)"
-      />
+    <div className={styles.CuerpoPagina}>
+      {/* KPI Section */}
+      <div className={styles.KPI_Grid}>
+        {isLoading ? (
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : (
+          <>
+            <StatCard label="Usuarios" value={stats.usuarios} icon={<FaUsers />} />
+            <StatCard label="Juegos" value={stats.juegos} icon={<FaGamepad />} />
+            <StatCard label="Noticias" value={stats.noticias} icon={<FaNewspaper />} />
+            <StatCard label="Ventas" value={stats.ventas} icon={<FaShoppingCart />} />
+          </>
+        )}
+      </div>
+
+      {/* Chart Section */}
+      <div className={styles.ChartWrapper}>
+        <div className={styles.ChartHeader}>
+          <h2 className={styles.ChartTitle}>Desempeño Mensual</h2>
+        </div>
+        <div className={styles.Grafico}>
+          {isLoading ? (
+            <div style={{ padding: '2rem', height: '300px' }}> {/* Placeholder simple para el gráfico */}
+              <div style={{ width: '100%', height: '100%', background: 'rgba(255,255,255,0.03)', borderRadius: '1rem' }} />
+            </div>
+          ) : (
+            <Grafico
+              titulo="Ganancias Proyectadas (S/.)"
+              ganancias={ganancias}
+              meses={meses}
+              tituloX="Periodo"
+              tituloY="Ingresos"
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };
 
-export default CuerpoPagina;
+export default CuerpoPagina;

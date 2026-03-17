@@ -1,30 +1,36 @@
-import styles from './styles.module.css'
-import { 
+import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
-    BarElement,
+    PointElement,
+    LineElement,
     Title,
     Tooltip,
+    Filler,
     Legend,
+    type ScriptableContext,
+    type TooltipItem
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
+import styles from './styles.module.css';
 
 ChartJS.register(
     CategoryScale,
     LinearScale,
-    BarElement,
+    PointElement,
+    LineElement,
     Title,
     Tooltip,
+    Filler,
     Legend
 );
 
 export interface PropsGrafico {
-    titulo: string
-    ganancias: number[]
-    meses: string[]
-    tituloX: string
-    tituloY: string
+    titulo: string;
+    ganancias: number[];
+    meses: string[];
+    tituloX: string;
+    tituloY: string;
 }
 
 const Grafico = (props: PropsGrafico) => {
@@ -32,92 +38,76 @@ const Grafico = (props: PropsGrafico) => {
         labels: props.meses,
         datasets: [
             {
-            label: props.tituloX,
-            data: props.ganancias,
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.6)',
-                'rgba(54, 162, 235, 0.6)',
-                'rgba(255, 206, 86, 0.6)',
-                'rgba(75, 192, 192, 0.6)',
-                'rgba(153, 102, 255, 0.6)',
-                'rgba(255, 159, 64, 0.6)',
-                'rgba(199, 199, 199, 0.6)',
-                'rgba(83, 109, 254, 0.6)',
-                'rgba(255, 99, 200, 0.6)',
-                'rgba(0, 200, 100, 0.6)',
-                'rgba(100, 100, 100, 0.6)',
-                'rgba(200, 0, 0, 0.6)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-                'rgba(199, 199, 199, 1)',
-                'rgba(83, 109, 254, 1)',
-                'rgba(255, 99, 200, 1)',
-                'rgba(0, 200, 100, 1)',
-                'rgba(100, 100, 100, 1)',
-                'rgba(200, 0, 0, 1)',
-            ],
-            borderWidth: 1,
+                fill: true,
+                label: 'Ingresos Mensuales',
+                data: props.ganancias,
+                borderColor: '#00aeef',
+                borderWidth: 3,
+                pointBackgroundColor: '#00aeef',
+                pointBorderColor: '#fff',
+                pointHoverRadius: 6,
+                pointRadius: 4,
+                tension: 0.4,
+                backgroundColor: (context: ScriptableContext<'line'>) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, 'rgba(0, 174, 239, 0.4)');
+                    gradient.addColorStop(1, 'rgba(0, 174, 239, 0)');
+                    return gradient;
+                },
             },
         ],
     };
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'top' as const,
-                labels: {
-                    color: "white"
-                },
+                display: false,
             },
-            title: {
-                display: true,
-                text: props.titulo,
-                color: "white"
+            tooltip: {
+                backgroundColor: 'rgba(13, 17, 23, 0.9)',
+                titleFont: { family: 'Fira Code', size: 14 },
+                bodyFont: { family: 'Fira Code', size: 13 },
+                borderColor: 'rgba(0, 174, 239, 0.3)',
+                borderWidth: 1,
+                padding: 12,
+                displayColors: false,
+                callbacks: {
+                    label: (context: TooltipItem<'line'>) => `S/. ${context.parsed.y.toLocaleString()}`
+                }
             },
         },
         scales: {
             y: {
                 beginAtZero: true,
-                title: {
-                    display: true,
-                    text: props.tituloY,
-                    color: "white"
+                grid: {
+                    color: 'rgba(255, 255, 255, 0.05)',
                 },
                 ticks: {
-                    color: "white"
+                    color: '#A0A0A0',
+                    font: { family: 'Fira Code', size: 11 },
+                    callback: (value: string | number) => `S/. ${value}`
                 },
-                grid: {
-                    color: "rgba(255, 255, 255, 0.1)"
-                }
             },
             x: {
-                title: {
-                    display: true,
-                    text: props.tituloX,
-                    color: "white"
+                grid: {
+                    display: false,
                 },
                 ticks: {
-                    color: "white"
+                    color: '#A0A0A0',
+                    font: { family: 'Fira Code', size: 11 },
                 },
-                grid: {
-                    color: "rgba(255, 255, 255, 0.1)"
-                }
             },
         },
     };
 
     return (
-        <div className={"container " + styles.Grafico}>
-            <Bar data={data} options={options} />
+        <div className={styles.Grafico}>
+            <Line data={data} options={options} />
         </div>
     );
 };
 
-export default Grafico
+export default Grafico;
