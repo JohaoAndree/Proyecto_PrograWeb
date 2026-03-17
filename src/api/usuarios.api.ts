@@ -16,6 +16,11 @@ export const obtenerGanancias = async () => {
   return response.data;
 };
 
+export const contarVentas = async () => {
+  const response = await backend.get('/api/johao/ventas/count');
+  return response.data.totalVentas;
+};
+
 export const obtenerNoticias = async (): Promise<Noticia[]> => {
   const response = await backend.get('/api/johao/noticias');
   return response.data;

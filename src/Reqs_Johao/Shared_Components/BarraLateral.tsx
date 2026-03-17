@@ -1,17 +1,19 @@
+import { useAdmin } from '../../Context/AdminContext'
 import styles from './SharedComponents.module.css'
 import ListaOpciones from './ListaOpciones'
-import PerfilUsuario from './PerfilUsuario'
-import Avatar from "../Resources/Avatar.jpeg"
+import PerfilAdmin from './PerfilAdmin'
+import AvatarPlaceholder from "../Resources/Avatar.jpeg"
 
 const BarraLateral = () => {
-    const rutaAvatar = Avatar
-    const alt = "avatar"
-    const nombre = "Johao Andreé"
-    const tamaño = 180
+    const { admin } = useAdmin();
 
     return (
-        <div className={"d-flex flex-column p-3 " + styles.BarraLateral}>
-            <PerfilUsuario src={rutaAvatar} alt={alt} size={tamaño} nombre={nombre}/>
+        <div className={styles.BarraLateral}>
+            <PerfilAdmin 
+                src={admin.foto || AvatarPlaceholder} 
+                alt="Admin Avatar" 
+                nombre={admin.nombre} 
+            />
             <ListaOpciones />
         </div>
     )

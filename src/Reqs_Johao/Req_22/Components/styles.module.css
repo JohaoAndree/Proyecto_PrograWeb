@@ -1,20 +1,173 @@
-.CuerpoPagina{
-    font-family: 'Roboto', sans-serif;
-    background-color: #37393b;
-    min-height: 100vh;
+.CuerpoPagina {
+  font-family: 'Fira Code', monospace;
+  background-color: transparent;
+  height: 100%;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Evita scroll global */
 }
 
-.Encabezado{
-    background-color: rgb(180, 180, 180);
-    font-weight: bold;
-    font-size: 20px;
+.FullSpaceContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
-.ItemLista{
-    background-color: rgb(233, 225, 225);
+.TableWrapper {
+  background: rgba(21, 25, 33, 0.5);
+  backdrop-filter: blur(12px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  flex: 1;
 }
 
-.ContenedorListaUsuarios{
-    max-height: 80vh;
-    overflow-y: auto;
+.AdminTable {
+  width: 100%;
+  border-collapse: collapse;
+  color: #EAEAEA;
 }
+
+.AdminTable thead {
+  background: rgba(0, 174, 239, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.AdminTable th {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-weight: 700;
+  color: var(--color-primary);
+  border-bottom: 2px solid rgba(0, 174, 239, 0.2);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.AdminTable td {
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  vertical-align: middle;
+}
+
+.AdminTable tr {
+  transition: background 0.2s ease;
+}
+
+.AdminTable tr:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.UserAvatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.IdCol {
+  color: #666;
+  font-weight: 600;
+}
+
+.NicknameCol {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.NombreCol {
+  font-weight: 500;
+}
+
+.PaisBadge {
+  background: rgba(0, 174, 239, 0.08);
+  color: var(--color-primary);
+  padding: 0.25rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(0, 174, 239, 0.2);
+}
+
+/* Scrollbar personalizada */
+.TableWrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.TableWrapper::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.TableWrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 174, 239, 0.2);
+  border-radius: 10px;
+}
+
+.TableWrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 174, 239, 0.4);
+}
+
+.HeaderTable {
+  margin-bottom: 1.5rem;
+  padding: 0 0.5rem;
+}
+
+.SearchContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  background: rgba(21, 25, 33, 0.4);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.SearchGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.SearchGroup label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.SearchInput {
+  background: rgba(11, 14, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  color: #fff;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.SearchInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 10px rgba(0, 174, 239, 0.2);
+  background: rgba(11, 14, 20, 0.8);
+}
+
+@media (max-width: 900px) {
+  .SearchContainer {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}

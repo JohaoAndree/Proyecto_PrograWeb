@@ -1,54 +1,140 @@
 .Titulo {
-    color: whitesmoke;
-    font-size: 2em;
-    font-weight: bold;
-    padding-top: 30px;
-    padding-left: 30px;
-    margin-bottom: 20px;
+  color: #FFFFFF;
+  font-size: 2.25rem;
+  font-weight: 800;
+  padding: 2.5rem 2rem 1rem 2rem;
+  margin: 0;
+  letter-spacing: -1px;
 }
 
-.BarraLateral{
-    font-family: 'Roboto', sans-serif;
-    background-color: #1B1C1D;
-    color: white;
-    min-height: 100vh;
-    width: auto;
-    /* padding-top: 20px; */
-    /* display: flex;
-    flex-direction: column; */
-    /* justify-content: space-between; */
+.BarraLateral {
+  background: linear-gradient(180deg, #111418 0%, #0d0f12 100%);
+  color: #EAEAEA;
+  height: 100%;
+  width: 100%;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrado vertical maestro */
+  padding: 2rem 1rem;
+  box-shadow: 4px 0 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
 }
 
-.PerfilUsuario{
-    padding: 10px;
-    /* padding-left: 30px; */
-    font-size: 1.5em;
-    margin-bottom: 20px;
+.PerfilAdmin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
 }
 
-.ListaOpciones{
-    padding-top: 10px;
-    padding-left: 0;
-    padding-right: 0;
-    /* display: flex;
-    flex-direction: column; */
-    flex-grow: 1;
+.Avatar {
+  width: min(160px, 20vh);
+  height: min(160px, 20vh);
+  border-radius: 1.5rem;
+  object-fit: cover;
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 25px rgba(0, 174, 239, 0.15);
+  transition: all 0.3s ease;
 }
 
-.ListItem{
-    background-color: transparent;
-    color: white;
-    border: none;
-    padding: 15px 50px;
-    text-align: left;
+/* Responsividad para pantallas con poca altura */
+@media (max-height: 700px) {
+  .PerfilAdmin {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    gap: 0.75rem;
+  }
+  .Avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 1rem;
+  }
+  .NombreAdmin {
+    font-size: 1rem;
+  }
 }
 
-.ListItem:hover{
-    background-color: rgba(17, 172, 12, 0.1);
-    cursor: pointer;
+.Avatar:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 35px rgba(0, 174, 239, 0.25);
 }
 
-.ItemFinal{
-    padding-left: 30px;
-    margin-top: auto;
+.NombreAdmin {
+  color: #FFFFFF;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
+
+.ListaOpciones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-grow: 0; /* No forzar el crecimiento para mantener el centrado */
+  overflow-y: auto;
+  padding-right: 5px;
+  max-height: 50vh; /* Límite para el scroll interno central */
+}
+
+/* Scrollbar para la lista de opciones */
+.ListaOpciones::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ListaOpciones::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ListaOpciones::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.ListItem {
+  background: rgba(255, 255, 255, 0.03);
+  color: #A0A0A0;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: 'Fira Code', monospace;
+  flex-shrink: 0;
+}
+
+.ListItem:hover {
+  background: rgba(0, 174, 239, 0.1);
+  color: var(--color-primary);
+  border-color: rgba(0, 174, 239, 0.3);
+  box-shadow: 0 0 15px rgba(0, 174, 239, 0.1);
+  transform: translateX(5px);
+}
+
+.ListItemActive {
+  background: rgba(0, 174, 239, 0.12);
+  color: var(--color-primary);
+  border-left: 3px solid var(--color-primary);
+}
+
+.ItemFinal {
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 1rem;
+  color: #ff4d4d !important;
+  flex-shrink: 0;
+}
+
+.ItemFinal:hover {
+  background: rgba(255, 77, 77, 0.08);
+}

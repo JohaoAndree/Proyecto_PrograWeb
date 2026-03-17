@@ -1,48 +1,50 @@
 import styles from "./styles.module.css"
 
-export interface Usuario{
-    id : number
-    foto : string
-    nickname : string
-    nombre : string
+export interface Usuario {
+    id: number
+    foto: string
+    nickname: string
+    nombre: string
+    pais: string
 }
 
-interface PropsListaUsuarios{
-    data : Usuario[]
+interface PropsListaUsuarios {
+    data: Usuario[]
 }
 
 const ListaUsuarios = (props: PropsListaUsuarios) => {
     return (
-        <div className="container text-center mt-4">
-            <ul className="list-group d-flex flex-column">
-                <li className={"list-group-item " + styles.Encabezado}>
-                    <div className="row">
-                        <div className="col-2">ID</div>
-                        <div className="col-3">Foto</div>
-                        <div className="col-4">Nickname</div>
-                        <div className="col-3">Nombre</div>
-                    </div>
-                </li>
-                {props.data.map((elemento: Usuario) => {
-                    return (
-                        <li key={elemento.id} className={"list-group-item " + styles.ItemLista}>
-                            <div className="row align-items-center">
-                                <div className="col-2">{elemento.id}</div>
-                                <div className="col-3">
-                                    <img
-                                        src={elemento.foto}
-                                        alt={`avatar${elemento.nombre}`}
-                                        className="rounded"
-                                        style={{ width: 70, height: 70, objectFit: "cover" }}
-                                    />
-                                </div>
-                                <div className="col-4">{elemento.nickname}</div>
-                                <div className="col-3">{elemento.nombre}</div>
-                            </div>
-                        </li>
-                    );
-                })}
-            </ul>
+        <div className={styles.TableWrapper}>
+            <table className={styles.AdminTable}>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Perfil</th>
+                        <th>Nickname</th>
+                        <th>Nombre</th>
+                        <th>País</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {props.data.map((usuario: Usuario) => (
+                        <tr key={usuario.id}>
+                            <td className={styles.IdCol}>#{usuario.id}</td>
+                            <td>
+                                <img
+                                    src={usuario.foto}
+                                    alt={usuario.nombre}
+                                    className={styles.UserAvatar}
+                                />
+                            </td>
+                            <td className={styles.NicknameCol}>{usuario.nickname}</td>
+                            <td className={styles.NombreCol}>{usuario.nombre}</td>
+                            <td>
+                                <span className={styles.PaisBadge}>{usuario.pais}</span>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

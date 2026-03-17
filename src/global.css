@@ -68,7 +68,7 @@ textarea:focus {
 }
 
 @font-face {
-  font-family: 'FiraCodeNerdFont';
+  font-family: 'Fira Code';
   src: url('/fonts/FiraCode-Light.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
@@ -101,7 +101,7 @@ body {
   background: radial-gradient(circle at 90% 90%, #00587A 0%, #0B0E14 40%);
   background-attachment: fixed;
   color: var(--color-text-main);
-  font-family: 'FiraCodeNerdFont', 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Fira Code', 'Inter', 'Segoe UI', system-ui, sans-serif;
   /* Fuente más limpia para UI */
   min-height: 100vh;
   margin: 0;
