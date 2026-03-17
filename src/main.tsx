@@ -20,31 +20,34 @@ import Req7 from './Reqs_Gerson/req7/req7';
 import Req8 from './Reqs_Gerson/req8/req8';
 import Req4 from './Reqs_Patrick/Req4/Req4';
 import RestablecerClave from './Reqs_Patrick/Req4/Req4.1';
+import { AdminProvider } from './Context/AdminContext';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename='/Proyecto_PrograWeb'>
-      <Routes>
-        <Route element={<LayoutConHeader />}>
-          <Route path="/" element={<PaginaPrincipal />} />
-          <Route path="/noticias" element={<Noticias />} />
-          <Route path="/carrito" element={<Req_10_11 />} />
-          <Route path="/usuario" element={<Req1 />} />
-          <Route path="/registro" element={<Req2 />} />
-          <Route path="/recuperar" element={<Req4 />} />
-          <Route path="/reset-password/:token" element={<RestablecerClave />} />
-          <Route path="/juegos" element={<Req7 />} />
-          <Route path="/juegos/mas-vendidos" element={<Req7 />} />
-          <Route path="/juegos/mas-populares" element={<Req8 />} />
-          <Route path="/juegos/lista" element={<Req9 />} />
-        </Route>
-        <Route path="/req1" element={<Req1 />} />
-        <Route path="/req17" element={<Req17 />} />
-        <Route path="/req18" element={<Req18 />} />
-        <Route path="/reqs_21_and_23" element={<Reqs_21_and_23 />} />
-        <Route path="/req22" element={<Req22 />} />
-        <Route path="/req24" element={<Req24 />} />
-      </Routes>
-    </BrowserRouter>
+    <AdminProvider>
+      <BrowserRouter basename='/Proyecto_PrograWeb'>
+        <Routes>
+          <Route element={<LayoutConHeader />}>
+            <Route path="/" element={<PaginaPrincipal />} />
+            <Route path="/noticias" element={<Noticias />} />
+            <Route path="/carrito" element={<Req_10_11 />} />
+            <Route path="/usuario" element={<Req1 />} />
+            <Route path="/registro" element={<Req2 />} />
+            <Route path="/recuperar" element={<Req4 />} />
+            <Route path="/reset-password/:token" element={<RestablecerClave />} />
+            <Route path="/juegos" element={<Req7 />} />
+            <Route path="/juegos/mas-vendidos" element={<Req7 />} />
+            <Route path="/juegos/mas-populares" element={<Req8 />} />
+            <Route path="/juegos/lista" element={<Req9 />} />
+          </Route>
+          <Route path="/req1" element={<Req1 />} />
+          <Route path="/req17" element={<Req17 />} />
+          <Route path="/req18" element={<Req18 />} />
+          <Route path="/reqs_21_and_23" element={<Reqs_21_and_23 />} />
+          <Route path="/req22" element={<Req22 />} />
+          <Route path="/req24" element={<Req24 />} />
+        </Routes>
+      </BrowserRouter>
+    </AdminProvider>
   </StrictMode>,
 );
