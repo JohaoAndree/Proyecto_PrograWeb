@@ -3,14 +3,18 @@ import { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import type { Juego } from '../../../../types';
 import FormularioJuego from '../Components/FormularioJuego';
+import styles from '../styles.module.css'
+import { SkeletonTable } from '../../../Shared/Components/SkeletonView';
 
 const TablaJuegos = () => {
   const [juegos, setJuegos] = useState<Juego[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [mostrarAgregar, setMostrarAgregar] = useState(false);
   const [juegoEditando, setJuegoEditando] = useState<Juego | null>(null);
   const [juegoEliminando, setJuegoEliminando] = useState<Juego | null>(null);
   const [categorias, setCategorias] = useState<{ id: number; nombre: string }[]>([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState<number | null>(null);
+  const [filtroNombre, setFiltroNombre] = useState('');
 
   useEffect(() => {
     cargarJuegos();
@@ -19,10 +23,11 @@ const TablaJuegos = () => {
 
   const cargarJuegos = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`);
       let lista = res.data;
 
-      // ⚠️ Agrega este filtro para que solo se vean los juegos activos
+      // Filtro para mostrar solo juegos activos
       lista = lista.filter((j: Juego) => j.estado === true);
 
       if (categoriaSeleccionada) {
@@ -32,9 +37,10 @@ const TablaJuegos = () => {
       setJuegos(lista);
     } catch (error) {
       console.error('Error al cargar juegos:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
-
 
   const cargarCategorias = async () => {
     try {
@@ -71,80 +77,104 @@ const TablaJuegos = () => {
     }
   };
 
+  const juegosFiltrados = juegos.filter((j) =>
+    j.nombre.toLowerCase().includes(filtroNombre.toLowerCase())
+  );
 
   return (
-    <div className="table-responsive px-4">
-      {/* Filtros */}
-      <div className="d-flex justify-content-between align-items-center mb-3 px-2">
-        <div className="d-flex gap-2">
-          <select
-            className="form-select"
-            style={{ width: '200px' }}
-            value={categoriaSeleccionada ?? ''}
-            onChange={(e) =>
-              setCategoriaSeleccionada(e.target.value ? Number(e.target.value) : null)
-            }
-          >
-            <option value="">Todas las categorías</option>
-            {categorias.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.nombre}
-              </option>
-            ))}
-          </select>
+    <div className="fadeInUp h-100 d-flex flex-column">
+      {/* Cabecera con Filtros */}
+      <div className={styles.HeaderTable}>
+        <div className={styles.SearchContainer}>
+          <div className={styles.SearchGroup}>
+            <label>Nombre</label>
+            <input
+              type="text"
+              placeholder="Buscar juego..."
+              value={filtroNombre}
+              onChange={(e) => setFiltroNombre(e.target.value)}
+              className={styles.SearchInput}
+            />
+          </div>
+          <div className={styles.SearchGroup}>
+            <label>Categoría</label>
+            <select
+              className={styles.SelectInput}
+              value={categoriaSeleccionada ?? ''}
+              onChange={(e) =>
+                setCategoriaSeleccionada(e.target.value ? Number(e.target.value) : null)
+              }
+            >
+              <option value="">Todas</option>
+              {categorias.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.nombre}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <button className="btn btn-primary" onClick={() => setMostrarAgregar(true)}>
-          + Agregar
+        <button className={styles.BtnAgregar} onClick={() => setMostrarAgregar(true)}>
+          + Nuevo Juego
         </button>
       </div>
 
-      {/* Tabla */}
-      <table className="table table-bordered">
-        <thead className="table-light">
-          <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Categoría</th>
-            <th>Precio</th>
-            <th>Descuento</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {juegos.map((juego) => (
-            <tr key={juego.id}>
-              <td>{juego.nombre}</td>
-              <td>{juego.descripcion}</td>
-              <td>{juego.categoria?.nombre || '—'}</td>
-              <td>S/. {juego.precio}</td>
-              <td>{juego.descuento || '0%'}</td>
-              <td>
-                <button
-                  className="btn btn-outline-dark btn-sm me-2"
-                  onClick={() => setJuegoEditando(juego)}
-                >
-                  <FaEdit />
-                </button>
-                <button
-                  className="btn btn-outline-danger btn-sm"
-                  onClick={() => setJuegoEliminando(juego)}
-                >
-                  <FaTrash />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      {/* Contenedor de Tabla Premium */}
+      <div className={styles.TableWrapper}>
+        {isLoading ? (
+          <SkeletonTable />
+        ) : (
+          <table className={styles.AdminTable}>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+                <th>Precio</th>
+                <th>Descuento</th>
+                <th style={{ textAlign: 'center' }}>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {juegosFiltrados.map((juego) => (
+                <tr key={juego.id}>
+                  <td><strong>{juego.nombre}</strong></td>
+                  <td>
+                    <div className={styles.DescripcionCol}>
+                      {juego.descripcion}
+                    </div>
+                  </td>
+                  <td>{juego.categoria?.nombre || '—'}</td>
+                  <td className={styles.PrecioCol}>S/. {juego.precio}</td>
+                  <td className={styles.DescuentoCol}>S/. {juego.descuento || '0'}</td>
+                  <td style={{ textAlign: 'center' }}>
+                    <button
+                      className={`${styles.BtnAction} ${styles.BtnEdit}`}
+                      onClick={() => setJuegoEditando(juego)}
+                      title="Editar"
+                    >
+                      <FaEdit />
+                    </button>
+                    <button
+                      className={`${styles.BtnAction} ${styles.BtnDelete}`}
+                      onClick={() => setJuegoEliminando(juego)}
+                      title="Eliminar"
+                    >
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
 
-      {/* Formulario agregar/editar */}
+      {/* Modal Formulario */}
       {(mostrarAgregar || juegoEditando) && (
-        <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
-        >
-          <div style={{ width: '90%', maxWidth: '700px' }}>
+        <div className={styles.ModalOverlay}>
+          <div className={styles.ModalContent} style={{ maxWidth: '750px' }}>
             <FormularioJuego
               modo={mostrarAgregar ? 'agregar' : 'editar'}
               juego={juegoEditando ?? undefined}
@@ -158,27 +188,31 @@ const TablaJuegos = () => {
         </div>
       )}
 
-      {/* Modal confirmar eliminar */}
+      {/* Modal Confirmación Eliminación */}
       {juegoEliminando && (
-        <div
-          className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1050 }}
-        >
-          <div className="bg-white p-4 rounded-4 shadow" style={{ width: '90%', maxWidth: '400px' }}>
-            <h5>¿Estás segura de eliminar <strong>{juegoEliminando.nombre}</strong>?</h5>
-            <div className="d-flex justify-content-end mt-3 gap-2">
-              <button className="btn btn-secondary" onClick={() => setJuegoEliminando(null)}>
+        <div className={styles.ModalOverlay}>
+          <div className={`${styles.ModalContent} ${styles.ModalConfirmacion} fadeInUp`}>
+            <h5 style={{ fontWeight: 800, fontSize: '1.25rem' }}>
+              ¿Estás seguro de eliminar <br />
+              <span style={{ color: 'var(--color-primary)' }}>{juegoEliminando.nombre}</span>?
+            </h5>
+            <p style={{ color: '#A0A0A0', fontSize: '0.9rem', marginBottom: '2rem' }}>
+              Esta acción no se puede deshacer. El juego dejará de ser visible en la tienda.
+            </p>
+            <div className="d-flex justify-content-center gap-3">
+              <button className={styles.BtnCancel} onClick={() => setJuegoEliminando(null)}>
                 Cancelar
               </button>
               <button
-                className="btn btn-danger"
+                className={styles.BtnSave}
+                style={{ background: 'linear-gradient(135deg, #ff4d4d 0%, #b30000 100%)', boxShadow: '0 4px 15px rgba(255, 77, 77, 0.3)' }}
                 onClick={async () => {
                   if (juegoEliminando?.id) {
                     await eliminarJuego(juegoEliminando.id);
                   }
                 }}
               >
-                Sí, eliminar
+                Sí, Eliminar
               </button>
             </div>
           </div>
