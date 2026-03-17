@@ -1,47 +1,79 @@
 .fondoAzulOsc {
-  background-color: white;
-  height: 100vh;
+  min-height: 70vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  padding: 1.5rem;
 }
 
 .cajaRegist {
-  background-color: black;
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 360px;
+  background: rgba(21, 25, 33, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 2.5rem 2rem;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   text-align: center;
-  color: white;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.5);
 }
 
 .cajaRegist h2 {
   font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: white;
-}
-
-.cajaRegist p {
-  font-size: 0.9rem;
+  font-weight: 800;
   margin-bottom: 1.5rem;
-  color: #cccccc;
+  color: #FFFFFF;
 }
 
-.formLabel {
-  text-align: left;
+.label {
   display: block;
-  color: white;
+  text-align: left;
   font-weight: 500;
   margin-bottom: 0.3rem;
+  color: var(--color-text-main);
+  font-size: 0.85rem;
 }
 
-#mensajes {
+.inputField {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #FFFFFF;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.inputField:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+  outline: none;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00587A 100%);
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 0.8rem;
+  width: 100%;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.submitBtn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px -5px var(--color-primary-glow);
+}
+
+.mensajeStyle {
   font-size: 0.9rem;
-  color: #ff4c4c;
-}
-
-.btn {
-  font-weight: bold;
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-top: 1rem;
 }

@@ -1,56 +1,57 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 import styles from "./stylesrestablecer.module.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const RestablecerClave = () => {
   const { token } = useParams();
+  const navigate = useNavigate();
 
   const [nuevaClave, setNuevaClave] = useState("");
   const [confirmarClave, setConfirmarClave] = useState("");
   const [mensaje, setMensaje] = useState("");
   const [exito, setExito] = useState(false);
   const [cargando, setCargando] = useState(false);
+  const [errorStatus, setErrorStatus] = useState(false);
 
   const handleRestablecer = async () => {
     if (!token) {
-      setMensaje("El enlace es inválido o ha expirado. Solicita uno nuevo.");
+      setMensaje("El enlace es inválido o ha expirado.");
+      setErrorStatus(true);
       return;
     }
 
     if (nuevaClave.length < 6) {
       setMensaje("La contraseña debe tener al menos 6 caracteres.");
+      setErrorStatus(true);
       return;
     }
 
     if (nuevaClave !== confirmarClave) {
       setMensaje("Las contraseñas no coinciden.");
+      setErrorStatus(true);
       return;
     }
 
     setCargando(true);
+    setMensaje("");
+    setErrorStatus(false);
+
     try {
-      const API_URL = import.meta.env.VITE_BACKEND_URL;
+      const respuesta = await axios.post(`/api/patrick/games/reset-password/${token}`, { nuevaClave });
 
-     const respuesta = await fetch(`${API_URL}/api/patrick/games/reset-password/${token}`, {
-       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nuevaClave }), // ya no mandes el token en el body
-      })
-
-      const data = await respuesta.json();
-
-      if (respuesta.ok) {
+      if (respuesta.status === 200) {
         setExito(true);
-        setMensaje("Contraseña actualizada correctamente. Redirigiendo...");
+        setMensaje("¡Contraseña actualizada! Redirigiendo al login...");
+        setErrorStatus(false);
         setTimeout(() => {
-          window.location.href = "/";
-        }, 5020);
-      } else {
-        setMensaje(data.mensaje || "No se pudo restablecer la contraseña.");
+          navigate("/usuario");
+        }, 3000);
       }
-    } catch (error) {
-      setMensaje("Error al conectar con el servidor.");
+    } catch (error: any) {
+      console.error("Error al actualizar la clave:", error);
+      setErrorStatus(true);
+      setMensaje(error.response?.data?.mensaje || "Error al conectar con el servidor.");
     } finally {
       setCargando(false);
     }
@@ -58,50 +59,59 @@ const RestablecerClave = () => {
 
   return (
     <div className={styles.fondoAzulOsc}>
-      <div className={styles.cajaRegist}>
-        <h2>Restablecer Contraseña</h2>
+      <div className={styles.cajaRegist + " fadeInUp"}>
+        <h2>Nueva <br /><strong>Contraseña</strong></h2>
 
-        {!exito && (
-          <>
-            <label htmlFor="clave1" className={`${styles["form-label"]}`}>
-              Nueva contraseña:
+        {!exito ? (
+          <form onSubmit={(e) => { e.preventDefault(); handleRestablecer(); }}>
+            <label htmlFor="clave1" className={styles.label}>
+              Nueva contraseña
             </label>
             <input
               id="clave1"
               type="password"
-              placeholder="Escribe tu nueva clave"
-              className="form-control mb-3"
+              placeholder="••••••••"
+              className={styles.inputField}
               value={nuevaClave}
               onChange={(e) => setNuevaClave(e.target.value)}
               disabled={cargando}
             />
 
-            <label htmlFor="clave2" className={`${styles["form-label"]}`}>
-              Confirmar contraseña:
+            <label htmlFor="clave2" className={styles.label}>
+              Confirmar contraseña
             </label>
             <input
               id="clave2"
               type="password"
-              placeholder="Confirma tu clave"
-              className="form-control mb-3"
+              placeholder="••••••••"
+              className={styles.inputField}
               value={confirmarClave}
               onChange={(e) => setConfirmarClave(e.target.value)}
               disabled={cargando}
             />
 
             <button
-              className="btn btn-danger w-100 mb-2"
-              onClick={handleRestablecer}
+              type="submit"
+              className={styles.submitBtn}
               disabled={cargando}
             >
+              {cargando ? (
+                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              ) : null}
               {cargando ? "Actualizando..." : "Cambiar contraseña"}
             </button>
-          </>
+          </form>
+        ) : (
+          <div className="text-center py-3">
+             <i className="bi bi-check-circle-fill text-success fs-1"></i>
+          </div>
         )}
 
-        <div id="mensajes" className="text-center mt-2 text-light fw-bold">
-          {mensaje}
-        </div>
+        {mensaje && (
+          <div className={`${styles.mensajeStyle} alert ${errorStatus ? 'alert-danger' : 'alert-success'} py-2`}>
+            {mensaje}
+          </div>
+        )}
       </div>
     </div>
   );

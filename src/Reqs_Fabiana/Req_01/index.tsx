@@ -11,93 +11,92 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-const handleLogin = async () => {
-  try {
-    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
-      correo,
-      password
-    });
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
+        correo,
+        password
+      });
 
-    const usuario = response.data.usuario;
-    localStorage.setItem('usuario', JSON.stringify(usuario));
-    setMensaje(`Bienvenido, ${usuario.nombre}`);
-    setError('');
+      const usuario = response.data.usuario;
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+      setMensaje(`Bienvenido, ${usuario.nombre}`);
+      setError('');
 
-    if (usuario.correo.trim().toLowerCase() === 'admin@gamestore.es') {
-  navigate('/req22'); // vista administrador
-} else {
-  navigate('/'); // vista normal
-}
+      if (usuario.correo.trim().toLowerCase() === 'admin@gamestore.es') {
+        navigate('/req22'); // vista administrador
+      } else {
+        navigate('/'); // vista normal
+      }
 
 
-  } catch (error) {
-    console.error('Error al iniciar sesión:', error);
-    setMensaje('');
-    setError('Correo o contraseña incorrectos');
-  }
-};
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      setMensaje('');
+      setError('Correo o contraseña incorrectos');
+    }
+  };
 
 
   return (
     <div className={styles.fondoAzulOscuro}>
-      <div className="text-center">
-        <div className={styles.loginBox}>
-          <h2 className="mb-4">
-            Ingresa <br /><strong>GameStore</strong>
-          </h2>
+      <div className={styles.loginBox + ' fadeInUp'}>
+        <h2 className="mb-4">
+          Ingresa a <br /><strong>GameStore</strong>
+        </h2>
 
-          <label htmlFor="email" className="form-label">Usuario o correo electrónico:</label>
+        <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+          <label htmlFor="email" className={styles.label}>Usuario o correo electrónico</label>
           <input
             id="email"
             type="text"
-            className="form-control mb-3"
+            className={styles.inputField}
             value={correo}
             onChange={(e) => setCorreo(e.target.value)}
+            placeholder="ejemplo@correo.com"
           />
 
           <div className="d-flex justify-content-between align-items-center mb-2">
-            <label htmlFor="password" className="form-label mb-0">Contraseña:</label>
-            <Link to="/recuperar"className={`text-white text-decoration-none ${styles.linkOlvido}`}>
-             ¿Olvidaste tu contraseña?
+            <label htmlFor="password" className={styles.label + ' mb-0'}>Contraseña</label>
+            <Link to="/recuperar" className={styles.linkOlvido}>
+              ¿Olvidaste tu contraseña?
             </Link>
           </div>
           <input
             id="password"
             type="password"
-            className="form-control mb-3"
+            className={styles.inputField}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
           />
 
-          <button onClick={handleLogin} className="btn btn-danger w-100 mb-3">
-            Ingresa
+          <button type="submit" className={styles.submitBtn}>
+            Iniciar Sesión
           </button>
+        </form>
 
-          {mensaje && (
-            <div className="alert alert-success" role="alert">
-              {mensaje}
-            </div>
-          )}
+        {mensaje && (
+          <div className="alert alert-success py-2 small" role="alert">
+            {mensaje}
+          </div>
+        )}
 
-          {error && (
-            <div className="alert alert-danger" role="alert">
-              {error}
-            </div>
-          )}
+        {error && (
+          <div className="alert alert-danger py-2 small" role="alert">
+            {error}
+          </div>
+        )}
 
-          <p>
-            ¿Eres nuevo en GameStore?{" "}
-            <Link to="/registro" className="text-white fw-bold text-decoration-underline">
-              Crea una cuenta
-            </Link>
-          </p>
-        </div>
+        <p className={styles.footerText}>
+          ¿Eres nuevo en GameStore?{" "}
+          <Link to="/registro" className={styles.registerLink}>
+            Crea una cuenta
+          </Link>
+        </p>
       </div>
     </div>
   );
 };
-
-
-
 
 export default Login;

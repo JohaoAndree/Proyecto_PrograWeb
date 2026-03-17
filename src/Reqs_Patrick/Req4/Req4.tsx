@@ -1,46 +1,41 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
+import axios from "../../api/axios";
 import styles from "./styles.module.css";
 
 const Req4 = () => {
   const [correo, setCorreo] = useState("");
   const [mensaje, setMensaje] = useState("");
-  const [correoEnviado, setCorreoEnviado] = useState(false);
   const [cargando, setCargando] = useState(false);
+  const [errorStatus, setErrorStatus] = useState(false);
 
   const handleEnviar = async () => {
     if (!correo) {
       setMensaje("Ingrese su correo.");
+      setErrorStatus(true);
       return;
     }
 
     if (!correo.includes("@") || !correo.includes(".")) {
       setMensaje("Correo inválido.");
+      setErrorStatus(true);
       return;
     }
 
     setCargando(true);
+    setMensaje("");
+    setErrorStatus(false);
 
     try {
-     const API_URL = import.meta.env.VITE_BACKEND_URL;
+      const respuesta = await axios.post("/api/patrick/games/recuperar", { correo });
 
-     const respuesta = await fetch(`${API_URL}/api/patrick/games/recuperar`, {
-          method: "POST",
-         headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ correo }),
-          });
-
-      const data = await respuesta.json();
-
-      if (respuesta.ok) {
-        setCorreoEnviado(true);
-        setMensaje("Se envió un enlace para restablecer la contraseña.");
-      } else {
-        setMensaje(data.mensaje || "Error al enviar el correo.");
+      if (respuesta.status === 200) {
+        setMensaje("¡Enlace enviado! Revisa tu bandeja de entrada.");
+        setErrorStatus(false);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error al conectar con el backend", error);
-      setMensaje("Fallo de conexión con el servidor.");
+      setErrorStatus(true);
+      setMensaje(error.response?.data?.mensaje || "Fallo de conexión con el servidor.");
     } finally {
       setCargando(false);
     }
@@ -48,44 +43,47 @@ const Req4 = () => {
 
   return (
     <div className={styles.fondoAzulOsc}>
-      <div className={styles.cajaRegist}>
+      <div className={styles.cajaRegist + " fadeInUp"}>
         <h2 className="mb-2 text-center">
-          ¿Olvidaste tu <strong>contraseña</strong>?
+          ¿Olvidaste tu <br /><strong>contraseña</strong>?
         </h2>
 
         <p className="text-center mb-4">
-          Ingresa tu correo para enviarte un enlace
+          Ingresa tu correo para enviarte un enlace de recuperación.
         </p>
 
-        <label htmlFor="correoOlvido" className="form-label">
-          Correo electrónico:
-        </label>
+        <form onSubmit={(e) => { e.preventDefault(); handleEnviar(); }}>
+          <label htmlFor="correoOlvido" className={styles.label}>
+            Correo electrónico
+          </label>
 
-        <input
-          id="correoOlvido"
-          type="email"
-          className="form-control mb-3"
-          value={correo}
-          onChange={(e) => setCorreo(e.target.value)}
-          disabled={cargando}
-        />
+          <input
+            id="correoOlvido"
+            type="email"
+            className={styles.inputField}
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+            disabled={cargando}
+            placeholder="ejemplo@correo.com"
+          />
 
-        <button
-          className="btn btn-danger w-100 mb-2"
-          onClick={handleEnviar}
-          disabled={cargando}
-        >
-          {cargando ? "Enviando..." : "Enviar enlace"}
-        </button>
+          <button
+            type="submit"
+            className={styles.submitBtn}
+            disabled={cargando}
+          >
+            {cargando ? (
+              <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            ) : null}
+            {cargando ? "Enviando..." : "Enviar enlace"}
+          </button>
+        </form>
 
-        <div id="mensajes" className="text-center mt-2 text-light fw-bold">
-          {mensaje}
-          {correoEnviado && (
-            <div className="mt-2">
-              Revisa tu correo electrónico para continuar con el restablecimiento.
-            </div>
-          )}
-        </div>
+        {mensaje && (
+          <div className={`${styles.mensajeStyle} alert ${errorStatus ? 'alert-danger' : 'alert-success'} py-2`}>
+            {mensaje}
+          </div>
+        )}
       </div>
     </div>
   );

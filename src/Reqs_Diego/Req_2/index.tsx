@@ -1,5 +1,4 @@
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import styles from "./styles.module.css";
 
@@ -9,80 +8,202 @@ const Req2 = () => {
   const [contra, setContra] = useState("");
   const [repContra, setRepContra] = useState("");
   const [pais, setPais] = useState("");
+  const [foto, setFoto] = useState<File | null>(null);
   const [mensaje, setMensaje] = useState("");
-  const [correoEnviado, setCorreoEnviado] = useState(false);
+  const [cargando, setCargando] = useState(false);
+  const [errorStatus, setErrorStatus] = useState(false);
 
   const onClick = async () => {
     if (!nombre || !correo || !contra || !repContra || !pais) {
-      setMensaje("Llene todos los segmentos");
-      return;
-    }
-    if (!correo.includes("@") || !correo.includes(".")) {
-      setMensaje("Registre un correo válido");
-      return;
-    }
-    if (contra !== repContra) {
-      setMensaje("Las contraseñas deben ser iguales");
+      setMensaje("Por favor, llena todos los campos obligatorios.");
+      setErrorStatus(true);
       return;
     }
 
+    if (!correo.includes("@") || !correo.includes(".")) {
+      setMensaje("Ingresa un correo electrónico válido.");
+      setErrorStatus(true);
+      return;
+    }
+
+    if (contra.length < 6) {
+      setMensaje("La contraseña debe tener al menos 6 caracteres.");
+      setErrorStatus(true);
+      return;
+    }
+
+    if (contra !== repContra) {
+      setMensaje("Las contraseñas no coinciden.");
+      setErrorStatus(true);
+      return;
+    }
+
+    setCargando(true);
+    setMensaje("");
+    setErrorStatus(false);
+
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("correo", correo);
+    formData.append("password", contra);
+    formData.append("pais", pais);
+    if (foto) {
+      formData.append("foto", foto);
+    }
+
     try {
-      const res = await axios.post<{ msg: string }>(
+      const res = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/registro`,
+        formData,
         {
-          nombre,
-          correo,
-          pais,
-          password: contra,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
       );
 
       if (res.status === 200) {
-        setMensaje(res.data.msg || "Registrado! :D");
-        setCorreoEnviado(true);
+        setMensaje(res.data.msg || "¡Registro exitoso! Bienvenido.");
+        setErrorStatus(false);
+        // Limpiar formulario si es necesario
+        setNombre("");
+        setCorreo("");
+        setContra("");
+        setRepContra("");
+        setPais("");
+        setFoto(null);
       }
-    } catch (error: unknown) {
-      if (
-        typeof error === "object" &&
-        error !== null &&
-        "response" in error &&
-        typeof (error as { response?: { data?: { msg?: string } } }).response?.data?.msg === "string"
-      ) {
-        setMensaje((error as { response: { data: { msg: string } } }).response.data.msg);
-      } else {
-        setMensaje("Ocurrió un error al registrar.");
-      }
-      setCorreoEnviado(false);
+    } catch (error: any) {
+      const errorMsg = error.response?.data?.msg || error.response?.data?.mensaje || "Ocurrió un error al registrar.";
+      setMensaje(errorMsg);
+      setErrorStatus(true);
+    } finally {
+      setCargando(false);
     }
-  }
+  };
 
   return (
     <div className={styles.fondoAzulOsc}>
-      <div className={styles.cajaRegist}>
-        <h2 className="mb-2 text-center">Registro <strong>GameStore</strong></h2>
-        <p className="text-center mb-4">Ingresa los siguientes datos</p>
+      <div className={styles.cajaRegist + " fadeInUp"}>
+        <h2 className="mb-2 text-center">
+          Únete a <strong>GameStore</strong>
+        </h2>
+        <p className="text-center mb-4">Crea tu cuenta y empieza la aventura</p>
 
-        <label htmlFor="nombreRegis" className="form-label">Nombres:</label>
-        <input id="nombreRegis" type="text" className="form-control mb-3" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-
-        <label htmlFor="emailRegis" className="form-label">Correo:</label>
-        <input id="emailRegis" type="text" className="form-control mb-3" value={correo} onChange={(e) => setCorreo(e.target.value)} />
-
-        <label htmlFor="paisRegis" className="form-label">País de residencia:</label>
-        <input id="paisRegis" type="text" className="form-control mb-3" value={pais} onChange={(e) => setPais(e.target.value)} />
-
-        <label htmlFor="contraRegis" className="form-label">Contraseña:</label>
-        <input id="contraRegis" type="password" className="form-control mb-3" value={contra} onChange={(e) => setContra(e.target.value)} />
-
-        <label htmlFor="repContraRegis" className="form-label">Repetir contraseña:</label>
-        <input id="repContraRegis" type="password" className="form-control mb-3" value={repContra} onChange={(e) => setRepContra(e.target.value)} />
-
-        <button id="buttonRegis" className="btn btn-danger w-100 mb-2" onClick={onClick}>Registrar</button>
-
-        <div id="mensajes" className="text-center mt-2 text-light fw-bold">
-          {mensaje}
-          {correoEnviado && <div>Registro exitoso. Revisa tu correo para activar tu cuenta.</div>}
+        <div className="mb-3">
+          <label htmlFor="nombreRegis" className={styles.formLabel}>
+            Nombres Completos
+          </label>
+          <input
+            id="nombreRegis"
+            type="text"
+            className={styles.formControl + " w-100"}
+            placeholder="Ej. Juan Pérez"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+          />
         </div>
+
+        <div className="mb-3">
+          <label htmlFor="emailRegis" className={styles.formLabel}>
+            Correo Electrónico
+          </label>
+          <input
+            id="emailRegis"
+            type="email"
+            className={styles.formControl + " w-100"}
+            placeholder="ejemplo@correo.com"
+            value={correo}
+            onChange={(e) => setCorreo(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="paisRegis" className={styles.formLabel}>
+            País de Residencia
+          </label>
+          <input
+            id="paisRegis"
+            type="text"
+            className={styles.formControl + " w-100"}
+            placeholder="Ej. Perú"
+            value={pais}
+            onChange={(e) => setPais(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-3">
+          <label className={styles.formLabel}>Foto de Perfil</label>
+          <div className={styles.fileInputContainer}>
+            <input
+              id="fotoRegis"
+              type="file"
+              className="d-none"
+              accept="image/*"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setFoto(e.target.files[0]);
+                }
+              }}
+            />
+            <label htmlFor="fotoRegis" className={styles.customFileLabel}>
+              {foto ? `✓ ${foto.name}` : "Seleccionar imagen..."}
+            </label>
+          </div>
+        </div>
+
+        <div className="row g-3 mb-3">
+          <div className="col-md-6">
+            <label htmlFor="contraRegis" className={styles.formLabel}>
+              Contraseña
+            </label>
+            <input
+              id="contraRegis"
+              type="password"
+              className={styles.formControl + " w-100"}
+              placeholder="••••••••"
+              value={contra}
+              onChange={(e) => setContra(e.target.value)}
+            />
+          </div>
+          <div className="col-md-6">
+            <label htmlFor="repContraRegis" className={styles.formLabel}>
+              Confirmar
+            </label>
+            <input
+              id="repContraRegis"
+              type="password"
+              className={styles.formControl + " w-100"}
+              placeholder="••••••••"
+              value={repContra}
+              onChange={(e) => setRepContra(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <button
+          id="buttonRegis"
+          className={styles.submitBtn + " w-100"}
+          onClick={onClick}
+          disabled={cargando}
+        >
+          {cargando ? (
+            <>
+              <span className={styles.spinner}></span> Procesando...
+            </>
+          ) : (
+            "Crear Cuenta"
+          )}
+        </button>
+
+        {mensaje && (
+          <div
+            className={`${styles.alert} ${errorStatus ? styles.alertError : styles.alertSuccess
+              } text-center`}
+          >
+            {mensaje}
+          </div>
+        )}
       </div>
     </div>
   );

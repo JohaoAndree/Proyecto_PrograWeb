@@ -29,34 +29,109 @@
 }
 
 .fondoAzulOscuro {
-  background-color: white;
-  height: 100vh;
-  color: white;
+  min-height: 70vh; /* Reducido para dar más aire */
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1.5rem;
 }
 
 .loginBox {
-  background-color: black;
-  padding: 2rem;
-  border-radius: 1rem;
-  width: 320px;
+  background: rgba(21, 25, 33, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 2rem 2rem; /* Más compacto */
+  border-radius: 20px;
+  width: 100%;
+  max-width: 380px; /* Un poco más estrecho */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   text-align: center;
-  color: white;
 }
 
-.loginBox label {
-  text-align: left;
+.loginBox h2 {
+  font-size: 1.8rem; /* Reducido */
+  font-weight: 800;
+  margin-bottom: 1.5rem; /* Menos espacio */
+  color: #FFFFFF;
+  line-height: 1.1;
+}
+
+.loginBox h2 strong {
+  color: var(--color-primary);
+  text-shadow: 0 0 15px var(--color-primary-glow);
+}
+
+.label {
   display: block;
+  text-align: left;
+  font-weight: 500;
+  margin-bottom: 0.3rem; /* Más apretado */
+  color: var(--color-text-main);
+  font-size: 0.85rem; /* Un pelín más pequeño */
 }
 
 .linkOlvido {
   font-size: 0.8rem;
+  color: var(--color-primary);
+  transition: color 0.2s;
 }
 
-.loginBox h2 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-  color: white;
+.linkOlvido:hover {
+  color: var(--color-accent);
 }
+
+.inputField {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #FFFFFF;
+  padding: 0.6rem 0.9rem; /* Más compacto */
+  margin-bottom: 1rem; /* Menos espacio entre campos */
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.inputField:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+  outline: none;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, var(--color-primary) 0%, #00587A 100%);
+  border: none;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-weight: 700;
+  padding: 0.75rem; /* Reducido levemente */
+  width: 100%;
+  margin-top: 0.2rem; /* Reducido */
+  margin-bottom: 0.8rem; /* Reducido */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.submitBtn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 20px -5px var(--color-primary-glow);
+}
+
+.footerText {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem; /* Un poco más pequeño */
+  margin-top: 0.2rem; /* Reducido */
+}
+
+.registerLink {
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s;
+}
+
+.registerLink:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
