@@ -1,4 +1,4 @@
-import axios from "axios";
+import backend from "../../api/axios";
 import { useState } from 'react';
 import styles from "./styles.module.css";
 
@@ -52,8 +52,8 @@ const Req2 = () => {
     }
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/registro`,
+      const res = await backend.post(
+        `/api/gerson/games/registro`,
         formData,
         {
           headers: {

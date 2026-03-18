@@ -1,4 +1,4 @@
-import axios from 'axios';
+import backend from '../../../api/axios';
 import { useEffect, useState } from 'react';
 import type { Juego } from '../../../../types';
 import styles from '../styles.module.css';
@@ -28,7 +28,7 @@ const FormularioJuego = ({ modo, juego, onCancelar, onGuardar }: Props) => {
   useEffect(() => {
     const fetchCategorias = async () => {
       try {
-        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/categorias`);
+        const res = await backend.get('/api/juegos/categorias');
         setCategorias(res.data);
       } catch (error) {
         console.error("Error al cargar categorías:", error);

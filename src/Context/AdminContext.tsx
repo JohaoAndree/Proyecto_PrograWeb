@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios, { isCancel } from 'axios';
+import backend from '../api/axios';
+import { isCancel } from 'axios';
 import AvatarPlaceholder from "../Reqs_Johao/Resources/Avatar.jpeg";
 
 interface AdminData {
@@ -25,7 +26,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const fetchAdmin = async (signal?: AbortSignal) => {
     setIsLoading(true);
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/johao/usuarios/admin`, { signal });
+      const res = await backend.get('/api/johao/usuarios/admin', { signal });
       const fotoPath = res.data.foto
         ? (res.data.foto.startsWith('/') ? res.data.foto : `/imagenes/usuario/${res.data.foto}`)
         : null;

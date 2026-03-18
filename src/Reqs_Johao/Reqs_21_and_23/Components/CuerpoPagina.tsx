@@ -3,7 +3,7 @@ import styles from './styles.module.css';
 import StatCard from './StatCard';
 import Grafico from './Grafico';
 import { contarUsuarios, obtenerGanancias, obtenerNoticias, contarVentas } from '../../../api/usuarios.api';
-import axios from 'axios';
+import backend from '../../../api/axios';
 import { FaUsers, FaGamepad, FaNewspaper, FaShoppingCart } from 'react-icons/fa';
 import { SkeletonCard } from '../../../Shared/Components/SkeletonView';
 
@@ -32,7 +32,7 @@ const CuerpoPagina = () => {
         const [resUsers, resNoticias, resJuegos, resGanancias, resVentasCount] = await Promise.all([
           contarUsuarios(),
           obtenerNoticias(),
-          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`),
+          backend.get('/api/juegos'),
           obtenerGanancias(),
           contarVentas()
         ]);

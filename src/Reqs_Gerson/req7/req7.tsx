@@ -2,7 +2,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { Container, Carousel, Modal, Button } from "react-bootstrap";
 import { FaGamepad, FaStar, FaTags, FaTrophy, FaTimes, FaInfoCircle } from "react-icons/fa";
-import axios from "axios";
+import backend from "../../api/axios";
+import { isCancel } from "axios";
 import styles from "./Req7.module.css";
 import Skeleton, { SkeletonCard } from "../../Shared/Components/SkeletonView";
 
@@ -46,7 +47,7 @@ const Req7 = () => {
 
   useEffect(() => {
     const controller = new AbortController();
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/masvendidos`, { signal: controller.signal })
+    backend.get("/api/gerson/games/masvendidos", { signal: controller.signal })
       .then((res) => {
         // Agrega el dominio del backend a la imagen si es ruta relativa
         const juegosConImagenes = res.data.map((juego: Juego) => ({
@@ -59,7 +60,7 @@ const Req7 = () => {
         setLoading(false);
       })
       .catch((err) => {
-        if (axios.isCancel && axios.isCancel(err)) return;
+        if (isCancel(err)) return;
         console.error("Error al obtener juegos:", err);
         setLoading(false);
       });

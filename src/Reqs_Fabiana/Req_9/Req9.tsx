@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-import axios from "axios";
+import backend from "../../api/axios";
+import { isCancel } from "axios";
 import DetalleJuego from "./Componentes/DetalleJuego";
 import FilaJuegos from "./Componentes/FilaJuegos";
 import { SkeletonCard } from "../../Shared/Components/SkeletonView";
@@ -46,12 +47,12 @@ function Req9() {
     useEffect(() => {
         const controller = new AbortController();
         setLoading(true);
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`, { signal: controller.signal })
+        backend.get("/api/juegos", { signal: controller.signal })
             .then(res => {
                 setJuegosDisponibles(res.data)
                 setLoading(false);
             }).catch(err => {
-                if (axios.isCancel && axios.isCancel(err)) return;
+                if (isCancel(err)) return;
                 console.error("Error al cargar los juegos: ", err)
                 setLoading(false);
             })

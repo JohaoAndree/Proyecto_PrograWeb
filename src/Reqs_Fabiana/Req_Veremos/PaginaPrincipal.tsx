@@ -10,7 +10,7 @@ import witcher from '../Req_Veremos/Imagenes_Carrusel/The_Witcher_3_Wild_Hunt.pn
 import genshin from '../Req_Veremos/Imagenes_Carrusel/genshin.jpg';
 import JuegosPopulares from './Componentes/JuegosPopulares';
 import Footer from './Componentes/Footer';
-import Skeleton, { SkeletonCard } from '../../Shared/Components/SkeletonView';
+import Skeleton from '../../Shared/Components/SkeletonView';
 
 function PaginaPrincipal() {
   const [imagesLoaded, setImagesLoaded] = useState<{ [key: string]: boolean }>({});
@@ -56,21 +56,8 @@ function PaginaPrincipal() {
         </Carousel>
       </div>
 
-      {/* Top juegos: show local skeletons until carousel images load */}
-      {(!carruselItems.every(i => imagesLoaded[i.src])) ? (
-        <section style={{ marginTop: '1rem' }}>
-          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-            <h2 className={styles.sectionTitle}>Top Juegos de la Semana</h2>
-            <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-            </div>
-          </div>
-        </section>
-      ) : (
-        <JuegosPopulares />
-      )}
+      {/* Top juegos: renderizar siempre para que el fetch comience inmediatamente */}
+      <JuegosPopulares />
 
       <section className={`${styles.sectionCard} fadeInUp`}>
         <h2 className={styles.sectionTitle}>Sobre Nosotros</h2>

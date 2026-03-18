@@ -1,4 +1,4 @@
-import axios from 'axios';
+import backend from '../../api/axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/login`, {
+      const response = await backend.post(`/api/users/login`, {
         correo,
         password
       });

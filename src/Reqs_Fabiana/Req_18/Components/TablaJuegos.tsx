@@ -1,4 +1,4 @@
-import axios from 'axios';
+import backend from '../../../api/axios';
 import { useEffect, useState } from 'react';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import type { Juego } from '../../../../types';
@@ -24,7 +24,7 @@ const TablaJuegos = () => {
   const cargarJuegos = async () => {
     try {
       setIsLoading(true);
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`);
+      const res = await backend.get('/api/juegos');
       let lista = res.data;
 
       // Filtro para mostrar solo juegos activos
@@ -44,7 +44,7 @@ const TablaJuegos = () => {
 
   const cargarCategorias = async () => {
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/categorias`);
+      const res = await backend.get('/api/juegos/categorias');
       setCategorias(res.data);
     } catch (error) {
       console.error('Error al cargar categorías:', error);
@@ -54,9 +54,9 @@ const TablaJuegos = () => {
   const guardarJuego = async (juego: Juego): Promise<void> => {
     try {
       if (juego.id) {
-        await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/${juego.id}`, juego);
+        await backend.put(`/api/juegos/${juego.id}`, juego);
       } else {
-        await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`, juego);
+        await backend.post('/api/juegos', juego);
       }
 
       setMostrarAgregar(false);
@@ -69,7 +69,7 @@ const TablaJuegos = () => {
 
   const eliminarJuego = async (id: number): Promise<void> => {
     try {
-      await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/juegos/${id}`, { estado: false });
+      await backend.put(`/api/juegos/${id}`, { estado: false });
       setJuegoEliminando(null);
       await cargarJuegos();
     } catch (error) {

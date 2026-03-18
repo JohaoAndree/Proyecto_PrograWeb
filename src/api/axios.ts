@@ -11,6 +11,7 @@ declare module 'axios' {
   export interface AxiosRequestConfig {
     cache?: boolean;
     cacheTtl?: number;
+    __retryCount?: number;
   }
 }
 
@@ -25,10 +26,9 @@ interface CacheEntry<T = unknown> {
 // Configuración y Estados
 const LOCALSTORAGE_PREFIX = 'marketplace_cache_v1:';
 const MEMORY_CACHE = new Map<string, CacheEntry<unknown>>();
-const PENDING_REQUESTS = new Map<string, Promise<AxiosResponse<any>>>();
 let DEFAULT_TTL = 60 * 1000;
 let MAX_CACHE_ENTRIES = 200;
-let AUTO_CLEANUP_INTERVAL_ID: number | null = null;
+let AUTO_CLEANUP_INTERVAL_ID: ReturnType<typeof setInterval> | null = null;
 
 /**
  * Normaliza los parámetros para que el orden de las keys no afecte el caché
@@ -45,64 +45,9 @@ function serializeParams(params: Record<string, unknown> = {}): string {
 }
 
 function buildCacheKey(config: InternalAxiosRequestConfig | AxiosRequestConfig): string {
+  const method = (config.method || 'get').toLowerCase();
   const paramsStr = serializeParams((config.params || {}) as Record<string, unknown>);
-  return `${config.method}:${config.url}::${paramsStr}`;
-}
-
-// Fallback adapter using fetch for environments where axios adapter isn't available
-async function fetchAdapter(cfg: InternalAxiosRequestConfig): Promise<AxiosResponse> {
-  // Build URL
-  let url = String(cfg.url || '');
-  try {
-    if (cfg.baseURL) {
-      url = new URL(url, cfg.baseURL as string).toString();
-    }
-  } catch {
-    // leave as-is
-  }
-
-  // params
-  if (cfg.params) {
-    const paramsStr = serializeParams(cfg.params as Record<string, unknown>);
-    const sep = url.includes('?') ? '&' : '?';
-    url = `${url}${sep}${paramsStr.replace(/^{|}$/g, '')}`;
-  }
-
-  const init: RequestInit = {
-    method: (cfg.method || 'get').toUpperCase(),
-    headers: cfg.headers as HeadersInit | undefined,
-    signal: cfg.signal as AbortSignal | undefined,
-  };
-
-  if (cfg.data != null && init.method !== 'GET' && init.method !== 'HEAD') {
-    init.body = typeof cfg.data === 'string' ? cfg.data : JSON.stringify(cfg.data);
-    if (init.headers && !(init.headers as any)['Content-Type']) {
-      (init.headers as any)['Content-Type'] = 'application/json;charset=utf-8';
-    }
-  }
-
-  const response = await fetch(url, init);
-  const headersObj: Record<string, string> = {};
-  response.headers.forEach((value, key) => { headersObj[key] = value; });
-
-  let data: any;
-  const contentType = response.headers.get('content-type') || '';
-  if (contentType.includes('application/json')) {
-    data = await response.json().catch(() => null);
-  } else {
-    data = await response.text().catch(() => null);
-  }
-
-  const axiosResp: AxiosResponse = {
-    data,
-    status: response.status,
-    statusText: response.statusText,
-    headers: headersObj,
-    config: cfg,
-    request: response as any,
-  };
-
-  return axiosResp;
+  return `${method}:${config.url}::${paramsStr}`;
 }
 
 /**
@@ -110,14 +55,14 @@ async function fetchAdapter(cfg: InternalAxiosRequestConfig): Promise<AxiosRespo
  */
 const storage = {
   get: <T>(key: string): CacheEntry<T> | null => {
-    if (typeof window === 'undefined') return null; // SSR Guard
+    if (typeof window === 'undefined') return null;
     try {
       const raw = localStorage.getItem(LOCALSTORAGE_PREFIX + encodeURIComponent(key));
       return raw ? (JSON.parse(raw) as CacheEntry<T>) : null;
     } catch { return null; }
   },
   set: <T>(key: string, entry: CacheEntry<T>): void => {
-    if (typeof window === 'undefined') return; // SSR Guard
+    if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(LOCALSTORAGE_PREFIX + encodeURIComponent(key), JSON.stringify(entry));
     } catch { /* Quota exceeded */ }
@@ -132,38 +77,37 @@ const storage = {
 
 const backend: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
+  timeout: 30_000, // 30s timeout máximo por request
 });
 
 /**
- * INTERCEPTOR DE PETICIÓN: Cache & Dedupe
+ * INTERCEPTOR DE PETICIÓN: Solo Caché (sin deduplicación problemática)
+ *
+ * Se eliminó la deduplicación via PENDING_REQUESTS porque causaba un bug crítico:
+ * cuando StrictMode abortaba el primer request, la promesa abortada quedaba en el Map
+ * y el segundo mount la reutilizaba, haciendo que también fallara con AbortError.
+ * También se eliminó el wrapper de adapter que causaba problemas con los internals de axios.
  */
-backend.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+backend.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (config.method !== 'get' || config.cache === false) return config;
 
   const key = buildCacheKey(config);
   const ttl = config.cacheTtl ?? DEFAULT_TTL;
   const now = Date.now();
 
-  // A. Verificar si hay una petición igual en curso (Dedupe)
-  const pending = PENDING_REQUESTS.get(key);
-  if (pending) {
-    config.adapter = () => pending;
-    return config;
-  }
-
-  // B. Verificar Caché (Memoria o Storage)
+  // Verificar Caché (Memoria primero, luego Storage)
   const cached = MEMORY_CACHE.get(key) || storage.get(key);
   if (cached && (now - cached.timestamp) < ttl) {
-    // Move accessed key to the end to implement LRU behavior
+    // Mover al final para comportamiento LRU
     if (MEMORY_CACHE.has(key)) {
       const existing = MEMORY_CACHE.get(key) as CacheEntry<unknown>;
       MEMORY_CACHE.delete(key);
       MEMORY_CACHE.set(key, existing);
     } else {
-      // if it came from storage, populate memory and place it at the end
       MEMORY_CACHE.set(key, cached as CacheEntry<unknown>);
     }
 
+    // Retornar datos cacheados sin hacer request al servidor
     config.adapter = () => Promise.resolve({
       data: cached.data,
       status: cached.status,
@@ -175,39 +119,21 @@ backend.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
     return config;
   }
 
-  // Si no hay cache y no hay pending, envolvemos el adaptador original para registrar la Promise
-  let originalAdapter: any = config.adapter;
-  if (typeof originalAdapter !== 'function') {
-    originalAdapter = (backend.defaults && (backend.defaults as any).adapter) || (axios.defaults && (axios.defaults as any).adapter);
-  }
-  if (typeof originalAdapter !== 'function') {
-    // último recurso: usar el adaptador basado en fetch para entornos browser donde no haya adapter
-    originalAdapter = fetchAdapter;
-  }
-
-  config.adapter = (cfg: InternalAxiosRequestConfig) => {
-    // Ejecuta el adaptador original y guarda la promesa en pending
-    const p = originalAdapter(cfg) as Promise<AxiosResponse>;
-    // Guardamos una promesa que limpia el pending al resolverse o rechazarse
-    const tracked = p.then((r) => { PENDING_REQUESTS.delete(key); return r; }).catch((err) => { PENDING_REQUESTS.delete(key); throw err; });
-    PENDING_REQUESTS.set(key, tracked as Promise<AxiosResponse<any>>);
-    return p;
-  };
-
+  // Sin cache válido → el request procede normalmente (sin wrappers de adapter)
   return config;
 });
 
 /**
- * INTERCEPTOR DE RESPUESTA: Guardar Caché y Limpiar Dedupe
+ * INTERCEPTOR DE RESPUESTA: Guardar Caché
  */
 backend.interceptors.response.use(
   (response) => {
     const { config } = response;
-    const key = buildCacheKey(config);
 
-    // Guardar en caché si es GET y está habilitado (no cachear respuestas autenticadas a menos que se forcee)
+    // Guardar en caché solo GETs sin auth (a menos que cache esté forzado)
     const hasAuth = Boolean(config.headers && (config.headers.Authorization || config.headers.authorization));
     if (config.method === 'get' && config.cache !== false && (!hasAuth || config.cache === true)) {
+      const key = buildCacheKey(config);
       const entry: CacheEntry = {
         timestamp: Date.now(),
         data: response.data,
@@ -217,20 +143,41 @@ backend.interceptors.response.use(
       };
       MEMORY_CACHE.set(key, entry);
       storage.set(key, entry);
-      // Ensure cache size limit
       enforceCacheLimit();
     }
 
-    PENDING_REQUESTS.delete(key);
     return response;
   },
   (error) => {
-    if (error.config) {
-      PENDING_REQUESTS.delete(buildCacheKey(error.config));
-    }
     return Promise.reject(error);
   }
 );
+
+/**
+ * INTERCEPTOR DE RETRY: Reintentar en Network Errors (cold start de Render)
+ * Reintenta hasta 2 veces con backoff de 3s, 6s
+ */
+backend.interceptors.response.use(undefined, async (error) => {
+  const config = error.config;
+  if (!config) return Promise.reject(error);
+
+  // No reintentar requests abortados intencionalmente
+  if (axios.isCancel(error) || error.name === 'AbortError' || error.name === 'CanceledError') {
+    return Promise.reject(error);
+  }
+
+  // Reintentar solo en errores de red o timeout (típicos de cold start)
+  if (error.code === 'ERR_NETWORK' || error.code === 'ECONNABORTED') {
+    config.__retryCount = (config.__retryCount || 0) + 1;
+    if (config.__retryCount <= 2) {
+      const delay = config.__retryCount * 3000;
+      await new Promise(r => setTimeout(r, delay));
+      return backend(config);
+    }
+  }
+
+  return Promise.reject(error);
+});
 
 // --- UTILIDADES EXPORTADAS ---
 
@@ -283,7 +230,7 @@ export const runCacheCleanup = (ttl: number = DEFAULT_TTL): void => {
 export const startAutoCleanup = (intervalMs: number = DEFAULT_TTL): void => {
   stopAutoCleanup();
   if (typeof window === 'undefined') return;
-  AUTO_CLEANUP_INTERVAL_ID = window.setInterval(() => runCacheCleanup(), intervalMs);
+  AUTO_CLEANUP_INTERVAL_ID = setInterval(() => runCacheCleanup(), intervalMs);
 };
 
 export const stopAutoCleanup = (): void => {
