@@ -44,17 +44,29 @@
 .carruselContainer {
   border-radius: 20px;
   overflow: hidden;
+  width: 100%;
   box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 174, 239, 0.15);
   margin-bottom: 2rem;
+  /* Reducido de 3rem */
   aspect-ratio: 16/9;
   background: #111120;
+  position: relative;
+}
+
+/* Fix Crítico: Forzar que Bootstrap llene el contenedor aspect-ratio */
+.carruselContainer :global(.carousel),
+.carruselContainer :global(.carousel-inner),
+.carruselContainer :global(.carousel-item) {
+  height: 100% !important;
 }
 
 .carruselImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   transition: transform 6s ease-out;
+  z-index: 1;
 }
 
 :global(.carousel-item.active) .carruselImg {
