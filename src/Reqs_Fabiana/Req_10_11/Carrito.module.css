@@ -222,3 +222,33 @@
 .modalHeader {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+  .cartItem {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .imageContainer {
+    width: 100%;
+    height: 140px;
+    margin-right: 0;
+  }
+
+  .itemPriceArea {
+    margin-left: 0;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .removeBtn {
+    margin-left: 0;
+    width: 100%;
+    justify-content: center;
+  }
+}

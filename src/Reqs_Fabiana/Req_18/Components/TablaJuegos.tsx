@@ -82,7 +82,7 @@ const TablaJuegos = () => {
   );
 
   return (
-    <div className="fadeInUp h-100 d-flex flex-column">
+    <div className="h-100 d-flex flex-column">
       {/* Cabecera con Filtros */}
       <div className={styles.HeaderTable}>
         <div className={styles.SearchContainer}>
@@ -174,7 +174,7 @@ const TablaJuegos = () => {
       {/* Modal Formulario */}
       {(mostrarAgregar || juegoEditando) && (
         <div className={styles.ModalOverlay}>
-          <div className={styles.ModalContent} style={{ maxWidth: '750px' }}>
+          <div className={`${styles.ModalContent} fadeInUp`}>
             <FormularioJuego
               modo={mostrarAgregar ? 'agregar' : 'editar'}
               juego={juegoEditando ?? undefined}

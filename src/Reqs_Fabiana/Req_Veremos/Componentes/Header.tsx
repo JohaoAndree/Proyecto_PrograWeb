@@ -9,6 +9,7 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const usuario = JSON.parse(localStorage.getItem("usuario") || "null");
 
@@ -35,6 +36,8 @@ const Header = () => {
 
   return (
     <Navbar
+      expanded={expanded}
+      onToggle={(isExpanded) => setExpanded(isExpanded)}
       expand="lg"
       className={`${styles.navbar} ${scrolled ? styles.navbarScrolled : ""}`}
       variant="dark"
@@ -48,7 +51,7 @@ const Header = () => {
         <Navbar.Toggle aria-controls="main-navbar-nav" />
         <Navbar.Collapse id="main-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/" className={navLinkClass("/")}>
+            <Nav.Link as={Link} to="/" className={navLinkClass("/")} onClick={() => setExpanded(false)}>
               <FaHome className={styles.linkIcon} />
               Inicio
             </Nav.Link>
@@ -62,34 +65,34 @@ const Header = () => {
               id="juegos-dropdown"
               className={`${styles.dropdown} ${isJuegosActive ? styles.dropdownActive : ""}`}
             >
-              <NavDropdown.Item as={Link} to="/juegos/mas-vendidos">
+              <NavDropdown.Item as={Link} to="/juegos/mas-vendidos" onClick={() => setExpanded(false)}>
                 Más vendidos
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/juegos/mas-populares">
+              <NavDropdown.Item as={Link} to="/juegos/mas-populares" onClick={() => setExpanded(false)}>
                 Más populares
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/juegos/lista">
+              <NavDropdown.Item as={Link} to="/juegos/lista" onClick={() => setExpanded(false)}>
                 Lista de juegos
               </NavDropdown.Item>
             </NavDropdown>
 
-            <Nav.Link as={Link} to="/noticias" className={navLinkClass("/noticias")}>
+            <Nav.Link as={Link} to="/noticias" className={navLinkClass("/noticias")} onClick={() => setExpanded(false)}>
               <FaNewspaper className={styles.linkIcon} />
               Noticias
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/carrito" className={navLinkClass("/carrito")}>
+            <Nav.Link as={Link} to="/carrito" className={navLinkClass("/carrito")} onClick={() => setExpanded(false)}>
               <FaShoppingCart className={styles.linkIcon} />
               Carrito
             </Nav.Link>
 
             {usuario ? (
-              <Nav.Link onClick={cerrarSesion} className={styles.logoutBtn}>
+              <Nav.Link onClick={() => { cerrarSesion(); setExpanded(false); }} className={styles.logoutBtn}>
                 <FaSignOutAlt className={styles.linkIcon} />
                 Cerrar sesión
               </Nav.Link>
             ) : (
-              <Nav.Link as={Link} to="/usuario" className={navLinkClass("/usuario")}>
+              <Nav.Link as={Link} to="/usuario" className={navLinkClass("/usuario")} onClick={() => setExpanded(false)}>
                 <FaSignInAlt className={styles.linkIcon} />
                 Acceder
               </Nav.Link>

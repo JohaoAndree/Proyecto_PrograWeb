@@ -308,3 +308,43 @@
   margin-right: 10px;
   color: #3a7bd5;
 }
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+  .detalleContainer {
+    padding: 1.25rem;
+  }
+
+  .detalleTitle {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .detalleDesc {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+  }
+
+  .badgeCategory, .badgePlatform {
+    padding: 0.3em 0.6em !important;
+    font-size: 0.75rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .btnAction {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .reviewSection {
+    padding: 1rem;
+  }
+  
+  .reviewItem {
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+}

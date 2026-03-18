@@ -412,7 +412,7 @@
 
 @media (max-width: 768px) {
   .carruselContainer {
-    aspect-ratio: 4/5;
+    aspect-ratio: 16/9;
     /* Formato más vertical para móvil */
   }
 
@@ -421,19 +421,37 @@
   }
 
   .carruselTitle {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   .carruselDesc {
-    font-size: 0.9rem;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
+    font-size: 0.6rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     max-height: 4rem;
   }
 
   .carruselCaption {
-    padding: 1.5rem 1rem 1rem;
+    padding: 1rem 0.5rem 0.5rem;
     background: linear-gradient(to top, rgba(11, 14, 20, 0.98) 0%, rgba(11, 14, 20, 0.8) 50%, transparent 100%);
+  }
+
+  .badgeGroup {
+    gap: 0.4rem;
+  }
+
+  .badge {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.65rem;
+  }
+
+  .ratingBadge {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.65rem;
+  }
+
+  .topRankBadge {
+    font-size: 0.65rem;
   }
 
   .pageTitle {
@@ -442,5 +460,49 @@
 
   .modalBody {
     padding: 1.25rem;
+  }
+
+  .modalHeader {
+    padding: 1rem;
+    position: relative;
+  }
+
+  .modalTitle {
+    font-size: 1.25rem;
+    padding-right: 2rem;
+  }
+
+  .btnClose {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .modalImgContainer {
+    aspect-ratio: 21/9;
+    margin-bottom: 0.75rem;
+  }
+
+  .modalRatingBadge {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.5rem;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .modalSectionTitle {
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .modalText {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .modalBadgeGroup {
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
   }
 }

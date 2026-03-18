@@ -14,7 +14,7 @@ function DetalleJuego(props:{juego: JuegoDB, onComprar: (juego: JuegoDB)=> void}
 
     return (
         <div className={styles.detalleContainer}>
-            <div className="d-flex justify-content-between align-items-start">
+            <div className="d-flex flex-column flex-md-row justify-content-between align-items-start">
                 <div>
                     <h2 className={styles.detalleTitle}>{juego.nombre}</h2>
                     {juego.categoria && <span className={`badge mb-2 me-2 ${styles.badgeCategory}`}>{juego.categoria.nombre}</span>}
@@ -22,7 +22,7 @@ function DetalleJuego(props:{juego: JuegoDB, onComprar: (juego: JuegoDB)=> void}
                         <span key={p.plataforma.id} className={`badge mb-2 me-1 ${styles.badgePlatform}`}>{p.plataforma.nombre}</span>
                     ))}
                 </div>
-                <div className="text-end">
+                <div className="text-start text-md-end mt-3 mt-md-0 w-100">
                     {juego.estaOferta && juego.descuento ? (
                         <>
                             <h5 className="text-decoration-line-through text-danger mb-0">S/ {juego.precio.toFixed(2)}</h5>

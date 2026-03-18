@@ -338,3 +338,22 @@
     margin-right: 0;
   }
 }
+
+@media (max-width: 768px) {
+  .ModalContent {
+    padding: 1.5rem;
+    border-radius: 1.25rem;
+    max-height: 90vh;
+    overflow-y: auto;
+    width: 100%;
+    margin: 1rem;
+  }
+  .FormActions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .BtnCancel, .BtnSave {
+    width: 100%;
+    margin-right: 0;
+  }
+}
