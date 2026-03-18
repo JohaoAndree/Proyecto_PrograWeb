@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { Container, Carousel, Modal, Button } from "react-bootstrap";
 import { FaGamepad, FaStar, FaTags, FaFire, FaTimes, FaInfoCircle } from "react-icons/fa";
 import backend from "../../api/axios";
+import { isCancel } from 'axios';
 import styles from "./Req8.module.css";
+import Skeleton, { SkeletonCard } from "../../Shared/Components/SkeletonView";
 
 interface Juego {
   titulo: string;
@@ -43,30 +45,55 @@ const Req8 = () => {
   };
 
   useEffect(() => {
-    let ignore = false;
+    const controller = new AbortController();
     backend
-      .get("/api/gerson/games/juegos-populares")
+      .get("/api/gerson/games/juegos-populares", { signal: controller.signal })
       .then((res) => {
-        if (!ignore) {
-          const juegosConImagenes = res.data.map((juego: Juego) => ({
-            ...juego,
-            imagen: juego.imagen.startsWith("http")
-              ? juego.imagen
-              : `${import.meta.env.VITE_BACKEND_URL}/${juego.imagen.replace(/^\//, '')}`,
-          }));
-          setJuegos(juegosConImagenes);
-          setLoading(false);
-        }
+        // debug logs removed for production
+        const juegosConImagenes = res.data.map((juego: Juego) => ({
+          ...juego,
+          imagen: juego.imagen.startsWith("http")
+            ? juego.imagen
+            : `${import.meta.env.VITE_BACKEND_URL}/${juego.imagen.replace(/^\//, '')}`,
+        }));
+        setJuegos(juegosConImagenes);
+        setLoading(false);
       })
       .catch((err) => {
+        if (isCancel(err)) return;
         console.error("Error al cargar los juegos populares", err);
         setLoading(false);
       });
-    return () => { ignore = true; };
+
+    return () => { controller.abort(); };
   }, []);
 
   if (loading) {
-    return <div className={styles.loading}>🔥 Cargando juegos populares...</div>;
+    return (
+      <div className={styles.pageContainer}>
+        <Container>
+          <div style={{ marginBottom: '0.75rem' }}>
+            <Skeleton width="60%" height="32px" />
+          </div>
+
+          <div className={styles.carruselContainer}>
+            <Skeleton width="100%" height="280px" borderRadius="12px" />
+          </div>
+
+          <div style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>
+            <Skeleton width="40%" height="24px" />
+          </div>
+
+          <div className={`${styles.juegosGrid}`}>
+            {[...Array(6)].map((_, i) => (
+              <div key={i} style={{ marginBottom: '1rem' }} onClick={() => { }}>
+                <SkeletonCard />
+              </div>
+            ))}
+          </div>
+        </Container>
+      </div>
+    );
   }
 
   // Separar el top 3 para el carrusel y el resto para la grilla

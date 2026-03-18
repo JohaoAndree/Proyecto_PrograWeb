@@ -9,6 +9,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './global.css';
 import LayoutConHeader from './Reqs_Fabiana/Req_Veremos/Componentes/LayoutConHeader';
 import PaginaPrincipal from './Reqs_Fabiana/Req_Veremos/PaginaPrincipal';
+import { startAutoCleanup, setCacheLimit } from './api/axios';
 import Req2 from "./Reqs_Diego/Req_2/index";
 import Req1 from './Reqs_Fabiana/Req_01';
 import Req_10_11 from './Reqs_Fabiana/Req_10_11/Carrito';
@@ -51,3 +52,7 @@ createRoot(document.getElementById('root')!).render(
     </AdminProvider>
   </StrictMode>,
 );
+
+// Iniciar limpieza automática de cache y establecer límite razonable
+startAutoCleanup(60_000);
+setCacheLimit(300);

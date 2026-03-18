@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 import axios from "axios";
 import DetalleJuego from "./Componentes/DetalleJuego";
 import FilaJuegos from "./Componentes/FilaJuegos";
+import { SkeletonCard } from "../../Shared/Components/SkeletonView";
 import styles from "./Req9.module.css";
 export interface JuegoDB {
     id: number;
@@ -43,18 +44,19 @@ function Req9() {
 
     //usando el back, ayuda xd
     useEffect(() => {
-        let ignore = false;
+        const controller = new AbortController();
         setLoading(true);
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`).then(res => {
-            if (!ignore) {
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/juegos`, { signal: controller.signal })
+            .then(res => {
                 setJuegosDisponibles(res.data)
                 setLoading(false);
-            }
-        }).catch(err => {
-            console.error("Error al cargar los juegos: ", err)
-            if (!ignore) setLoading(false);
-        })
-        return () => { ignore = true; };
+            }).catch(err => {
+                if (axios.isCancel && axios.isCancel(err)) return;
+                console.error("Error al cargar los juegos: ", err)
+                setLoading(false);
+            })
+
+        return () => { controller.abort(); };
     }, [])
 
     //cargar carrito
@@ -89,7 +91,7 @@ function Req9() {
     return (
         <div className={`container-fluid ${styles.container}`}>
             <div className="container">
-                    <div className="d-flex justify-content-center align-items-center mb-5">
+                <div className="d-flex justify-content-center align-items-center mb-3">
                     <h2 className={styles.title}>Lista de Juegos</h2>
                 </div>
 
@@ -116,19 +118,27 @@ function Req9() {
                 )}
 
                 {loading ? (
-                    <div className={styles.loaderContainer}>
-                        <div className={styles.spinner}></div>
-                        <p className="mt-3 text-info fw-bold">Cargando catálogo de juegos...</p>
-                    </div>
+                    <>
+                        <div className={styles.loaderContainer}>
+                            <div className={styles.spinner}></div>
+                            <p className="mt-3 text-info fw-bold">Cargando catálogo de juegos...</p>
+                        </div>
+
+                        <div className={styles.gridContainer}>
+                            {[...Array(9)].map((_, i) => (
+                                <SkeletonCard key={i} />
+                            ))}
+                        </div>
+                    </>
                 ) : (
                     <>
                         <FilaJuegos juegos={juegosDisponibles} select={manejarSeleccion} juegoSeleccionadoId={juegoSeleccionado?.id} />
 
                         {/* Modal de Detalle de Juego */}
-                        <Modal 
-                            show={showModal} 
-                            onHide={() => setShowModal(false)} 
-                            centered 
+                        <Modal
+                            show={showModal}
+                            onHide={() => setShowModal(false)}
+                            centered
                             size="lg"
                             contentClassName={styles.modalContent}
                         >

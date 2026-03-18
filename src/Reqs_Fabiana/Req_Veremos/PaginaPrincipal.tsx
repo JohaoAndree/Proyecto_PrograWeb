@@ -10,7 +10,7 @@ import witcher from '../Req_Veremos/Imagenes_Carrusel/The_Witcher_3_Wild_Hunt.pn
 import genshin from '../Req_Veremos/Imagenes_Carrusel/genshin.jpg';
 import JuegosPopulares from './Componentes/JuegosPopulares';
 import Footer from './Componentes/Footer';
-import Skeleton from '../../Shared/Components/SkeletonView';
+import Skeleton, { SkeletonCard } from '../../Shared/Components/SkeletonView';
 
 function PaginaPrincipal() {
   const [imagesLoaded, setImagesLoaded] = useState<{ [key: string]: boolean }>({});
@@ -38,9 +38,9 @@ function PaginaPrincipal() {
               {!imagesLoaded[item.src] && (
                 <Skeleton width="100%" height="100%" borderRadius="0" />
               )}
-              <img 
-                src={item.src} 
-                alt={item.alt} 
+              <img
+                src={item.src}
+                alt={item.alt}
                 className={styles.carruselImg}
                 onLoad={() => handleImageLoad(item.src)}
                 style={{ opacity: imagesLoaded[item.src] ? 1 : 0 }}
@@ -56,7 +56,21 @@ function PaginaPrincipal() {
         </Carousel>
       </div>
 
-      <JuegosPopulares />
+      {/* Top juegos: show local skeletons until carousel images load */}
+      {(!carruselItems.every(i => imagesLoaded[i.src])) ? (
+        <section style={{ marginTop: '1rem' }}>
+          <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <h2 className={styles.sectionTitle}>Top Juegos de la Semana</h2>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '0.5rem' }}>
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          </div>
+        </section>
+      ) : (
+        <JuegosPopulares />
+      )}
 
       <section className={`${styles.sectionCard} fadeInUp`}>
         <h2 className={styles.sectionTitle}>Sobre Nosotros</h2>
@@ -99,7 +113,7 @@ function PaginaPrincipal() {
           </div>
           <div className={styles.infoItem}>
             <h4 style={{ color: '#00D1FF', marginBottom: '0.5rem' }}>💳 Variedad de Pago</h4>
-            <p className={styles.sectionText} style={{ fontSize: '0.95rem' }}>Aceptamos múltiples métodos para tu mayor comodidad.</p> 
+            <p className={styles.sectionText} style={{ fontSize: '0.95rem' }}>Aceptamos múltiples métodos para tu mayor comodidad.</p>
           </div>
         </div>
       </section>

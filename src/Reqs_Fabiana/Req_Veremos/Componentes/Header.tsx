@@ -3,6 +3,7 @@ import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGamepad, FaHome, FaNewspaper, FaShoppingCart, FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
 import styles from "./Header.module.css";
+import { clearCache } from '../../../api/axios';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ const Header = () => {
   }, []);
 
   const cerrarSesion = () => {
+    // Remove local user and clear cached responses tied to session
     localStorage.removeItem("usuario");
+    try { clearCache(); } catch { /* ignore */ }
     navigate("/");
   };
 

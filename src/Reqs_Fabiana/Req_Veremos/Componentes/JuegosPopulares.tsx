@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './JuegosPopulares.module.css';
 import axios from '../../../api/axios';
+import { isCancel } from 'axios';
 import { SkeletonCard } from '../../../Shared/Components/SkeletonView';
 
 interface Juego {
@@ -23,22 +24,22 @@ export default function JuegosPopulares() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    let ignore = false;
-    axios.get('/api/gerson/games/juegos-populares')
+    const controller = new AbortController();
+    axios.get('/api/gerson/games/juegos-populares', { signal: controller.signal })
       .then(res => {
-        if (ignore) return;
+        // debug logs removed for production
         const juegosOrdenados = [...res.data]
           .sort((a: Juego, b: Juego) => extraerValoracion(b.valoracion) - extraerValoracion(a.valoracion));
-        
         setJuegos(juegosOrdenados.slice(0, 3));
         setLoading(false);
       })
-      .catch(() => {
-        if (ignore) return;
+      .catch((err) => {
+        if (isCancel(err)) return;
         setError('No se pudieron cargar los juegos populares');
         setLoading(false);
       });
-    return () => { ignore = true; };
+
+    return () => { controller.abort(); };
   }, []);
 
   const extractNumericRating = (val: string) => {
@@ -62,10 +63,10 @@ export default function JuegosPopulares() {
           juegos.map((juego, idx) => (
             <div key={idx} className={`${styles.juegoCard} fadeInUp`}>
               <div className={styles.imgWrapper}>
-                <img 
-                  src={`${import.meta.env.VITE_BACKEND_URL}${juego.imagen}`} 
-                  alt={juego.titulo} 
-                  className={styles.juegoImg} 
+                <img
+                  src={`${import.meta.env.VITE_BACKEND_URL}${juego.imagen}`}
+                  alt={juego.titulo}
+                  className={styles.juegoImg}
                 />
               </div>
               <div className={styles.juegoInfo}>

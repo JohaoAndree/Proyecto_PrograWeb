@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import axios, { isCancel } from 'axios';
 import AvatarPlaceholder from "../Reqs_Johao/Resources/Avatar.jpeg";
 
 interface AdminData {
@@ -22,11 +22,11 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchAdmin = async () => {
+  const fetchAdmin = async (signal?: AbortSignal) => {
     setIsLoading(true);
     try {
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/johao/usuarios/admin`);
-      const fotoPath = res.data.foto 
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/johao/usuarios/admin`, { signal });
+      const fotoPath = res.data.foto
         ? (res.data.foto.startsWith('/') ? res.data.foto : `/imagenes/usuario/${res.data.foto}`)
         : null;
 
@@ -35,6 +35,7 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         foto: fotoPath ? `${import.meta.env.VITE_BACKEND_URL}${fotoPath}` : AvatarPlaceholder
       });
     } catch (error) {
+      if (isCancel(error)) return;
       console.error("Error fetching admin profile in context:", error);
       setAdmin({
         nombre: "Administrador",
@@ -46,7 +47,9 @@ export const AdminProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   useEffect(() => {
-    fetchAdmin();
+    const controller = new AbortController();
+    fetchAdmin(controller.signal);
+    return () => controller.abort();
   }, []);
 
   return (

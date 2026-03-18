@@ -4,6 +4,7 @@ import { Container, Carousel, Modal, Button } from "react-bootstrap";
 import { FaGamepad, FaStar, FaTags, FaTrophy, FaTimes, FaInfoCircle } from "react-icons/fa";
 import axios from "axios";
 import styles from "./Req7.module.css";
+import Skeleton, { SkeletonCard } from "../../Shared/Components/SkeletonView";
 
 interface Juego {
   titulo: string;
@@ -44,10 +45,9 @@ const Req7 = () => {
   };
 
   useEffect(() => {
-    let ignore = false;
-    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/masvendidos`)
+    const controller = new AbortController();
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/gerson/games/masvendidos`, { signal: controller.signal })
       .then((res) => {
-        if (ignore) return;
         // Agrega el dominio del backend a la imagen si es ruta relativa
         const juegosConImagenes = res.data.map((juego: Juego) => ({
           ...juego,
@@ -59,14 +59,40 @@ const Req7 = () => {
         setLoading(false);
       })
       .catch((err) => {
+        if (axios.isCancel && axios.isCancel(err)) return;
         console.error("Error al obtener juegos:", err);
         setLoading(false);
       });
-    return () => { ignore = true; };
+
+    return () => { controller.abort(); };
   }, []);
 
   if (loading) {
-    return <div className={styles.loading}>🎮 Cargando juegos más vendidos...</div>;
+    return (
+      <div className={styles.pageContainer}>
+        <Container>
+          <div style={{ marginBottom: '0.75rem' }}>
+            <Skeleton width="60%" height="32px" />
+          </div>
+
+          <div className={styles.carruselContainer}>
+            <Skeleton width="100%" height="280px" borderRadius="12px" />
+          </div>
+
+          <div style={{ marginTop: '1rem', marginBottom: '0.5rem' }}>
+            <Skeleton width="40%" height="24px" />
+          </div>
+
+          <div className={`${styles.juegosGrid}`}>
+            {[...Array(6)].map((_, i) => (
+              <div key={i} style={{ marginBottom: '1rem' }} onClick={() => { }}>
+                <SkeletonCard />
+              </div>
+            ))}
+          </div>
+        </Container>
+      </div>
+    );
   }
 
   // Separar el top 3 para el carrusel y el resto para la grilla
@@ -77,10 +103,10 @@ const Req7 = () => {
     <div className={styles.pageContainer}>
       <Container>
         <h2 className={styles.pageTitle}>
-          <FaTrophy style={{ 
-            color: '#FFD700', 
-            filter: 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 215, 0, 0.4))', 
-            marginRight: '15px' 
+          <FaTrophy style={{
+            color: '#FFD700',
+            filter: 'drop-shadow(0 0 8px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 15px rgba(255, 215, 0, 0.4))',
+            marginRight: '15px'
           }} />
           Juegos Más Vendidos
         </h2>
@@ -113,8 +139,8 @@ const Req7 = () => {
                       )}
                       {juego.plataforma && (
                         <span className={styles.badge}>
-                          <FaGamepad /> {Array.isArray(juego.plataforma) 
-                            ? juego.plataforma.join(', ') 
+                          <FaGamepad /> {Array.isArray(juego.plataforma)
+                            ? juego.plataforma.join(', ')
                             : String(juego.plataforma).replace(/([a-z])([A-Z])/g, '$1, $2').replace(/(\d)([A-Z])/g, '$1, $2')}
                         </span>
                       )}
@@ -142,14 +168,14 @@ const Req7 = () => {
                     <div className={styles.topRankBadge}># {idx + 4}</div>
                     <img src={juego.imagen} alt={juego.titulo} className={styles.cardImg} />
                   </div>
-                  
+
                   <div className={styles.cardBody}>
                     <h4 className={styles.cardTitle}>{juego.titulo}</h4>
                     <p className={styles.cardDesc}>
                       {juego.descripcion}
                       <span className={styles.readMore}>...</span>
                     </p>
-                    
+
                     <div className={styles.badgeGroup} style={{ marginBottom: '1rem' }}>
                       {juego.genero && (
                         <span className={`${styles.badge} py-1 px-2`} style={{ fontSize: '0.75rem' }}>
@@ -175,10 +201,10 @@ const Req7 = () => {
         )}
 
         {/* Modal de Detalles Premium */}
-        <Modal 
-          show={showModal} 
-          onHide={handleCloseModal} 
-          centered 
+        <Modal
+          show={showModal}
+          onHide={handleCloseModal}
+          centered
           size="lg"
           className={styles.premiumModal}
         >
@@ -199,7 +225,7 @@ const Req7 = () => {
                     <FaStar /> {extractRating(selectedJuego.valoracion)}
                   </div>
                 </div>
-                
+
                 <div className={styles.modalContent}>
                   <div className={styles.modalBadgeGroup}>
                     {selectedJuego.genero && (
@@ -209,8 +235,8 @@ const Req7 = () => {
                     )}
                     {selectedJuego.plataforma && (
                       <span className={styles.badge}>
-                        <FaGamepad /> {Array.isArray(selectedJuego.plataforma) 
-                          ? selectedJuego.plataforma.join(', ') 
+                        <FaGamepad /> {Array.isArray(selectedJuego.plataforma)
+                          ? selectedJuego.plataforma.join(', ')
                           : String(selectedJuego.plataforma).replace(/([a-z])([A-Z])/g, '$1, $2').replace(/(\d)([A-Z])/g, '$1, $2')}
                       </span>
                     )}
